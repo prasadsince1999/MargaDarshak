@@ -1,0 +1,63 @@
+{
+  "@@locale": "en",
+  "appTitle": "Margadarshak",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "tagline": "Clear direction for every student stage",
+  "@tagline": {
+    "description": "App tagline shown on splash/onboarding"
+  },
+  "studentMode": "Student",
+  "@studentMode": {
+    "description": "Label for student mode"
+  },
+  "parentMode": "Parent",
+  "@parentMode": {
+    "description": "Label for parent mode"
+  },
+  "familyBridge": "Family Bridge",
+  "@familyBridge": {
+    "description": "Label for family bridge mode"
+  },
+  "eligible": "Eligible",
+  "@eligible": {
+    "description": "Eligibility status: student qualifies"
+  },
+  "partiallyEligible": "Check Requirements",
+  "@partiallyEligible": {
+    "description": "Eligibility status: needs verification"
+  },
+  "notEligible": "Not Eligible",
+  "@notEligible": {
+    "description": "Eligibility status: student does not qualify"
+  },
+  "aiSuggestion": "AI Suggestion",
+  "@aiSuggestion": {
+    "description": "Label on AI-generated content cards"
+  },
+  "roadmap": "Roadmap",
+  "@roadmap": {
+    "description": "Navigation label for roadmap section"
+  },
+  "explore": "Explore",
+  "@explore": {
+    "description": "Navigation label for explore/discover section"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Navigation label for home screen"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Navigation label for profile section"
+  },
+  "getStarted": "Get Started",
+  "@getStarted": {
+    "description": "Primary CTA on onboarding screens"
+  },
+  "whatsNext": "What's next for you?",
+  "@whatsNext": {
+    "description": "Home screen greeting subtitle"
+  }
+}

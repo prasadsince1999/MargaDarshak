@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guidance Need Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e8e3da",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#d6d1c9",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#f5f0e8",
+                    "outline-variant": "#d0cbc3",
+                    "on-background": "#1a1a1a",
+                    "primary-fixed": "#ffcc00",
+                    "secondary-fixed-dim": "#ffb3ab",
+                    "secondary": "#e63b2e",
+                    "surface-tint": "#1a1a1a",
+                    "surface-container": "#eee9e0",
+                    "primary-container": "#ffcc00",
+                    "error": "#cc0000",
+                    "on-tertiary-container": "#1a1a1a",
+                    "surface-container-highest": "#e2ddd4",
+                    "on-tertiary-fixed": "#1a1a1a",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#1a1a1a",
+                    "surface": "#f5f0e8",
+                    "surface-container-high": "#e8e3da",
+                    "on-surface-variant": "#4a4a4a",
+                    "on-secondary": "#1a1a1a",
+                    "on-primary-container": "#1a1a1a",
+                    "primary": "#1a1a1a",
+                    "inverse-on-surface": "#f5f0e8",
+                    "tertiary-fixed": "#d6e3ff",
+                    "tertiary": "#0055ff",
+                    "secondary-fixed": "#ffdad6",
+                    "on-primary-fixed-variant": "#1a1a1a",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#d6e3ff",
+                    "surface-container-low": "#f2ede5",
+                    "background": "#f5f0e8",
+                    "surface-bright": "#faf7f2",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#ffdad6",
+                    "on-surface": "#1a1a1a",
+                    "on-secondary-fixed-variant": "#1a1a1a",
+                    "primary-fixed-dim": "#e6b800",
+                    "tertiary-fixed-dim": "#a8c6ff",
+                    "on-primary-fixed": "#1a1a1a",
+                    "outline": "#1a1a1a",
+                    "on-secondary-fixed": "#1a1a1a",
+                    "on-secondary-container": "#1a1a1a",
+                    "on-tertiary-fixed-variant": "#1a1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Space Grotesk"
+                    ],
+                    "display": [
+                            "Space Grotesk"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "label": [
+                            "Space Grotesk"
+                    ]
+            },
+            "fontSize": {}
+    },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            font-family: theme('fontFamily.body');
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: theme('fontFamily.headline');
+        }
+        .bauhaus-card {
+            border: 3px solid theme('colors.on-background');
+            box-shadow: 6px 6px 0px 0px theme('colors.on-background');
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .bauhaus-card:active {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0px 0px theme('colors.on-background');
+        }
+        .bauhaus-card:hover {
+            background-color: theme('colors.on-background');
+            color: theme('colors.background');
+        }
+        .bauhaus-card:hover .material-symbols-outlined {
+            color: theme('colors.primary-fixed');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col pb-24 md:pb-0 pt-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#f5f0e8] border-b-4 border-[#1a1a1a] flex justify-between items-center px-6 h-20 transition-none">
+<button class="text-[#1a1a1a] hover:bg-[#0055ff] hover:text-white active:translate-x-1 active:translate-y-1 transition-none p-2 border-2 border-transparent hover:border-[#1a1a1a]">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+<div class="font-['Space_Grotesk'] font-black text-2xl text-[#1a1a1a] italic uppercase tracking-tighter">MARGADARSHAK</div>
+<button class="text-[#1a1a1a] hover:bg-[#0055ff] hover:text-white active:translate-x-1 active:translate-y-1 transition-none p-2 border-2 border-transparent hover:border-[#1a1a1a]">
+<span class="material-symbols-outlined text-3xl">account_circle</span>
+</button>
+<!-- Web Nav (Hidden on Mobile) -->
+<nav class="hidden md:flex gap-8 ml-8 mr-auto absolute left-24">
+<a class="font-['Space_Grotesk'] font-bold uppercase text-[#1a1a1a] hover:bg-[#0055ff] hover:text-white active:translate-x-1 active:translate-y-1 transition-none px-4 py-2 border-2 border-transparent hover:border-[#1a1a1a]" href="#">Home</a>
+<a class="font-['Space_Grotesk'] font-bold uppercase text-[#1a1a1a] hover:bg-[#0055ff] hover:text-white active:translate-x-1 active:translate-y-1 transition-none px-4 py-2 border-2 border-transparent hover:border-[#1a1a1a]" href="#">Mentors</a>
+<a class="font-['Space_Grotesk'] font-bold uppercase text-[#ffcc00] border-2 border-[#1a1a1a] bg-[#1a1a1a] px-4 py-2 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]" href="#">Guidance</a>
+<a class="font-['Space_Grotesk'] font-bold uppercase text-[#1a1a1a] hover:bg-[#0055ff] hover:text-white active:translate-x-1 active:translate-y-1 transition-none px-4 py-2 border-2 border-transparent hover:border-[#1a1a1a]" href="#">Exams</a>
+</nav>
+</header>
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-6 py-12 md:py-24 max-w-5xl">
+<div class="mb-16 border-b-4 border-on-background pb-8">
+<h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none text-on-background">
+                How can we help today?
+            </h1>
+</div>
+<!-- Asymmetric Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 auto-rows-min">
+<!-- Card 1: What after 10th? -->
+<a class="bauhaus-card bg-primary-fixed p-8 flex flex-col justify-between group h-64 md:col-span-2 lg:col-span-1" href="#">
+<div class="mb-4 text-on-background">
+<span class="material-symbols-outlined text-5xl font-variation-settings: 'FILL' 1;">school</span>
+</div>
+<h2 class="font-headline font-bold text-3xl uppercase tracking-tight text-on-background">What after 10th?</h2>
+</a>
+<!-- Card 2: What after 12th? -->
+<a class="bauhaus-card bg-tertiary p-8 flex flex-col justify-between group h-64 lg:col-span-2" href="#">
+<div class="mb-4 text-on-primary">
+<span class="material-symbols-outlined text-5xl font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+<h2 class="font-headline font-bold text-4xl uppercase tracking-tight text-on-primary group-hover:text-background">What after 12th?</h2>
+</a>
+<!-- Card 3: Compare Careers -->
+<a class="bauhaus-card bg-surface p-8 flex flex-col justify-between group h-64" href="#">
+<div class="mb-4 text-on-background">
+<span class="material-symbols-outlined text-5xl font-variation-settings: 'FILL' 1;">compare_arrows</span>
+</div>
+<h2 class="font-headline font-bold text-3xl uppercase tracking-tight text-on-background group-hover:text-background">Compare Careers</h2>
+</a>
+<!-- Card 4: Check Eligibility -->
+<a class="bauhaus-card bg-surface p-8 flex flex-col justify-between group h-64 lg:col-span-2" href="#">
+<div class="mb-4 text-on-background">
+<span class="material-symbols-outlined text-5xl font-variation-settings: 'FILL' 1;">fact_check</span>
+</div>
+<h2 class="font-headline font-bold text-3xl uppercase tracking-tight text-on-background group-hover:text-background">Check Eligibility</h2>
+</a>
+<!-- Card 5: I am confused -->
+<a class="bauhaus-card bg-secondary p-8 flex flex-col justify-between group h-64 md:col-span-2 lg:col-span-3 items-center text-center" href="#">
+<div class="mb-4 text-on-primary">
+<span class="material-symbols-outlined text-6xl font-variation-settings: 'FILL' 1;">psychology_alt</span>
+</div>
+<h2 class="font-headline font-black text-5xl md:text-6xl uppercase tracking-tighter text-on-primary group-hover:text-background">I am confused</h2>
+</a>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 bg-[#f5f0e8] border-t-4 border-[#1a1a1a] md:hidden">
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] opacity-100 hover:bg-[#e63b2e] hover:text-white transition-none p-2 w-full h-full" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] opacity-100 hover:bg-[#e63b2e] hover:text-white transition-none p-2 w-full h-full" href="#">
+<span class="material-symbols-outlined text-2xl">school</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase mt-1">Mentors</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#ffcc00] text-[#1a1a1a] border-2 border-[#1a1a1a] -mt-2 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] px-3 py-1 w-full max-w-[80px]" href="#">
+<span class="material-symbols-outlined text-2xl">explore</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase mt-1">Guidance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] opacity-100 hover:bg-[#e63b2e] hover:text-white transition-none p-2 w-full h-full" href="#">
+<span class="material-symbols-outlined text-2xl">description</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase mt-1">Exams</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] opacity-100 hover:bg-[#e63b2e] hover:text-white transition-none p-2 w-full h-full" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

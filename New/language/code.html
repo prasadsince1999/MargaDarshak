@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Language Selection</title>
+<!-- Google Fonts: Space Grotesk & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#e63b2e",
+                        "primary-fixed-dim": "#e6b800",
+                        "on-primary-container": "#1a1a1a",
+                        "on-primary": "#ffffff",
+                        "error": "#cc0000",
+                        "tertiary": "#0055ff",
+                        "on-surface-variant": "#4a4a4a",
+                        "outline-variant": "#d0cbc3",
+                        "surface-bright": "#faf7f2",
+                        "on-surface": "#1a1a1a",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#1a1a1a",
+                        "tertiary-fixed": "#d6e3ff",
+                        "primary": "#1a1a1a",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#ffb3ab",
+                        "on-primary-fixed": "#1a1a1a",
+                        "inverse-on-surface": "#f5f0e8",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eee9e0",
+                        "inverse-surface": "#1a1a1a",
+                        "primary-container": "#ffcc00",
+                        "on-secondary-container": "#1a1a1a",
+                        "outline": "#1a1a1a",
+                        "secondary-container": "#ffdad6",
+                        "surface": "#f5f0e8",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#d6e3ff",
+                        "background": "#f5f0e8",
+                        "on-secondary-fixed-variant": "#1a1a1a",
+                        "tertiary-fixed-dim": "#a8c6ff",
+                        "on-background": "#1a1a1a",
+                        "inverse-primary": "#f5f0e8",
+                        "surface-container-low": "#f2ede5",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffcc00",
+                        "surface-container-highest": "#e2ddd4",
+                        "on-tertiary-fixed-variant": "#1a1a1a",
+                        "on-secondary-fixed": "#1a1a1a",
+                        "on-primary-fixed-variant": "#1a1a1a",
+                        "surface-tint": "#1a1a1a",
+                        "surface-container-high": "#e8e3da",
+                        "on-tertiary-container": "#1a1a1a",
+                        "on-secondary": "#1a1a1a",
+                        "secondary-fixed": "#ffdad6",
+                        "surface-dim": "#d6d1c9",
+                        "surface-variant": "#e8e3da"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk", "sans-serif"],
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Space Grotesk", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-primary">
+<!-- TopAppBar Shared Component -->
+<header class="flex justify-between items-center w-full px-6 py-4 bg-stone-50 dark:bg-stone-950 docked full-width top-0 border-b-4 border-stone-900 dark:border-stone-50">
+<div class="flex items-center gap-4">
+<button class="text-stone-900 dark:text-stone-50 hover:bg-yellow-400 hover:text-stone-900 transition-colors duration-100 active:translate-x-1 active:translate-y-1 p-2 border-2 border-transparent">
+<span class="material-symbols-outlined text-3xl font-bold">arrow_back</span>
+</button>
+<span class="font-['Space_Grotesk'] uppercase tracking-tighter text-xl font-black text-stone-900 dark:text-stone-50">
+                MARGADARSHAK
+            </span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col w-full max-w-6xl mx-auto px-6 py-8 md:px-12 md:py-16 gap-12">
+<!-- Progress Bar (Neo-Brutalist) -->
+<div class="w-full h-8 border-[3px] border-outline bg-surface relative flex items-center shadow-[4px_4px_0px_#1a1a1a]">
+<div class="h-full bg-primary-container w-[80%] border-r-[3px] border-outline absolute top-0 left-0"></div>
+<span class="absolute w-full text-center font-headline font-bold text-sm tracking-widest text-primary z-10 mix-blend-exclusion">80%</span>
+</div>
+<!-- Heading -->
+<div class="max-w-4xl pt-4">
+<h1 class="font-headline text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.9] tracking-tighter text-primary break-words">
+                Which language<br/>
+<span class="text-secondary bg-surface border-[3px] border-outline shadow-[6px_6px_0px_#1a1a1a] inline-block px-4 py-2 mt-4 mb-4 transform -rotate-1">
+                    are you most
+                </span><br/>
+                comfortable with?
+            </h1>
+</div>
+<!-- Language Options Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8">
+<button class="group relative w-full text-left bg-surface border-[3px] border-outline p-6 md:p-8 transition-all shadow-[6px_6px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_#1a1a1a] hover:translate-x-[4px] hover:translate-y-[4px] hover:bg-primary hover:text-on-primary">
+<div class="flex justify-between items-end">
+<span class="font-headline text-3xl md:text-4xl font-bold uppercase tracking-tight">English</span>
+<span class="material-symbols-outlined text-4xl opacity-0 group-hover:opacity-100 transition-opacity">language</span>
+</div>
+</button>
+<button class="group relative w-full text-left bg-surface border-[3px] border-outline p-6 md:p-8 transition-all shadow-[6px_6px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_#1a1a1a] hover:translate-x-[4px] hover:translate-y-[4px] hover:bg-primary-container hover:text-primary">
+<div class="flex justify-between items-end">
+<span class="font-headline text-3xl md:text-4xl font-bold uppercase tracking-tight">Hindi</span>
+<span class="material-symbols-outlined text-4xl opacity-0 group-hover:opacity-100 transition-opacity">translate</span>
+</div>
+</button>
+<button class="group relative w-full text-left bg-surface border-[3px] border-outline p-6 md:p-8 transition-all shadow-[6px_6px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_#1a1a1a] hover:translate-x-[4px] hover:translate-y-[4px] hover:bg-tertiary hover:text-on-tertiary">
+<div class="flex justify-between items-end">
+<span class="font-headline text-3xl md:text-4xl font-bold uppercase tracking-tight">Marathi</span>
+<span class="material-symbols-outlined text-4xl opacity-0 group-hover:opacity-100 transition-opacity">forum</span>
+</div>
+</button>
+<button class="group relative w-full text-left bg-surface border-[3px] border-outline p-6 md:p-8 transition-all shadow-[6px_6px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_#1a1a1a] hover:translate-x-[4px] hover:translate-y-[4px] hover:bg-secondary hover:text-on-error">
+<div class="flex justify-between items-end">
+<span class="font-headline text-3xl md:text-4xl font-bold uppercase tracking-tight">Bengali</span>
+<span class="material-symbols-outlined text-4xl opacity-0 group-hover:opacity-100 transition-opacity">record_voice_over</span>
+</div>
+</button>
+<button class="group relative w-full text-left bg-surface border-[3px] border-outline p-6 md:p-8 transition-all shadow-[6px_6px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_#1a1a1a] hover:translate-x-[4px] hover:translate-y-[4px] hover:bg-primary hover:text-on-primary">
+<div class="flex justify-between items-end">
+<span class="font-headline text-3xl md:text-4xl font-bold uppercase tracking-tight">Tamil</span>
+<span class="material-symbols-outlined text-4xl opacity-0 group-hover:opacity-100 transition-opacity">chat_bubble</span>
+</div>
+</button>
+<button class="group relative w-full text-left bg-surface border-[3px] border-outline p-6 md:p-8 transition-all shadow-[6px_6px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_#1a1a1a] hover:translate-x-[4px] hover:translate-y-[4px] hover:bg-primary-container hover:text-primary">
+<div class="flex justify-between items-end">
+<span class="font-headline text-3xl md:text-4xl font-bold uppercase tracking-tight">Telugu</span>
+<span class="material-symbols-outlined text-4xl opacity-0 group-hover:opacity-100 transition-opacity">hearing</span>
+</div>
+</button>
+</div>
+</main>
+<!-- Bottom Action Bar (Contextual for Onboarding) -->
+<div class="w-full bg-background border-t-[3px] border-outline p-6 flex justify-end sticky bottom-0 z-40">
+<button class="bg-primary-container text-primary font-headline text-2xl font-black uppercase tracking-widest px-10 py-5 border-[3px] border-outline shadow-[6px_6px_0px_#1a1a1a] hover:shadow-[0px_0px_0px_#1a1a1a] hover:translate-x-[6px] hover:translate-y-[6px] transition-all flex items-center gap-4">
+            Continue
+            <span class="material-symbols-outlined font-black text-3xl" style="font-variation-settings: 'wght' 700;">arrow_forward</span>
+</button>
+</div>
+</body></html>

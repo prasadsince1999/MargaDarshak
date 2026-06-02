@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Margadarshak - Child Profile</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            ink: "#171717",
+            paper: "#f5f0e8",
+            muted: "#e7e0d4",
+            line: "#cfc7ba",
+            yellow: "#ffcc00",
+            blue: "#0055ff",
+            red: "#e63b2e",
+            peach: "#f0c7bd",
+            green: "#0f7a4d"
+          },
+          fontFamily: {
+            display: ["Space Grotesk", "sans-serif"],
+            body: ["Inter", "sans-serif"]
+          },
+          boxShadow: {
+            brutal: "6px 6px 0 #171717",
+            brutalSm: "4px 4px 0 #171717",
+            yellow: "6px 6px 0 #ffcc00",
+            blue: "5px 5px 0 #0055ff"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100dvh;
+      background: #f5f0e8;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 24;
+      line-height: 1;
+    }
+
+    .hard-panel {
+      border: 3px solid #171717;
+      background: #f5f0e8;
+      box-shadow: 6px 6px 0 #171717;
+    }
+
+    .chip {
+      border: 2px solid #171717;
+      box-shadow: 3px 3px 0 #171717;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .press {
+      transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, color 160ms ease;
+    }
+
+    .press:active {
+      transform: translate(3px, 3px);
+      box-shadow: 2px 2px 0 #171717;
+    }
+
+    .portrait-face {
+      clip-path: polygon(34% 7%, 70% 8%, 86% 25%, 84% 58%, 73% 70%, 74% 93%, 23% 93%, 32% 70%, 24% 50%, 24% 22%);
+    }
+
+    .portrait-neck {
+      clip-path: polygon(38% 0, 70% 0, 83% 100%, 20% 100%);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+<body class="font-body text-ink">
+  <div class="relative mx-auto min-h-dvh w-full max-w-[430px] bg-paper md:min-h-[920px] md:border-[3px] md:border-ink md:shadow-brutal">
+    <header class="sticky top-0 z-40 border-b-[3px] border-ink bg-paper px-4 py-4">
+      <div class="flex items-center justify-between">
+        <button class="press grid h-10 w-10 place-items-center border-2 border-transparent hover:border-ink" aria-label="Open menu">
+          <span class="material-symbols-outlined text-[25px]">menu</span>
+        </button>
+        <div class="text-center font-display text-[1.35rem] font-black italic leading-none">
+          CHILD_CORE
+        </div>
+        <button class="press grid h-10 w-10 place-items-center border-2 border-transparent hover:border-ink" aria-label="Open settings">
+          <span class="material-symbols-outlined text-[25px]">settings</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="space-y-7 px-4 pb-28 pt-5">
+      <section class="relative overflow-hidden border-[3px] border-ink bg-ink text-paper shadow-yellow">
+        <div class="absolute right-0 top-0 h-24 w-24 bg-yellow"></div>
+        <div class="absolute right-0 top-24 h-16 w-24 bg-blue"></div>
+        <div class="relative p-4">
+          <div class="flex items-end justify-between gap-3">
+            <div class="relative h-32 w-32 shrink-0 border-[3px] border-paper bg-yellow">
+              <div class="portrait-face absolute left-5 top-3 h-[104px] w-[82px] bg-yellow"></div>
+              <div class="portrait-neck absolute bottom-3 left-9 h-9 w-14 bg-yellow"></div>
+              <div class="absolute left-12 top-14 h-[2px] w-9 bg-ink opacity-70"></div>
+              <div class="absolute left-14 top-20 h-[2px] w-7 rotate-6 bg-ink opacity-70"></div>
+              <button class="press absolute -bottom-3 -right-3 grid h-9 w-9 place-items-center border-2 border-paper bg-blue text-white shadow-brutalSm" aria-label="Edit photo">
+                <span class="material-symbols-outlined text-[18px]">edit</span>
+              </button>
+            </div>
+
+            <div class="mb-1 flex flex-col items-end gap-2">
+              <span class="chip bg-paper px-3 py-2 text-xs text-ink">Student</span>
+              <span class="chip bg-yellow px-3 py-2 text-xs text-ink">Class 12</span>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <p class="font-display text-xs font-black uppercase text-yellow">Active child profile</p>
+            <h1 class="font-display text-[4.45rem] font-black uppercase leading-[0.82]">Rahul</h1>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip bg-yellow px-3 py-2 text-xs text-ink">Science</span>
+              <span class="chip bg-paper px-3 py-2 text-xs text-ink">CBSE</span>
+              <span class="chip bg-blue px-3 py-2 text-xs text-white">JEE Track</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-3 gap-3">
+        <div class="border-[3px] border-ink bg-yellow p-3 shadow-brutalSm">
+          <div class="font-display text-2xl font-black leading-none">12</div>
+          <div class="mt-1 text-[0.65rem] font-extrabold uppercase leading-tight">Grade</div>
+        </div>
+        <div class="border-[3px] border-ink bg-paper p-3 shadow-brutalSm">
+          <div class="font-display text-2xl font-black leading-none">45%</div>
+          <div class="mt-1 text-[0.65rem] font-extrabold uppercase leading-tight">Roadmap</div>
+        </div>
+        <div class="border-[3px] border-ink bg-peach p-3 shadow-brutalSm">
+          <div class="font-display text-2xl font-black leading-none">3</div>
+          <div class="mt-1 text-[0.65rem] font-extrabold uppercase leading-tight">Goals</div>
+        </div>
+      </section>
+
+      <section class="hard-panel relative overflow-hidden p-5">
+        <div class="absolute -right-5 -top-5 h-28 w-28 border-l-[3px] border-b-[3px] border-ink bg-peach"></div>
+        <div class="relative">
+          <div class="section-title">
+            <span class="material-symbols-outlined text-[20px]">school</span>
+            Academic stage
+          </div>
+          <div class="mt-5 grid grid-cols-[1fr_auto] items-end gap-3">
+            <div>
+              <p class="text-xs font-bold uppercase text-stone-600">Current level</p>
+              <h2 class="mt-1 font-display text-[2.2rem] font-black uppercase leading-none">Class 12th</h2>
+            </div>
+            <button class="press grid h-11 w-11 place-items-center border-[3px] border-ink bg-yellow shadow-brutalSm" aria-label="Edit academic stage">
+              <span class="material-symbols-outlined text-[20px]">edit</span>
+            </button>
+          </div>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="chip bg-ink px-3 py-2 text-xs text-white">Science</span>
+            <span class="chip bg-paper px-3 py-2 text-xs">CBSE</span>
+            <span class="chip bg-paper px-3 py-2 text-xs">English</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-[20px]">ads_click</span>
+          Interests and goals
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <button class="press chip bg-blue px-4 py-4 text-left text-sm text-white">Engineering</button>
+          <button class="press chip bg-red px-4 py-4 text-left text-sm text-white">Defense</button>
+          <button class="press chip bg-paper px-4 py-4 text-left text-sm">Research</button>
+          <button class="press chip border-dashed bg-yellow px-4 py-4 text-left text-sm">
+            <span class="material-symbols-outlined mr-1 inline text-[17px] align-[-3px]">add</span>
+            Add goal
+          </button>
+        </div>
+      </section>
+
+      <section class="space-y-4 border-t-[3px] border-dashed border-ink pt-6">
+        <div class="flex items-center justify-between gap-3">
+          <div class="section-title">
+            <span class="material-symbols-outlined text-[20px]">route</span>
+            Saved roadmaps
+          </div>
+          <span class="border-2 border-ink bg-yellow px-2 py-1 font-display text-xs font-black uppercase">1 Live</span>
+        </div>
+
+        <article class="press hard-panel cursor-pointer overflow-hidden">
+          <div class="border-b-[3px] border-ink bg-paper p-5">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold uppercase text-stone-600">Next milestone</p>
+                <h3 class="mt-1 font-display text-[1.55rem] font-black uppercase leading-[1.02]">Engineering after 12th</h3>
+              </div>
+              <span class="material-symbols-outlined text-[26px]">north_east</span>
+            </div>
+            <p class="mt-3 text-sm font-semibold">JEE Mains Prep starts next.</p>
+          </div>
+          <div class="bg-muted p-4">
+            <div class="flex items-center justify-between font-display text-xs font-black uppercase">
+              <span>Progress</span>
+              <span>45%</span>
+            </div>
+            <div class="mt-2 h-4 border-2 border-ink bg-paper">
+              <div class="h-full w-[45%] border-r-2 border-ink bg-yellow"></div>
+            </div>
+          </div>
+        </article>
+
+        <button class="press flex w-full items-center justify-center gap-2 border-[3px] border-dashed border-ink bg-paper py-4 font-display text-sm font-black uppercase shadow-brutalSm hover:bg-yellow">
+          <span class="material-symbols-outlined text-[20px]">add</span>
+          Explore new paths
+        </button>
+      </section>
+
+      <section class="grid gap-4">
+        <div class="hard-panel p-5">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-xs font-extrabold uppercase text-stone-600">Preferred language</p>
+              <p class="mt-2 font-display text-xl font-black uppercase">English</p>
+            </div>
+            <button class="press grid h-11 w-11 place-items-center border-[3px] border-ink bg-paper shadow-brutalSm" aria-label="Edit preferred language">
+              <span class="material-symbols-outlined text-[20px]">edit</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="hard-panel p-5">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-xs font-extrabold uppercase text-stone-600">Guidance mode</p>
+              <p class="mt-2 font-display text-xl font-black uppercase">Detailed guidance</p>
+            </div>
+            <button class="press grid h-11 w-11 place-items-center border-[3px] border-ink bg-yellow shadow-brutalSm" aria-label="Tune guidance mode">
+              <span class="material-symbols-outlined text-[20px]">tune</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="space-y-4 pt-2">
+        <button class="press w-full border-[3px] border-ink bg-ink py-5 font-display text-base font-black uppercase text-paper shadow-yellow hover:bg-yellow hover:text-ink">
+          Edit profile
+        </button>
+        <div class="grid grid-cols-2 gap-4">
+          <button class="press border-[3px] border-ink bg-paper px-3 py-4 font-display text-xs font-black uppercase leading-tight shadow-brutalSm hover:bg-muted">
+            Switch to parent mode
+          </button>
+          <button class="press flex items-center justify-center gap-2 border-[3px] border-ink bg-paper px-3 py-4 font-display text-xs font-black uppercase leading-tight shadow-brutalSm hover:bg-red hover:text-white">
+            <span class="material-symbols-outlined text-[19px]">restart_alt</span>
+            Reset path
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <nav class="fixed bottom-0 left-1/2 z-50 grid h-20 w-full max-w-[430px] -translate-x-1/2 grid-cols-4 border-t-[3px] border-ink bg-paper md:absolute">
+      <a class="press flex flex-col items-center justify-center gap-1 border-r-[3px] border-ink text-ink hover:bg-ink hover:text-paper" href="#">
+        <span class="material-symbols-outlined text-[22px]">home</span>
+        <span class="font-display text-[0.65rem] font-black uppercase">Home</span>
+      </a>
+      <a class="press flex flex-col items-center justify-center gap-1 border-r-[3px] border-ink text-ink hover:bg-ink hover:text-paper" href="#">
+        <span class="material-symbols-outlined text-[22px]">map</span>
+        <span class="font-display text-[0.65rem] font-black uppercase">Maps</span>
+      </a>
+      <a class="press flex flex-col items-center justify-center gap-1 border-r-[3px] border-ink text-ink hover:bg-ink hover:text-paper" href="#">
+        <span class="material-symbols-outlined text-[22px]">flag</span>
+        <span class="font-display text-[0.65rem] font-black uppercase">Goals</span>
+      </a>
+      <a class="flex flex-col items-center justify-center gap-1 bg-yellow text-ink" href="#">
+        <span class="material-symbols-outlined text-[22px]">person</span>
+        <span class="font-display text-[0.65rem] font-black uppercase">User</span>
+      </a>
+    </nav>
+  </div>
+</body>
+</html>

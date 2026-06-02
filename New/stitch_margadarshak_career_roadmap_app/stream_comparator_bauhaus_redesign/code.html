@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stream Comparator - Margadarshak</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-bright": "#faf7f2",
+                "on-primary-fixed-variant": "#1a1a1a",
+                "on-background": "#1a1a1a",
+                "inverse-primary": "#f5f0e8",
+                "on-error": "#ffffff",
+                "inverse-surface": "#1a1a1a",
+                "primary-fixed-dim": "#e6b800",
+                "on-secondary-container": "#1a1a1a",
+                "on-surface-variant": "#4a4a4a",
+                "primary-container": "#ffcc00",
+                "on-tertiary": "#ffffff",
+                "primary-fixed": "#ffcc00",
+                "surface-tint": "#1a1a1a",
+                "inverse-on-surface": "#f5f0e8",
+                "tertiary-container": "#d6e3ff",
+                "tertiary-fixed": "#d6e3ff",
+                "primary": "#1a1a1a",
+                "on-primary": "#ffffff",
+                "on-secondary-fixed": "#1a1a1a",
+                "surface": "#f5f0e8",
+                "on-secondary-fixed-variant": "#1a1a1a",
+                "outline-variant": "#d0cbc3",
+                "surface-dim": "#d6d1c9",
+                "outline": "#1a1a1a",
+                "surface-container-high": "#e8e3da",
+                "surface-container-highest": "#e2ddd4",
+                "on-tertiary-fixed": "#1a1a1a",
+                "on-primary-fixed": "#1a1a1a",
+                "surface-variant": "#e8e3da",
+                "on-error-container": "#93000a",
+                "secondary": "#e63b2e",
+                "secondary-fixed": "#ffdad6",
+                "on-tertiary-container": "#1a1a1a",
+                "on-secondary": "#1a1a1a",
+                "background": "#f5f0e8",
+                "tertiary": "#0055ff",
+                "surface-container-lowest": "#ffffff",
+                "surface-container": "#eee9e0",
+                "error-container": "#ffdad6",
+                "on-primary-container": "#1a1a1a",
+                "error": "#cc0000",
+                "secondary-fixed-dim": "#ffb3ab",
+                "on-tertiary-fixed-variant": "#1a1a1a",
+                "tertiary-fixed-dim": "#a8c6ff",
+                "surface-container-low": "#f2ede5",
+                "secondary-container": "#ffdad6",
+                "on-surface": "#1a1a1a"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "fontFamily": {
+                "headline": ["Space Grotesk", "sans-serif"],
+                "display": ["Space Grotesk", "sans-serif"],
+                "body": ["Inter", "sans-serif"],
+                "label": ["Space Grotesk", "sans-serif"]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: theme('colors.background'); color: theme('colors.primary'); }
+  .neo-border { border: 4px solid #18181b; }
+  .neo-shadow { box-shadow: 6px 6px 0px 0px #18181b; }
+  .neo-shadow-heavy { box-shadow: 8px 8px 0px 0px #18181b; }
+  .neo-card { background-color: theme('colors.surface-container-lowest'); border: 4px solid #18181b; box-shadow: 6px 6px 0px 0px #18181b; }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body min-h-screen pb-24 flex flex-col md:pb-0 bg-stone-50">
+<!-- TopAppBar Component -->
+<header class="flex justify-between items-center w-full px-4 h-16 bg-stone-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 docked full-width top-0 border-b-4 border-zinc-900 dark:border-zinc-100 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] z-50 sticky">
+<button class="hover:bg-amber-400 dark:hover:bg-amber-500 transition-colors active:translate-x-1 active:translate-y-1 active:shadow-none transition-all p-2 neo-border">
+<span class="material-symbols-outlined block" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-['Space_Grotesk'] font-bold uppercase tracking-tighter text-xl font-black text-zinc-900 dark:text-zinc-100 uppercase text-center flex-1">STREAM COMPARATOR</h1>
+<button class="hover:bg-amber-400 dark:hover:bg-amber-500 transition-colors active:translate-x-1 active:translate-y-1 active:shadow-none transition-all p-2 neo-border bg-amber-400 text-zinc-900">
+<span class="material-symbols-outlined block" data-icon="tune">tune</span>
+</button>
+</header>
+<main class="flex-1 max-w-5xl mx-auto w-full px-4 py-12 space-y-16">
+<!-- Header Section -->
+<section class="text-center space-y-8">
+<h2 class="font-headline text-4xl md:text-6xl font-black uppercase tracking-tight text-zinc-900">HEAD TO HEAD</h2>
+<div class="flex flex-col md:flex-row justify-center items-stretch gap-6 md:gap-10">
+<div class="flex-1 bg-blue-600 text-white neo-border neo-shadow-heavy p-8 relative overflow-hidden group transition-transform hover:-translate-y-1">
+<div class="absolute -right-4 -bottom-4 opacity-20 transform rotate-12 transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-[10rem]" data-icon="science">science</span>
+</div>
+<h3 class="font-headline text-3xl font-black uppercase relative z-10">SCIENCE (PCM)</h3>
+<p class="font-body text-base mt-2 font-bold relative z-10 tracking-widest uppercase">THE ANALYTICAL PATH</p>
+</div>
+<div class="flex items-center justify-center -my-6 md:my-0 z-10 relative">
+<div class="bg-amber-400 text-zinc-900 rounded-full p-4 neo-border neo-shadow font-headline font-black text-2xl md:text-3xl rotate-12">VS</div>
+</div>
+<div class="flex-1 bg-red-500 text-white neo-border neo-shadow-heavy p-8 relative overflow-hidden group transition-transform hover:-translate-y-1">
+<div class="absolute -right-4 -bottom-4 opacity-20 transform -rotate-12 transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-[10rem]" data-icon="monitoring">monitoring</span>
+</div>
+<h3 class="font-headline text-3xl font-black uppercase relative z-10">COMMERCE</h3>
+<p class="font-body text-base mt-2 font-bold relative z-10 tracking-widest uppercase">THE BUSINESS PATH</p>
+</div>
+</div>
+</section>
+<!-- Recommendation Card -->
+<section>
+<div class="bg-amber-400 neo-border neo-shadow-heavy p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+<div class="bg-zinc-900 text-white p-4 rounded-full flex-shrink-0">
+<span class="material-symbols-outlined text-5xl block" data-icon="verified">verified</span>
+</div>
+<div>
+<h3 class="font-headline text-2xl md:text-3xl font-black uppercase mb-3 text-zinc-900">BEST FOR YOU: SCIENCE (PCM)</h3>
+<p class="font-body font-bold text-lg md:text-xl text-zinc-900">Based on your 92nd percentile in Math and strong analytical aptitude scores.</p>
+</div>
+</div>
+</section>
+<!-- Comparison Matrix -->
+<section class="space-y-10">
+<h3 class="font-headline text-3xl font-black border-b-8 border-zinc-900 pb-2 inline-block uppercase">THE BREAKDOWN</h3>
+<div class="grid gap-8">
+<!-- Eligibility -->
+<div class="neo-card p-0 flex flex-col">
+<div class="bg-stone-200 p-4 border-b-4 border-zinc-900 flex items-center justify-center">
+<h4 class="font-headline font-black uppercase text-xl text-center flex items-center gap-3 text-zinc-900">
+<span class="material-symbols-outlined block text-3xl" data-icon="fact_check">fact_check</span>
+              Eligibility
+            </h4>
+</div>
+<div class="flex flex-col sm:flex-row">
+<div class="flex-1 p-8 border-b-4 sm:border-b-0 sm:border-r-4 border-zinc-900 border-dashed">
+<div class="inline-block bg-blue-600 text-white text-xs font-black px-3 py-1 mb-4 uppercase tracking-widest border-2 border-zinc-900">Science</div>
+<div class="font-headline text-2xl font-black text-zinc-900">Class 10th (90%+)</div>
+<div class="font-body font-bold text-zinc-700 mt-2">Strong foundation in Math &amp; Science required.</div>
+</div>
+<div class="flex-1 p-8">
+<div class="inline-block bg-red-500 text-white text-xs font-black px-3 py-1 mb-4 uppercase tracking-widest border-2 border-zinc-900">Commerce</div>
+<div class="font-headline text-2xl font-black text-zinc-900">Class 10th (60%+)</div>
+<div class="font-body font-bold text-zinc-700 mt-2">Basic math proficiency recommended.</div>
+</div>
+</div>
+</div>
+<!-- Key Subjects -->
+<div class="neo-card p-0 flex flex-col">
+<div class="bg-stone-200 p-4 border-b-4 border-zinc-900 flex items-center justify-center">
+<h4 class="font-headline font-black uppercase text-xl text-center flex items-center gap-3 text-zinc-900">
+<span class="material-symbols-outlined block text-3xl" data-icon="book">book</span>
+              Key Subjects
+            </h4>
+</div>
+<div class="flex flex-col sm:flex-row">
+<div class="flex-1 p-8 border-b-4 sm:border-b-0 sm:border-r-4 border-zinc-900 border-dashed">
+<ul class="space-y-4 font-body font-bold text-lg text-zinc-900">
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-blue-600 font-black">check_circle</span> Physics</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-blue-600 font-black">check_circle</span> Chemistry</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-blue-600 font-black">check_circle</span> Mathematics</li>
+</ul>
+</div>
+<div class="flex-1 p-8">
+<ul class="space-y-4 font-body font-bold text-lg text-zinc-900">
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-red-500 font-black">check_circle</span> Accountancy</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-red-500 font-black">check_circle</span> Economics</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-red-500 font-black">check_circle</span> Business Studies</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Cost -->
+<div class="neo-card p-0 flex flex-col">
+<div class="bg-stone-200 p-4 border-b-4 border-zinc-900 flex items-center justify-center">
+<h4 class="font-headline font-black uppercase text-xl text-center flex items-center gap-3 text-zinc-900">
+<span class="material-symbols-outlined block text-3xl" data-icon="payments">payments</span>
+              Financial Cost
+            </h4>
+</div>
+<div class="flex flex-col sm:flex-row">
+<div class="flex-1 p-8 border-b-4 sm:border-b-0 sm:border-r-4 border-zinc-900 border-dashed">
+<div class="font-headline text-4xl font-black text-red-600 mb-2">HIGH</div>
+<div class="font-body text-base font-bold text-zinc-700">Coaching + Engineering Fees</div>
+</div>
+<div class="flex-1 p-8">
+<div class="font-headline text-4xl font-black text-amber-500 mb-2">LOW-MED</div>
+<div class="font-body text-base font-bold text-zinc-700">Standard Tuition + B.Com Fees</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Buttons -->
+<section class="flex flex-col sm:flex-row gap-6 justify-center pt-10 border-t-8 border-zinc-900">
+<button class="w-full bg-stone-200 text-zinc-900 neo-border py-5 px-8 font-headline font-black text-lg uppercase hover:bg-zinc-900 hover:text-white transition-all active:translate-y-2 active:translate-x-2 active:shadow-none neo-shadow">
+        SAVE COMPARISON
+      </button>
+<button class="w-full bg-blue-600 text-white neo-border py-5 px-8 font-headline font-black text-lg uppercase hover:bg-zinc-900 transition-all active:translate-y-2 active:translate-x-2 active:shadow-none neo-shadow">
+        VIEW ROADMAP
+      </button>
+<button class="w-full bg-amber-400 text-zinc-900 neo-border py-5 px-8 font-headline font-black text-lg uppercase hover:bg-zinc-900 hover:text-white transition-all active:translate-y-2 active:translate-x-2 active:shadow-none neo-shadow flex items-center justify-center gap-3">
+<span class="material-symbols-outlined text-2xl" data-icon="forum">forum</span>
+        ASK MENTOR
+      </button>
+</section>
+</main>
+<!-- BottomNavBar Component -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center bg-stone-100 dark:bg-zinc-900 py-2 border-t-4 border-zinc-900 dark:border-zinc-100 md:hidden bg-stone-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 fixed bottom-0 w-full border-t-4 border-zinc-900 dark:border-zinc-100 border-t-4 border-zinc-900 dark:border-zinc-100 no-shadow">
+<a class="flex flex-col items-center justify-center text-zinc-900 dark:text-zinc-100 p-2 opacity-80 hover:bg-blue-600 hover:text-white transition-colors active:scale-95 transition-transform flex-1" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-['Space_Grotesk'] text-[12px] font-black uppercase">HOME</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-900 dark:text-zinc-100 p-2 opacity-80 hover:bg-blue-600 hover:text-white transition-colors active:scale-95 transition-transform flex-1" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="school">school</span>
+<span class="font-['Space_Grotesk'] text-[12px] font-black uppercase">STREAMS</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-amber-400 dark:bg-amber-400 text-zinc-900 p-2 border-2 border-zinc-900 hover:bg-blue-600 hover:text-white transition-colors active:scale-95 transition-transform flex-1" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="compare_arrows" data-weight="fill" style="font-variation-settings: 'FILL' 1;">compare_arrows</span>
+<span class="font-['Space_Grotesk'] text-[12px] font-black uppercase">COMPARE</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-900 dark:text-zinc-100 p-2 opacity-80 hover:bg-blue-600 hover:text-white transition-colors active:scale-95 transition-transform flex-1" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="account_circle">account_circle</span>
+<span class="font-['Space_Grotesk'] text-[12px] font-black uppercase">PROFILE</span>
+</a>
+</nav>
+</body></html>

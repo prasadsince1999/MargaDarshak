@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Subject Aspect Simulator - Margadarshak</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-error-container": "#93000a",
+                "inverse-primary": "#f5f0e8",
+                "surface-container-lowest": "#ffffff",
+                "tertiary": "#0055ff",
+                "surface-dim": "#d6d1c9",
+                "on-primary-container": "#1a1a1a",
+                "on-tertiary-fixed": "#1a1a1a",
+                "on-surface": "#1a1a1a",
+                "on-primary": "#ffffff",
+                "surface-container-highest": "#e2ddd4",
+                "tertiary-fixed-dim": "#a8c6ff",
+                "on-primary-fixed-variant": "#1a1a1a",
+                "surface-variant": "#e8e3da",
+                "secondary-fixed": "#ffdad6",
+                "on-surface-variant": "#4a4a4a",
+                "surface-container-low": "#f2ede5",
+                "surface": "#f5f0e8",
+                "on-secondary": "#1a1a1a",
+                "secondary-fixed-dim": "#ffb3ab",
+                "on-tertiary-container": "#1a1a1a",
+                "outline": "#1a1a1a",
+                "on-secondary-fixed": "#1a1a1a",
+                "surface-container": "#eee9e0",
+                "on-background": "#1a1a1a",
+                "surface-container-high": "#e8e3da",
+                "primary-fixed": "#ffcc00",
+                "error-container": "#ffdad6",
+                "primary": "#1a1a1a",
+                "primary-container": "#ffcc00",
+                "secondary-container": "#ffdad6",
+                "outline-variant": "#d0cbc3",
+                "secondary": "#e63b2e",
+                "inverse-surface": "#1a1a1a",
+                "on-secondary-container": "#1a1a1a",
+                "surface-bright": "#faf7f2",
+                "on-error": "#ffffff",
+                "on-tertiary-fixed-variant": "#1a1a1a",
+                "inverse-on-surface": "#f5f0e8",
+                "background": "#f5f0e8",
+                "primary-fixed-dim": "#e6b800",
+                "surface-tint": "#1a1a1a",
+                "on-primary-fixed": "#1a1a1a",
+                "error": "#cc0000",
+                "on-secondary-fixed-variant": "#1a1a1a",
+                "tertiary-fixed": "#d6e3ff",
+                "on-tertiary": "#ffffff",
+                "tertiary-container": "#d6e3ff"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "fontFamily": {
+                "headline": ["Space Grotesk"],
+                "display": ["Space Grotesk"],
+                "body": ["Inter"],
+                "label": ["Space Grotesk"]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body {
+    background-color: theme('colors.background');
+    color: theme('colors.on-background');
+    font-family: theme('fontFamily.body');
+  }
+  h1, h2, h3, h4, h5, h6, .display-font {
+    font-family: theme('fontFamily.display');
+  }
+  .neo-shadow {
+    box-shadow: 4px 4px 0px 0px theme('colors.primary');
+  }
+  .neo-shadow-hover:hover {
+    box-shadow: 6px 6px 0px 0px theme('colors.primary');
+    transform: translate(-2px, -2px);
+    transition: all 0.2s ease;
+  }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-20 bg-[#f5f0e8] dark:bg-stone-900 border-b-4 border-[#1a1a1a] dark:border-white shadow-[4px_4px_0px_0px_#1a1a1a] dark:shadow-[4px_4px_0px_0px_#ffffff] text-[#1a1a1a] dark:text-stone-100 font-['Space_Grotesk'] font-bold uppercase tracking-tighter transition-all">
+<button class="hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-100 p-2 active:translate-x-1 active:translate-y-1 active:shadow-none">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+<div class="text-3xl font-black italic tracking-tighter text-[#1a1a1a] dark:text-stone-100">
+    GUIDANCE.AI
+  </div>
+<button class="hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-100 p-2 active:translate-x-1 active:translate-y-1 active:shadow-none">
+<span class="material-symbols-outlined text-3xl">account_circle</span>
+</button>
+</header>
+<main class="mt-28 px-4 md:px-8 max-w-7xl mx-auto space-y-12">
+<!-- Header Title -->
+<section class="border-b-4 border-primary pb-6 mb-8">
+<h1 class="display-font text-5xl md:text-7xl font-black uppercase tracking-tighter">Subject <span class="text-tertiary">Simulator</span></h1>
+<p class="font-body text-xl font-bold mt-4 uppercase">Toggle subjects to see how they impact your future paths.</p>
+</section>
+<!-- Subject Selection -->
+<section class="mb-12">
+<h2 class="display-font text-3xl font-bold mb-6 uppercase border-l-8 border-primary-container pl-4">Your Arsenal</h2>
+<div class="flex flex-wrap gap-4">
+<!-- Active Chip -->
+<button class="display-font font-bold text-xl uppercase border-4 border-primary bg-primary-container text-on-primary-container px-6 py-3 neo-shadow-hover hover:bg-primary-container hover:text-on-primary-container">
+        MATHEMATICS
+      </button>
+<button class="display-font font-bold text-xl uppercase border-4 border-primary bg-background text-on-background px-6 py-3 neo-shadow-hover hover:bg-primary-container hover:text-on-primary-container">
+        PHYSICS
+      </button>
+<button class="display-font font-bold text-xl uppercase border-4 border-primary bg-primary-container text-on-primary-container px-6 py-3 neo-shadow-hover hover:bg-primary-container hover:text-on-primary-container">
+        CHEMISTRY
+      </button>
+<button class="display-font font-bold text-xl uppercase border-4 border-primary bg-background text-on-background px-6 py-3 neo-shadow-hover hover:bg-primary-container hover:text-on-primary-container">
+        BIOLOGY
+      </button>
+<button class="display-font font-bold text-xl uppercase border-4 border-primary bg-background text-on-background px-6 py-3 neo-shadow-hover hover:bg-primary-container hover:text-on-primary-container">
+        COMPUTER SCIENCE
+      </button>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- WHAT OPENS -->
+<section>
+<div class="border-4 border-primary bg-background neo-shadow h-full flex flex-col">
+<div class="bg-[#00d084] border-b-4 border-primary p-4 flex items-center justify-between">
+<h2 class="display-font text-2xl font-black uppercase tracking-tight text-primary">What Opens</h2>
+<span class="material-symbols-outlined text-4xl text-primary font-bold">lock_open_right</span>
+</div>
+<div class="p-6 flex-grow space-y-4 bg-white">
+<div class="border-2 border-primary p-4 bg-surface-container-low hover:bg-[#00d084] hover:text-primary transition-colors border-l-8 border-l-[#00d084]">
+<h3 class="display-font font-bold text-xl uppercase">Engineering &amp; Tech</h3>
+<p class="font-body text-sm mt-2 font-semibold">Access to top-tier B.Tech/B.E. programs globally.</p>
+</div>
+<div class="border-2 border-primary p-4 bg-surface-container-low hover:bg-[#00d084] hover:text-primary transition-colors border-l-8 border-l-[#00d084]">
+<h3 class="display-font font-bold text-xl uppercase">Pure Sciences</h3>
+<p class="font-body text-sm mt-2 font-semibold">B.Sc. in Mathematics, Chemistry, and related research fields.</p>
+</div>
+<div class="border-2 border-primary p-4 bg-surface-container-low hover:bg-[#00d084] hover:text-primary transition-colors border-l-8 border-l-[#00d084]">
+<h3 class="display-font font-bold text-xl uppercase">Architecture</h3>
+<p class="font-body text-sm mt-2 font-semibold">B.Arch programs requiring mandatory Math.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- WHAT CLOSES -->
+<section>
+<div class="border-4 border-primary bg-background neo-shadow h-full flex flex-col">
+<div class="bg-secondary border-b-4 border-primary p-4 flex items-center justify-between">
+<h2 class="display-font text-2xl font-black uppercase tracking-tight text-white">What Closes</h2>
+<span class="material-symbols-outlined text-4xl text-white font-bold">lock</span>
+</div>
+<div class="p-6 flex-grow space-y-4 bg-white">
+<div class="border-2 border-primary p-4 bg-surface-container-low hover:bg-secondary hover:text-white transition-colors border-l-8 border-l-secondary">
+<h3 class="display-font font-bold text-xl uppercase">Medicine &amp; Surgery</h3>
+<p class="font-body text-sm mt-2 font-semibold">MBBS, BDS, and related medical fields are restricted without Biology.</p>
+</div>
+<div class="border-2 border-primary p-4 bg-surface-container-low hover:bg-secondary hover:text-white transition-colors border-l-8 border-l-secondary">
+<h3 class="display-font font-bold text-xl uppercase">Biotechnology (Core)</h3>
+<p class="font-body text-sm mt-2 font-semibold">Certain core bio-research paths are limited without formal Biology background.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- EXAM IMPACT -->
+<section class="mt-12">
+<h2 class="display-font text-3xl font-bold mb-6 uppercase border-l-8 border-tertiary pl-4">Exam Impact</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="border-4 border-primary bg-tertiary text-white p-6 neo-shadow-hover">
+<div class="flex justify-between items-start mb-4">
+<h3 class="display-font text-3xl font-black uppercase">JEE MAIN</h3>
+<span class="material-symbols-outlined text-4xl">check_circle</span>
+</div>
+<p class="font-body font-bold">Fully Eligible. Math, Physics, and Chemistry combination unlocks all engineering entrances.</p>
+</div>
+<div class="border-4 border-primary bg-surface-container-highest text-on-surface p-6 neo-shadow-hover">
+<div class="flex justify-between items-start mb-4">
+<h3 class="display-font text-3xl font-black uppercase">NEET</h3>
+<span class="material-symbols-outlined text-4xl text-secondary">cancel</span>
+</div>
+<p class="font-body font-bold">Ineligible. Biology is required as a core subject for medical entrances.</p>
+</div>
+<div class="border-4 border-primary bg-tertiary text-white p-6 neo-shadow-hover">
+<div class="flex justify-between items-start mb-4">
+<h3 class="display-font text-3xl font-black uppercase">BITSAT</h3>
+<span class="material-symbols-outlined text-4xl">check_circle</span>
+</div>
+<p class="font-body font-bold">Fully Eligible. PCM combination satisfies all criteria for BITS admissions.</p>
+</div>
+</div>
+</section>
+<!-- SIMULATOR EXPLANATION -->
+<section class="mt-12 mb-8">
+<div class="border-4 border-primary bg-primary-container p-8 neo-shadow relative overflow-hidden">
+<!-- Decorative element -->
+<div class="absolute -right-10 -top-10 opacity-20 transform rotate-12">
+<span class="material-symbols-outlined text-9xl">info</span>
+</div>
+<h2 class="display-font text-3xl font-black uppercase mb-4 text-primary relative z-10">The Verdict</h2>
+<p class="font-body text-xl font-bold max-w-3xl leading-relaxed relative z-10 text-primary">
+        By selecting <span class="bg-primary text-white px-2 py-1 uppercase">Math</span> and <span class="bg-primary text-white px-2 py-1 uppercase">Chemistry</span> while dropping <span class="bg-secondary text-white px-2 py-1 uppercase">Biology</span>, you are strongly pivoting towards Engineering, Architecture, and Pure Sciences. You are closing doors to traditional Medicine and heavy biological research fields. This is a high-reward path for technical and analytical careers.
+      </p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 bg-[#f5f0e8] dark:bg-stone-900 px-4 border-t-4 border-[#1a1a1a] dark:border-white">
+<button class="bg-[#ffcc00] text-[#1a1a1a] border-2 border-[#1a1a1a] -mt-2 mb-2 p-2 flex flex-col items-center justify-center w-20 hover:bg-[#0055ff] hover:text-white active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase mt-1">SIMULATE</span>
+</button>
+<button class="text-[#1a1a1a] dark:text-stone-400 p-2 flex flex-col items-center justify-center w-20 hover:bg-[#0055ff] hover:text-white active:scale-95 transition-transform">
+<span class="material-symbols-outlined">work</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase mt-1">CAREERS</span>
+</button>
+<button class="text-[#1a1a1a] dark:text-stone-400 p-2 flex flex-col items-center justify-center w-20 hover:bg-[#0055ff] hover:text-white active:scale-95 transition-transform">
+<span class="material-symbols-outlined">school</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase mt-1">EXAMS</span>
+</button>
+<button class="text-[#1a1a1a] dark:text-stone-400 p-2 flex flex-col items-center justify-center w-20 hover:bg-[#0055ff] hover:text-white active:scale-95 transition-transform">
+<span class="material-symbols-outlined">flag</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase mt-1">GOALS</span>
+</button>
+</nav>
+</body></html>

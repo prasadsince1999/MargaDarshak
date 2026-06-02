@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Margadarshak - Select Stage</title>
+<!-- Google Fonts: Space Grotesk & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#eee9e0",
+                    "surface-container-low": "#f2ede5",
+                    "surface-variant": "#e8e3da",
+                    "inverse-on-surface": "#f5f0e8",
+                    "on-surface-variant": "#4a4a4a",
+                    "tertiary-fixed": "#d6e3ff",
+                    "surface-container-highest": "#e2ddd4",
+                    "secondary": "#e63b2e",
+                    "primary-fixed": "#ffcc00",
+                    "primary-fixed-dim": "#e6b800",
+                    "on-secondary": "#1a1a1a",
+                    "tertiary-fixed-dim": "#a8c6ff",
+                    "secondary-fixed-dim": "#ffb3ab",
+                    "on-background": "#1a1a1a",
+                    "outline-variant": "#d0cbc3",
+                    "on-tertiary-container": "#1a1a1a",
+                    "on-surface": "#1a1a1a",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#ffdad6",
+                    "primary": "#1a1a1a",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#1a1a1a",
+                    "on-primary-container": "#1a1a1a",
+                    "inverse-surface": "#1a1a1a",
+                    "tertiary-container": "#d6e3ff",
+                    "primary-container": "#ffcc00",
+                    "on-primary-fixed-variant": "#1a1a1a",
+                    "surface-tint": "#1a1a1a",
+                    "on-secondary-fixed": "#1a1a1a",
+                    "error": "#cc0000",
+                    "inverse-primary": "#f5f0e8",
+                    "outline": "#1a1a1a",
+                    "on-tertiary-fixed": "#1a1a1a",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#e8e3da",
+                    "on-secondary-container": "#1a1a1a",
+                    "surface-dim": "#d6d1c9",
+                    "on-primary-fixed": "#1a1a1a",
+                    "tertiary": "#0055ff",
+                    "on-error-container": "#93000a",
+                    "surface-bright": "#faf7f2",
+                    "background": "#f5f0e8",
+                    "surface": "#f5f0e8",
+                    "secondary-fixed": "#ffdad6",
+                    "on-secondary-fixed-variant": "#1a1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk", "sans-serif"],
+                    "display": ["Space Grotesk", "sans-serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Space Grotesk", "sans-serif"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { background-color: #f5f0e8; }
+        /* Neo-brutalist custom utilities */
+        .brutal-shadow { box-shadow: 6px 6px 0px 0px rgba(26,26,26,1); }
+        .brutal-shadow-lg { box-shadow: 10px 10px 0px 0px rgba(26,26,26,1); }
+        .brutal-shadow-hover:hover { box-shadow: 14px 14px 0px 0px rgba(26,26,26,1); transform: translate(-4px, -4px); }
+        .brutal-active:active { box-shadow: 0px 0px 0px 0px rgba(26,26,26,1); transform: translate(10px, 10px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background font-body min-h-screen flex flex-col pb-24 md:pb-0 overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-6 py-4 bg-[#f5f0e8] dark:bg-stone-900 border-b-4 border-[#1a1a1a] shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] z-40 sticky top-0">
+<button aria-label="Go Back" class="text-[#1a1a1a] dark:text-stone-100 hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-100 active:translate-x-1 active:translate-y-1 active:shadow-none p-2 border-2 border-transparent flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">arrow_back</span>
+</button>
+<h1 class="font-['Space_Grotesk'] font-black text-[#1a1a1a] dark:text-stone-100 italic font-['Space_Grotesk'] font-black uppercase tracking-tighter text-3xl">MARGADARSHAK</h1>
+<button class="font-['Space_Grotesk'] font-bold text-sm uppercase text-[#1a1a1a] dark:text-stone-100 hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-100 active:translate-x-1 active:translate-y-1 active:shadow-none px-4 py-2 border-2 border-primary brutal-shadow bg-surface-container-lowest">
+            SKIP
+        </button>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow w-full max-w-4xl mx-auto px-6 py-12 flex flex-col gap-12 relative z-10">
+<!-- Explanatory Header Section -->
+<section class="flex flex-col gap-6 items-start">
+<div class="inline-block bg-primary text-on-primary px-4 py-1 border-[3px] border-primary brutal-shadow transform -rotate-2">
+<span class="font-headline font-bold uppercase tracking-widest text-sm">Step 01</span>
+</div>
+<h2 class="font-display font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tighter text-primary break-words max-w-full">
+                SELECT<br/>YOUR STAGE
+            </h2>
+<!-- Anxiety Reduction Box -->
+<div class="bg-surface-container-lowest border-[4px] border-primary brutal-shadow p-6 md:p-8 relative mt-4">
+<!-- Decorative Pin -->
+<div class="absolute -top-4 -right-4 w-8 h-8 bg-secondary border-[3px] border-primary rounded-full brutal-shadow flex items-center justify-center z-10">
+<div class="w-2 h-2 bg-primary rounded-full"></div>
+</div>
+<p class="font-body text-xl md:text-2xl font-medium leading-relaxed text-on-surface">
+                    Don't sweat the details. Pick the stage that feels right. <span class="bg-primary-container font-bold px-2 inline-block -rotate-1 border border-primary">There are no wrong choices</span> here. You can easily switch tracks anytime as you explore.
+                </p>
+</div>
+</section>
+<!-- Stage Selection Buttons -->
+<section class="flex flex-col gap-8 w-full mt-8">
+<!-- Option: After 10th -->
+<button class="w-full text-left p-8 md:p-10 border-[4px] border-primary brutal-shadow-lg brutal-shadow-hover brutal-active transition-all duration-200 group flex justify-between items-center bg-primary-container text-on-primary-container relative overflow-hidden">
+<div class="flex flex-col gap-2 relative z-10 w-3/4">
+<span class="font-headline font-black text-4xl md:text-5xl uppercase tracking-tight">AFTER 10TH</span>
+<span class="font-body text-lg md:text-xl font-bold opacity-90">Exploring streams and foundations.</span>
+</div>
+<div class="bg-surface-container-lowest border-[3px] border-primary w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-none group-hover:bg-primary group-hover:text-on-primary transition-colors brutal-shadow relative z-10">
+<span class="material-symbols-outlined text-4xl md:text-5xl" style="font-variation-settings: 'FILL' 1;">school</span>
+</div>
+<!-- Decorative background shape -->
+<div class="absolute -bottom-10 -right-10 w-64 h-64 bg-primary opacity-5 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+</button>
+<!-- Option: After 12th -->
+<button class="w-full text-left p-8 md:p-10 border-[4px] border-primary brutal-shadow-lg brutal-shadow-hover brutal-active transition-all duration-200 group flex justify-between items-center bg-tertiary text-on-tertiary relative overflow-hidden">
+<div class="flex flex-col gap-2 relative z-10 w-3/4">
+<span class="font-headline font-black text-4xl md:text-5xl uppercase tracking-tight">AFTER 12TH</span>
+<span class="font-body text-lg md:text-xl font-medium opacity-90">Deciding degrees and colleges.</span>
+</div>
+<div class="bg-surface-container-lowest border-[3px] border-primary w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-none group-hover:bg-primary group-hover:text-on-primary text-primary transition-colors brutal-shadow relative z-10">
+<span class="material-symbols-outlined text-4xl md:text-5xl" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+</button>
+<!-- Option: Undergraduate -->
+<button class="w-full text-left p-8 md:p-10 border-[4px] border-primary brutal-shadow-lg brutal-shadow-hover brutal-active transition-all duration-200 group flex justify-between items-center bg-secondary text-on-error relative overflow-hidden">
+<div class="flex flex-col gap-2 relative z-10 w-3/4">
+<span class="font-headline font-black text-4xl md:text-5xl uppercase tracking-tight">UNDERGRADUATE</span>
+<span class="font-body text-lg md:text-xl font-medium opacity-90">Looking for masters or early career.</span>
+</div>
+<div class="bg-surface-container-lowest border-[3px] border-primary w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-none group-hover:bg-primary group-hover:text-on-primary text-primary transition-colors brutal-shadow relative z-10">
+<span class="material-symbols-outlined text-4xl md:text-5xl" style="font-variation-settings: 'FILL' 1;">work</span>
+</div>
+</button>
+<!-- Option: Professional -->
+<button class="w-full text-left p-8 md:p-10 border-[4px] border-primary brutal-shadow-lg brutal-shadow-hover brutal-active transition-all duration-200 group flex justify-between items-center bg-surface-container-lowest text-on-surface relative overflow-hidden">
+<div class="flex flex-col gap-2 relative z-10 w-3/4">
+<span class="font-headline font-black text-4xl md:text-5xl uppercase tracking-tight">PROFESSIONAL</span>
+<span class="font-body text-lg md:text-xl font-medium opacity-90 text-on-surface-variant">Upskilling and career transitions.</span>
+</div>
+<div class="bg-primary-container border-[3px] border-primary w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-none group-hover:bg-primary group-hover:text-on-primary text-primary transition-colors brutal-shadow relative z-10">
+<span class="material-symbols-outlined text-4xl md:text-5xl" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+</div>
+</button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-stretch h-20 bg-[#f5f0e8] dark:bg-stone-900 border-t-4 border-[#1a1a1a] md:hidden">
+<!-- GUIDE (Inactive) -->
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] dark:text-stone-400 opacity-60 hover:bg-[#0055ff] hover:text-white active:bg-[#e63b2e] w-1/4 transition-colors" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Space_Grotesk'] font-bold text-xs uppercase mt-1">GUIDE</span>
+</a>
+<!-- STAGES (Active) -->
+<a class="flex flex-col items-center justify-center bg-[#ffcc00] text-[#1a1a1a] border-x-2 border-[#1a1a1a] h-full px-2 hover:bg-[#0055ff] hover:text-white active:bg-[#e63b2e] w-1/4 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">layers</span>
+<span class="font-['Space_Grotesk'] font-bold text-xs uppercase mt-1">STAGES</span>
+</a>
+<!-- INTERESTS (Inactive) -->
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] dark:text-stone-400 opacity-60 hover:bg-[#0055ff] hover:text-white active:bg-[#e63b2e] w-1/4 transition-colors" href="#">
+<span class="material-symbols-outlined">interests</span>
+<span class="font-['Space_Grotesk'] font-bold text-xs uppercase mt-1">INTERESTS</span>
+</a>
+<!-- PROFILE (Inactive) -->
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] dark:text-stone-400 opacity-60 hover:bg-[#0055ff] hover:text-white active:bg-[#e63b2e] w-1/4 transition-colors" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-['Space_Grotesk'] font-bold text-xs uppercase mt-1">PROFILE</span>
+</a>
+</nav>
+</body></html>

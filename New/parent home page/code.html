@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Margadarshak - Parent Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-variant": "#e8e3da",
+                        "surface-dim": "#d6d1c9",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eee9e0",
+                        "primary-container": "#ffcc00",
+                        "background": "#f5f0e8",
+                        "surface-bright": "#faf7f2",
+                        "on-tertiary-fixed": "#1a1a1a",
+                        "secondary-fixed-dim": "#ffb3ab",
+                        "on-error": "#ffffff",
+                        "secondary": "#e63b2e",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#1a1a1a",
+                        "on-primary-fixed": "#1a1a1a",
+                        "on-secondary-fixed-variant": "#1a1a1a",
+                        "outline": "#1a1a1a",
+                        "inverse-surface": "#1a1a1a",
+                        "inverse-on-surface": "#f5f0e8",
+                        "on-tertiary-container": "#1a1a1a",
+                        "tertiary-fixed-dim": "#a8c6ff",
+                        "on-secondary-container": "#1a1a1a",
+                        "secondary-container": "#ffdad6",
+                        "on-surface": "#1a1a1a",
+                        "surface-container-highest": "#e2ddd4",
+                        "on-primary-fixed-variant": "#1a1a1a",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#1a1a1a",
+                        "surface-container-high": "#e8e3da",
+                        "surface-container-low": "#f2ede5",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#cc0000",
+                        "tertiary-fixed": "#d6e3ff",
+                        "primary-fixed-dim": "#e6b800",
+                        "primary": "#1a1a1a",
+                        "outline-variant": "#d0cbc3",
+                        "on-surface-variant": "#4a4a4a",
+                        "on-background": "#1a1a1a",
+                        "tertiary-container": "#d6e3ff",
+                        "surface": "#f5f0e8",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#1a1a1a",
+                        "secondary-fixed": "#ffdad6",
+                        "primary-fixed": "#ffcc00",
+                        "on-secondary": "#1a1a1a",
+                        "tertiary": "#0055ff",
+                        "on-tertiary-fixed-variant": "#1a1a1a",
+                        "inverse-primary": "#f5f0e8"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0rem",
+                        "lg": "0rem",
+                        "xl": "0rem",
+                        "full": "0rem"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "display": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .brutal-shadow {
+                box-shadow: 6px 6px 0px 0px rgba(26,26,26,1);
+            }
+            .brutal-shadow-sm {
+                box-shadow: 4px 4px 0px 0px rgba(26,26,26,1);
+            }
+            .brutal-shadow-red {
+                box-shadow: 6px 6px 0px 0px rgba(230,59,46,1);
+            }
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-primary font-body min-h-screen flex flex-col pt-20 pb-24 md:pb-0">
+<header class="fixed top-0 left-0 w-full z-50 bg-[#f5f0e8] dark:bg-zinc-900 border-b-4 border-[#1a1a1a] dark:border-zinc-100 flex justify-between items-center px-6 h-20">
+<button class="text-[#1a1a1a] dark:text-zinc-100 hover:bg-[#0055ff] hover:text-white transition-none active:translate-x-1 active:translate-y-1 p-2 border-2 border-transparent hover:border-[#1a1a1a] md:hidden">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="text-2xl font-black text-[#1a1a1a] dark:text-zinc-100 italic font-['Space_Grotesk'] uppercase tracking-tighter">
+            MARGADARSHAK
+        </div>
+<nav class="hidden md:flex gap-8 items-center font-['Space_Grotesk'] font-bold uppercase tracking-tighter">
+<a class="text-[#ffcc00] dark:text-[#ffcc00] border-b-4 border-[#ffcc00] pb-1" href="#">Home</a>
+<a class="text-[#1a1a1a] dark:text-zinc-400 hover:bg-[#0055ff] hover:text-white px-2 py-1 transition-none border-2 border-transparent hover:border-[#1a1a1a]" href="#">Mentors</a>
+<a class="text-[#1a1a1a] dark:text-zinc-400 hover:bg-[#0055ff] hover:text-white px-2 py-1 transition-none border-2 border-transparent hover:border-[#1a1a1a]" href="#">Guidance</a>
+<a class="text-[#1a1a1a] dark:text-zinc-400 hover:bg-[#0055ff] hover:text-white px-2 py-1 transition-none border-2 border-transparent hover:border-[#1a1a1a]" href="#">Exams</a>
+</nav>
+<button class="text-[#1a1a1a] dark:text-zinc-100 hover:bg-[#0055ff] hover:text-white transition-none active:translate-x-1 active:translate-y-1 p-2 border-2 border-transparent hover:border-[#1a1a1a]">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</header>
+<main class="flex-grow w-full max-w-7xl mx-auto p-4 md:p-8 flex flex-col gap-12">
+<section class="flex flex-col gap-6 mt-4">
+<h1 class="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter text-primary border-b-8 border-primary pb-2 inline-block self-start">
+                Rahul's Progress
+            </h1>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-primary-container border-4 border-outline brutal-shadow p-6 flex flex-col justify-between h-48 hover:-translate-y-1 hover:-translate-x-1 transition-transform">
+<div class="flex justify-between items-start">
+<h3 class="font-headline text-2xl font-bold uppercase">Attendance</h3>
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+</div>
+<div>
+<p class="font-headline text-5xl font-black">94%</p>
+<p class="font-body font-bold mt-1">ON TRACK</p>
+</div>
+</div>
+<div class="bg-surface border-4 border-outline brutal-shadow p-6 flex flex-col justify-between h-48 hover:-translate-y-1 hover:-translate-x-1 transition-transform">
+<div class="flex justify-between items-start">
+<h3 class="font-headline text-2xl font-bold uppercase">Current Grade</h3>
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+</div>
+<div>
+<p class="font-headline text-5xl font-black">A-</p>
+<p class="font-body font-bold mt-1 text-tertiary uppercase">Top 15% of Class</p>
+</div>
+</div>
+<div class="bg-tertiary text-on-primary border-4 border-outline brutal-shadow p-6 flex flex-col justify-between h-48 hover:-translate-y-1 hover:-translate-x-1 transition-transform">
+<div class="flex justify-between items-start">
+<h3 class="font-headline text-2xl font-bold uppercase">Next Milestone</h3>
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">flag</span>
+</div>
+<div>
+<p class="font-headline text-3xl font-black leading-tight">Science Fair Project</p>
+<p class="font-body font-bold mt-2 uppercase text-primary-container">Due in 12 Days</p>
+</div>
+</div>
+</div>
+</section>
+<section class="flex flex-col gap-6">
+<div class="flex items-center gap-4 border-b-4 border-outline pb-2">
+<span class="material-symbols-outlined text-4xl text-secondary" style="font-variation-settings: 'FILL' 1;">warning</span>
+<h2 class="font-headline text-4xl font-black uppercase tracking-tighter text-primary">
+                    Action Required
+                </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface border-4 border-secondary brutal-shadow-red p-6 flex flex-col gap-4">
+<div class="flex justify-between items-start border-b-2 border-outline pb-4">
+<h3 class="font-headline text-2xl font-bold uppercase text-primary leading-tight">Review Math Mock Test Results</h3>
+<span class="bg-secondary text-on-error font-label font-bold text-xs px-2 py-1 uppercase border-2 border-outline">Urgent</span>
+</div>
+<p class="font-body text-on-surface-variant font-medium">Rahul's recent geometry scores dropped below the target baseline. Review the detailed breakdown.</p>
+<button class="mt-auto self-start bg-primary text-on-primary border-2 border-outline font-headline font-bold uppercase px-6 py-3 hover:bg-secondary hover:text-on-error transition-none active:translate-x-1 active:translate-y-1 active:shadow-none brutal-shadow-sm">
+                        View Results
+                    </button>
+</div>
+<div class="bg-surface border-4 border-secondary brutal-shadow-red p-6 flex flex-col gap-4">
+<div class="flex justify-between items-start border-b-2 border-outline pb-4">
+<h3 class="font-headline text-2xl font-bold uppercase text-primary leading-tight">Sign Permission Slip: Field Trip</h3>
+<span class="bg-primary-container text-on-primary-container font-label font-bold text-xs px-2 py-1 uppercase border-2 border-outline">Pending</span>
+</div>
+<p class="font-body text-on-surface-variant font-medium">Digital signature required for the upcoming visit to the National Science Museum.</p>
+<button class="mt-auto self-start bg-primary text-on-primary border-2 border-outline font-headline font-bold uppercase px-6 py-3 hover:bg-secondary hover:text-on-error transition-none active:translate-x-1 active:translate-y-1 active:shadow-none brutal-shadow-sm">
+                        Sign Document
+                    </button>
+</div>
+</div>
+</section>
+<section class="flex flex-col gap-6 mt-8">
+<h2 class="font-headline text-4xl font-black uppercase tracking-tighter text-primary border-b-4 border-outline pb-2">
+                Parent Guidance Resources
+            </h2>
+<div class="flex flex-col gap-8">
+<article class="flex flex-col md:flex-row border-4 border-outline bg-surface brutal-shadow group">
+<div class="w-full md:w-64 h-48 md:h-auto border-b-4 md:border-b-0 md:border-r-4 border-outline overflow-hidden bg-surface-dim">
+<img alt="Student studying at a desk" class="w-full h-full object-cover filter grayscale contrast-125 group-hover:scale-105 transition-transform duration-300" data-alt="high contrast black and white photo of a student writing in a notebook at a cluttered wooden desk with harsh dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTXytZqngYrEKf2jzN9FruVqMBtQubcdOmNb54Vc8XQI_10rusq422QE5JczxuFRLuJVzMaZ99jxlIZI-86h_unoyg2-HnTbZZDDm_BfYnEL95Ap-wH3VOHLebIBBKoTxQ-V89ow5J0Eb1LHV47zzpgDwXyZwPSwPhrn5StlS4xwaYfHZ-0DJYglnoROPOl6b3yaZPJ62g5WtPyP32G0Bb149Qf7uFUGX2emUIYB-Oq9IcsTDPKkGkNiUJi3coH-iV7IvbnNCoV72a"/>
+</div>
+<div class="p-6 md:p-8 flex flex-col justify-between flex-grow">
+<div>
+<span class="font-label font-bold text-sm uppercase text-tertiary mb-2 block tracking-widest">Strategy Guide</span>
+<h3 class="font-headline text-3xl font-black uppercase leading-none mb-4 group-hover:text-tertiary transition-colors">Managing Exam Anxiety</h3>
+<p class="font-body font-medium text-on-surface-variant max-w-2xl">Actionable techniques to help your child navigate pre-test stress. Built on cognitive behavioral principles adapted for high-school students.</p>
+</div>
+<a class="font-headline font-bold uppercase flex items-center gap-2 mt-6 text-primary hover:text-tertiary w-max border-b-2 border-transparent hover:border-tertiary pb-1" href="#">
+                            Read Full Article <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</article>
+<article class="flex flex-col md:flex-row border-4 border-outline bg-surface brutal-shadow group">
+<div class="w-full md:w-64 h-48 md:h-auto border-b-4 md:border-b-0 md:border-r-4 border-outline overflow-hidden bg-surface-dim">
+<img alt="Colleagues discussing over a chart" class="w-full h-full object-cover filter grayscale contrast-125 group-hover:scale-105 transition-transform duration-300" data-alt="high contrast graphic black and white image of hands pointing at architectural blueprints and geometric charts on a table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfkLLZkgYxw5cF7ABoKNKgYGJ35ExH7cuTQuA98U7eDmabZS4fGrNJ8BkN0gOyD-yWA8wcdtd8zu_vd55ahX30FEPT7XKcOfrt5G5xBamlp5Ki0aT_CKBaexnvqRvGjl__BOdjrJlG8Crd0a85lKD0d9EgCntBF7qOLhSzpV7WffzPR6j6AC7VwKY2GqvWyH4yO1m5yGAIDjitu22WECetXXk7TWC5FH_vnGyObWP4l3faOr0uZOHornFzOhwDom1LoAYwSsfU5r8V"/>
+</div>
+<div class="p-6 md:p-8 flex flex-col justify-between flex-grow">
+<div>
+<span class="font-label font-bold text-sm uppercase text-tertiary mb-2 block tracking-widest">Academic Planning</span>
+<h3 class="font-headline text-3xl font-black uppercase leading-none mb-4 group-hover:text-tertiary transition-colors">Structuring Study Blocks</h3>
+<p class="font-body font-medium text-on-surface-variant max-w-2xl">The Pomodoro method redesigned for rigorous Indian curriculum demands. How to enforce breaks without losing momentum.</p>
+</div>
+<a class="font-headline font-bold uppercase flex items-center gap-2 mt-6 text-primary hover:text-tertiary w-max border-b-2 border-transparent hover:border-tertiary pb-1" href="#">
+                            Read Full Article <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</article>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 bg-[#f5f0e8] dark:bg-zinc-900 border-t-4 border-[#1a1a1a] dark:border-zinc-100 md:hidden font-['Space_Grotesk'] font-bold text-[10px] uppercase">
+<a class="flex flex-col items-center justify-center bg-[#ffcc00] text-[#1a1a1a] border-2 border-[#1a1a1a] -mt-2 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] px-3 py-1 transition-none hover:bg-[#e63b2e] hover:text-white w-16" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">home</span>
+<span>Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] dark:text-zinc-400 opacity-100 transition-none hover:bg-[#e63b2e] hover:text-white px-2 py-2 w-16" href="#">
+<span class="material-symbols-outlined mb-1">school</span>
+<span>Mentors</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] dark:text-zinc-400 opacity-100 transition-none hover:bg-[#e63b2e] hover:text-white px-2 py-2 w-16" href="#">
+<span class="material-symbols-outlined mb-1">explore</span>
+<span>Guidance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] dark:text-zinc-400 opacity-100 transition-none hover:bg-[#e63b2e] hover:text-white px-2 py-2 w-16" href="#">
+<span class="material-symbols-outlined mb-1">description</span>
+<span>Exams</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1a1a1a] dark:text-zinc-400 opacity-100 transition-none hover:bg-[#e63b2e] hover:text-white px-2 py-2 w-16" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span>Profile</span>
+</a>
+</nav>
+</body></html>

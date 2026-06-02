@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>JEE Advanced Eligibility Checker</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Space+Grotesk:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from Design System -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e8e3da",
+                        "surface-dim": "#d6d1c9",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eee9e0",
+                        "primary-container": "#ffcc00",
+                        "background": "#f5f0e8",
+                        "surface-bright": "#faf7f2",
+                        "on-tertiary-fixed": "#1a1a1a",
+                        "secondary-fixed-dim": "#ffb3ab",
+                        "on-error": "#ffffff",
+                        "secondary": "#e63b2e",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#1a1a1a",
+                        "on-primary-fixed": "#1a1a1a",
+                        "on-secondary-fixed-variant": "#1a1a1a",
+                        "outline": "#1a1a1a",
+                        "inverse-surface": "#1a1a1a",
+                        "inverse-on-surface": "#f5f0e8",
+                        "on-tertiary-container": "#1a1a1a",
+                        "tertiary-fixed-dim": "#a8c6ff",
+                        "on-secondary-container": "#1a1a1a",
+                        "secondary-container": "#ffdad6",
+                        "on-surface": "#1a1a1a",
+                        "surface-container-highest": "#e2ddd4",
+                        "on-primary-fixed-variant": "#1a1a1a",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#1a1a1a",
+                        "surface-container-high": "#e8e3da",
+                        "surface-container-low": "#f2ede5",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#cc0000",
+                        "tertiary-fixed": "#d6e3ff",
+                        "primary-fixed-dim": "#e6b800",
+                        "primary": "#1a1a1a",
+                        "outline-variant": "#d0cbc3",
+                        "on-surface-variant": "#4a4a4a",
+                        "on-background": "#1a1a1a",
+                        "tertiary-container": "#d6e3ff",
+                        "surface": "#f5f0e8",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#1a1a1a",
+                        "secondary-fixed": "#ffdad6",
+                        "primary-fixed": "#ffcc00",
+                        "on-secondary": "#1a1a1a",
+                        "tertiary": "#0055ff",
+                        "on-tertiary-fixed-variant": "#1a1a1a",
+                        "inverse-primary": "#f5f0e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk", "sans-serif"],
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Space Grotesk", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-6 h-20 bg-[#f5f0e8] border-b-4 border-[#1a1a1a] fixed top-0 z-50">
+<button class="material-symbols-outlined text-[#1a1a1a] text-3xl hover:bg-[#0055ff] hover:text-white p-1 border-2 border-transparent hover:border-[#1a1a1a]">
+            menu
+        </button>
+<span class="text-2xl font-black text-[#1a1a1a] italic font-['Space_Grotesk'] uppercase tracking-tighter">
+            MARGADARSHAK
+        </span>
+<button class="material-symbols-outlined text-[#1a1a1a] text-3xl hover:bg-[#0055ff] hover:text-white p-1 border-2 border-transparent hover:border-[#1a1a1a]">
+            account_circle
+        </button>
+</header>
+<!-- Main Canvas -->
+<main class="pt-28 px-4 md:px-8 max-w-5xl mx-auto space-y-12">
+<!-- Header Section -->
+<div class="border-b-4 border-outline pb-6">
+<h1 class="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9]">
+                Eligibility<br/>
+<span class="text-primary-fixed">Checker</span>
+</h1>
+<p class="font-label font-bold text-xl md:text-2xl uppercase mt-4 text-on-surface-variant tracking-tight">
+                JEE Advanced 2024
+            </p>
+</div>
+<!-- Action Required Card (Deep Blue) -->
+<section class="bg-tertiary text-on-tertiary border-4 border-outline shadow-[8px_8px_0px_0px_#1a1a1a] p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-5xl shrink-0" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div>
+<h2 class="font-headline text-3xl md:text-4xl font-black uppercase tracking-tight leading-none mb-2">Action Required</h2>
+<p class="font-body font-bold text-lg max-w-md">
+                        Your profile data is incomplete. Please update your details to confirm your eligibility status.
+                    </p>
+</div>
+</div>
+<button class="w-full md:w-auto bg-surface text-primary font-label font-bold uppercase border-4 border-outline px-8 py-4 text-xl hover:bg-secondary hover:text-on-secondary shadow-[4px_4px_0px_0px_#1a1a1a] active:translate-x-1 active:translate-y-1 active:shadow-none transition-none">
+                Update Profile
+            </button>
+</section>
+<!-- Criteria Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Card: JEE Main Score -->
+<article class="bg-surface-bright border-4 border-outline shadow-[6px_6px_0px_0px_#1a1a1a] p-6 flex flex-col h-full relative overflow-hidden group hover:bg-surface-dim transition-none">
+<div class="absolute top-0 right-0 w-16 h-16 bg-primary border-l-4 border-b-4 border-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-3xl">analytics</span>
+</div>
+<h3 class="font-headline text-2xl font-black uppercase tracking-tight border-b-4 border-outline pb-3 mb-4 w-5/6">
+                    Qualifying JEE Main Score
+                </h3>
+<div class="space-y-4 flex-grow">
+<div>
+<span class="block text-sm font-bold uppercase text-on-surface-variant tracking-widest">Your Percentile</span>
+<span class="font-headline text-4xl font-black block">98.50</span>
+</div>
+<div>
+<span class="block text-sm font-bold uppercase text-on-surface-variant tracking-widest">Requirement</span>
+<p class="font-bold text-lg leading-tight">Must be among the top 2,50,000 successful candidates.</p>
+</div>
+</div>
+<div class="mt-8 self-start bg-primary text-on-primary border-2 border-outline px-4 py-2 shadow-[2px_2px_0px_0px_#1a1a1a]">
+<span class="font-label font-bold text-lg uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Cleared
+                    </span>
+</div>
+</article>
+<!-- Card: Class 12th Percentage -->
+<article class="bg-surface-bright border-4 border-outline shadow-[6px_6px_0px_0px_#1a1a1a] p-6 flex flex-col h-full relative overflow-hidden group hover:bg-surface-dim transition-none">
+<div class="absolute top-0 right-0 w-16 h-16 bg-primary-container border-l-4 border-b-4 border-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container text-3xl">school</span>
+</div>
+<h3 class="font-headline text-2xl font-black uppercase tracking-tight border-b-4 border-outline pb-3 mb-4 w-5/6">
+                    Class 12th Percentage
+                </h3>
+<div class="space-y-4 flex-grow">
+<div>
+<span class="block text-sm font-bold uppercase text-on-surface-variant tracking-widest">Your Percentage</span>
+<span class="font-headline text-4xl font-black block text-on-surface-variant">--</span>
+</div>
+<div>
+<span class="block text-sm font-bold uppercase text-on-surface-variant tracking-widest">Requirement</span>
+<p class="font-bold text-lg leading-tight">Minimum 75% aggregate marks (65% for SC/ST/PwD).</p>
+</div>
+</div>
+<div class="mt-8 self-start bg-primary-container text-on-primary-container border-2 border-outline px-4 py-2 shadow-[2px_2px_0px_0px_#1a1a1a]">
+<span class="font-label font-bold text-lg uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined">hourglass_empty</span>
+                        Pending
+                    </span>
+</div>
+</article>
+<!-- Card: Age Limit (Spans 2 columns on desktop) -->
+<article class="bg-surface-bright border-4 border-outline shadow-[6px_6px_0px_0px_#1a1a1a] p-6 md:col-span-2 flex flex-col md:flex-row gap-8 items-start md:items-center justify-between relative overflow-hidden group hover:bg-surface-dim transition-none">
+<div class="flex-grow w-full">
+<div class="flex items-center gap-4 border-b-4 border-outline pb-3 mb-4 w-full">
+<span class="material-symbols-outlined text-4xl p-2 bg-secondary text-on-error border-2 border-outline">cake</span>
+<h3 class="font-headline text-2xl md:text-3xl font-black uppercase tracking-tight">
+                            Age Limit
+                        </h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<span class="block text-sm font-bold uppercase text-on-surface-variant tracking-widest">Date of Birth</span>
+<span class="font-headline text-2xl md:text-3xl font-black block">15 Aug 1998</span>
+</div>
+<div>
+<span class="block text-sm font-bold uppercase text-on-surface-variant tracking-widest">Requirement</span>
+<p class="font-bold text-lg leading-tight">Born on or after October 1, 1999 (5 years relaxation for reserved categories).</p>
+</div>
+</div>
+</div>
+<div class="w-full md:w-auto bg-secondary text-on-error border-4 border-outline px-6 py-4 shadow-[4px_4px_0px_0px_#1a1a1a] shrink-0 text-center">
+<span class="font-label font-black text-2xl uppercase tracking-widest flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cancel</span>
+                        Not Met
+                    </span>
+</div>
+</article>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 bg-[#f5f0e8] border-t-4 border-[#1a1a1a]">
+<button class="flex flex-col items-center justify-center text-[#1a1a1a] opacity-100 hover:bg-[#e63b2e] hover:text-white w-full h-full transition-none">
+<span class="material-symbols-outlined mb-1 text-2xl">home</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#1a1a1a] opacity-100 hover:bg-[#e63b2e] hover:text-white w-full h-full transition-none">
+<span class="material-symbols-outlined mb-1 text-2xl">school</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase">Mentors</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#1a1a1a] opacity-100 hover:bg-[#e63b2e] hover:text-white w-full h-full transition-none">
+<span class="material-symbols-outlined mb-1 text-2xl">explore</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase">Guidance</span>
+</button>
+<!-- Active Tab: Exams -->
+<button class="flex flex-col items-center justify-center bg-[#ffcc00] text-[#1a1a1a] border-2 border-[#1a1a1a] -mt-4 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] px-4 py-2 hover:bg-[#e63b2e] hover:text-white transition-none z-10">
+<span class="material-symbols-outlined mb-1 text-2xl" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase">Exams</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#1a1a1a] opacity-100 hover:bg-[#e63b2e] hover:text-white w-full h-full transition-none">
+<span class="material-symbols-outlined mb-1 text-2xl">person</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] uppercase">Profile</span>
+</button>
+</nav>
+</body></html>

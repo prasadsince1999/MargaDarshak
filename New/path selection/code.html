@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Margadarshak - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#eee9e0",
+                        "surface-container-low": "#f2ede5",
+                        "surface-variant": "#e8e3da",
+                        "inverse-on-surface": "#f5f0e8",
+                        "on-surface-variant": "#4a4a4a",
+                        "tertiary-fixed": "#d6e3ff",
+                        "surface-container-highest": "#e2ddd4",
+                        "secondary": "#e63b2e",
+                        "primary-fixed": "#ffcc00",
+                        "primary-fixed-dim": "#e6b800",
+                        "on-secondary": "#1a1a1a",
+                        "tertiary-fixed-dim": "#a8c6ff",
+                        "secondary-fixed-dim": "#ffb3ab",
+                        "on-background": "#1a1a1a",
+                        "outline-variant": "#d0cbc3",
+                        "on-tertiary-container": "#1a1a1a",
+                        "on-surface": "#1a1a1a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#ffdad6",
+                        "primary": "#1a1a1a",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#1a1a1a",
+                        "on-primary-container": "#1a1a1a",
+                        "inverse-surface": "#1a1a1a",
+                        "tertiary-container": "#d6e3ff",
+                        "primary-container": "#ffcc00",
+                        "on-primary-fixed-variant": "#1a1a1a",
+                        "surface-tint": "#1a1a1a",
+                        "on-secondary-fixed": "#1a1a1a",
+                        "error": "#cc0000",
+                        "inverse-primary": "#f5f0e8",
+                        "outline": "#1a1a1a",
+                        "on-tertiary-fixed": "#1a1a1a",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e8e3da",
+                        "on-secondary-container": "#1a1a1a",
+                        "surface-dim": "#d6d1c9",
+                        "on-primary-fixed": "#1a1a1a",
+                        "tertiary": "#0055ff",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#faf7f2",
+                        "background": "#f5f0e8",
+                        "surface": "#f5f0e8",
+                        "secondary-fixed": "#ffdad6",
+                        "on-secondary-fixed-variant": "#1a1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "display": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex flex-col p-6 md:p-12 overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- Progress Indicator - Neo-Brutalist -->
+<header class="w-full max-w-5xl mx-auto mb-12 mt-4">
+<div class="flex items-center justify-between mb-2">
+<span class="font-headline font-bold uppercase tracking-widest text-sm text-on-surface-variant" style="">Step 1 of 4</span>
+<button class="font-headline font-bold uppercase tracking-widest text-sm hover:underline hover:text-tertiary transition-colors" style="">Skip</button>
+</div>
+<div class="w-full h-4 border-4 border-primary bg-surface-container-lowest">
+<div class="w-1/4 h-full bg-primary-container border-r-4 border-primary"></div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-5xl mx-auto flex flex-col justify-center">
+<!-- Typography Anchor -->
+<section class="mb-16 max-w-3xl">
+<h1 class="font-headline font-black text-5xl md:text-7xl uppercase tracking-tighter leading-none mb-6" style="">Select your path</h1>
+<p class="font-body text-xl md:text-2xl text-on-surface-variant leading-relaxed border-l-8 border-tertiary pl-6 py-2" style="">
+                Every great journey begins with a single choice. Let us guide you on the right path for your family's future.
+            </p>
+</section>
+<!-- Blocky Action Cards -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+<!-- Student Card -->
+<button class="group relative w-full text-left outline-none focus:outline-none h-64 md:h-80 block transition-transform duration-200 hover:-translate-y-2 hover:-translate-x-2" style="">
+<!-- Shadow Offset -->
+<div class="absolute inset-0 bg-primary translate-x-4 translate-y-4"></div>
+<!-- Card Body -->
+<div class="absolute inset-0 bg-primary-container border-4 border-primary p-8 flex flex-col justify-between z-10 transition-colors group-active:bg-primary-fixed-dim">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-6xl text-primary" style='font-variation-settings: "FILL" 1;'>
+                            school
+                        </span>
+<div class="w-12 h-12 border-4 border-primary rounded-full flex items-center justify-center bg-surface-container-lowest group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-surface-container-lowest" style="">
+                                arrow_forward
+                            </span>
+</div>
+</div>
+<div>
+<h2 class="font-headline font-black text-4xl uppercase tracking-tight mb-2" style="">Student</h2>
+<p class="font-body text-lg font-medium" style="">I am exploring career options and colleges.</p>
+</div>
+</div>
+</button>
+<!-- Parent Card -->
+<button class="group relative w-full text-left outline-none focus:outline-none h-64 md:h-80 block transition-transform duration-200 hover:-translate-y-2 hover:-translate-x-2" style="">
+<!-- Shadow Offset -->
+<div class="absolute inset-0 bg-primary translate-x-4 translate-y-4"></div>
+<!-- Card Body -->
+<div class="absolute inset-0 bg-tertiary-container border-4 border-primary p-8 flex flex-col justify-between z-10 transition-colors group-active:bg-tertiary-fixed">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-6xl text-primary" style='font-variation-settings: "FILL" 1;'>
+                            family_restroom
+                        </span>
+<div class="w-12 h-12 border-4 border-primary rounded-full flex items-center justify-center bg-surface-container-lowest group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-surface-container-lowest" style="">
+                                arrow_forward
+                            </span>
+</div>
+</div>
+<div>
+<h2 class="font-headline font-black text-4xl uppercase tracking-tight mb-2" style="">Parent</h2>
+<p class="font-body text-lg font-medium" style="">I am guiding my child's educational journey.</p>
+</div>
+</div>
+</button>
+</section>
+<!-- Secondary Action -->
+<div class="mt-16 flex justify-center pb-12">
+<button class="font-headline font-bold uppercase text-lg border-b-4 border-primary pb-1 hover:text-tertiary hover:border-tertiary transition-colors flex items-center gap-2" style="">
+<span class="material-symbols-outlined" style="">help</span>
+                Need help deciding?
+            </button>
+</div>
+</main>
+</body></html>

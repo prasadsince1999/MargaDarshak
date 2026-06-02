@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Margadarshak - Mentor Page</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&amp;family=Inter:wght@400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "secondary-container": "#ffdad6",
+                "on-error-container": "#93000a",
+                "surface-container": "#eee9e0",
+                "secondary": "#e63b2e",
+                "on-primary": "#ffffff",
+                "tertiary-container": "#d6e3ff",
+                "on-primary-fixed": "#1a1a1a",
+                "primary-fixed": "#ffcc00",
+                "on-background": "#1a1a1a",
+                "outline": "#1a1a1a",
+                "tertiary": "#0055ff",
+                "error": "#cc0000",
+                "surface-container-high": "#e8e3da",
+                "surface": "#f5f0e8",
+                "primary": "#1a1a1a",
+                "on-tertiary-fixed": "#1a1a1a",
+                "on-secondary-fixed-variant": "#1a1a1a",
+                "outline-variant": "#d0cbc3",
+                "surface-tint": "#1a1a1a",
+                "on-primary-container": "#1a1a1a",
+                "tertiary-fixed": "#d6e3ff",
+                "tertiary-fixed-dim": "#a8c6ff",
+                "on-secondary": "#1a1a1a",
+                "secondary-fixed": "#ffdad6",
+                "on-tertiary": "#ffffff",
+                "background": "#f5f0e8",
+                "surface-dim": "#d6d1c9",
+                "on-secondary-container": "#1a1a1a",
+                "on-primary-fixed-variant": "#1a1a1a",
+                "surface-variant": "#e8e3da",
+                "surface-container-highest": "#e2ddd4",
+                "surface-container-low": "#f2ede5",
+                "on-error": "#ffffff",
+                "surface-container-lowest": "#ffffff",
+                "secondary-fixed-dim": "#ffb3ab",
+                "error-container": "#ffdad6",
+                "primary-fixed-dim": "#e6b800",
+                "primary-container": "#ffcc00",
+                "inverse-primary": "#f5f0e8",
+                "on-tertiary-container": "#1a1a1a",
+                "on-surface-variant": "#4a4a4a",
+                "inverse-surface": "#1a1a1a",
+                "on-tertiary-fixed-variant": "#1a1a1a",
+                "on-surface": "#1a1a1a",
+                "inverse-on-surface": "#f5f0e8",
+                "surface-bright": "#faf7f2",
+                "on-secondary-fixed": "#1a1a1a"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {},
+        "fontFamily": {
+                "headline": [
+                        "Space Grotesk"
+                ],
+                "display": [
+                        "Space Grotesk"
+                ],
+                "body": [
+                        "Inter"
+                ],
+                "label": [
+                        "Space Grotesk"
+                ]
+        },
+        "fontSize": {}
+},
+    },
+  }
+</script>
+<style>
+    /* Utility for brutalist offsets to prevent layout shifting on active */
+    .brutalist-button-active:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0px 0px 0px 0px #1a1a1a !important;
+    }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container pb-28 pt-20">
+<!-- TopAppBar Shared Component -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#f5f0e8] border-b-4 border-[#1a1a1a] shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] flex justify-between items-center px-6 py-4">
+<button class="text-[#1a1a1a] hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors active:translate-x-1 active:translate-y-1 active:shadow-none p-1 border-2 border-transparent hover:border-[#1a1a1a]">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1; font-size: 28px;">menu</span>
+</button>
+<h1 class="font-['Space_Grotesk'] text-3xl font-black text-[#1a1a1a] uppercase tracking-tighter">
+            MARGADARSHAK
+        </h1>
+<button class="text-[#1a1a1a] hover:bg-[#ffcc00] transition-colors active:translate-x-1 active:translate-y-1 active:shadow-none border-2 border-[#1a1a1a] overflow-hidden bg-white w-10 h-10 flex items-center justify-center">
+<img alt="student profile" class="w-full h-full object-cover" data-alt="close up headshot portrait of a young indian student looking forward neutrally against clear background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDaXlDPDw70qs3-1wkDlUEs48T8ebTuLkPRxZEc8HGXxHWtlYPUwLDg8CTTg83W5rC7ccD3lqc_XFZf9QaoYkYwI52vEBx_vIcZQRmv4Ycj6bCvJekTQU3-o3xCMDzw9U1uRn1Sx9XZfDhclZxsTs4aatSVz2YzOHUeX85fP8h_52QAZl_un2NYQoRUiw55JQ1c0siBnqO9OB7_v1KqMK3n-EBvcUSIf4gPU1jz7S7AB7xE4I1anEGWBBiE9aLh5XzxE1OuxNKjE3j"/>
+</button>
+</header>
+<main class="max-w-md mx-auto px-5 w-full">
+<!-- Top Section: Mentor Summary Card -->
+<section class="mt-6 mb-10">
+<div class="bg-tertiary text-on-tertiary border-[4px] border-outline p-6 shadow-[6px_6px_0px_0px_#1a1a1a] rounded-none relative overflow-hidden group">
+<div class="absolute -right-10 -bottom-10 opacity-20 transform rotate-12">
+<span class="material-symbols-outlined text-[150px]">explore</span>
+</div>
+<div class="flex items-start gap-4 relative z-10">
+<div class="w-16 h-16 border-[3px] border-outline bg-primary-container flex-shrink-0">
+<img alt="Mentor Icon" class="w-full h-full object-cover grayscale contrast-125" data-alt="high contrast black and white portrait of a wise authoritative male figure looking directly at camera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA3w_-MmqU2Auj4xpNdCr0dnnpqX4wdSxvl47QqHHg9mH8pgPXL6CogPPrcF3sIxYNI9m23qndOc_oLY31IoR-5zMqc-UwmB3y4hHlXf3Jxo9mVyGrVJOg1zNXcZD133E46Z9YK_-nFQYuWCYbVj7np7ungvgK5jq6A3T1u5SkM1UFCy4k2bV2427bF1nPhwaL956L0aSdKkiggKGxHudL0EAHxwoSWcoYeCE6lu9ZDFMCX1veD4sT7-Lzb892WAy01_tbsqUv3dyD"/>
+</div>
+<div>
+<h2 class="font-headline text-2xl font-black leading-tight mb-2 tracking-tight">Namaste Aditya,<br/>here is your path today.</h2>
+<p class="font-body text-sm font-semibold opacity-90">Daily Guidance Active</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Middle Section: Mentor Guidance -->
+<section class="mb-12">
+<h3 class="font-headline text-3xl font-black uppercase tracking-tighter mb-6 border-b-4 border-outline pb-2 inline-block">Mentor Guidance</h3>
+<div class="flex flex-col gap-6">
+<!-- Card 1: The Big Picture -->
+<article class="bg-primary-container text-on-primary-container border-[4px] border-outline p-5 shadow-[5px_5px_0px_0px_#1a1a1a] rounded-none relative">
+<div class="absolute top-0 right-0 bg-outline text-on-primary font-headline text-xs font-bold uppercase px-2 py-1">The Big Picture</div>
+<div class="flex items-center gap-3 mb-3 mt-4">
+<span class="material-symbols-outlined text-3xl">psychology</span>
+<h4 class="font-headline text-xl font-bold uppercase tracking-tight">Current Trajectory</h4>
+</div>
+<p class="font-body text-base font-medium leading-snug">Class 12th PCM Aspirant aiming for Tier-1 Engineering Institutes. Focus required on Advanced Mathematics and Physics concepts.</p>
+</article>
+<!-- Card 2: Suggested Roadmap -->
+<article class="bg-surface text-on-surface border-[4px] border-outline p-5 shadow-[5px_5px_0px_0px_#1a1a1a] rounded-none relative">
+<div class="absolute top-0 right-0 bg-outline text-on-primary font-headline text-xs font-bold uppercase px-2 py-1">Suggested Roadmap</div>
+<div class="flex items-center gap-3 mb-4 mt-2">
+<span class="material-symbols-outlined text-3xl">route</span>
+<h4 class="font-headline text-xl font-bold uppercase tracking-tight">Engineering Entrance Prep</h4>
+</div>
+<div class="w-full border-2 border-outline h-8 relative bg-surface-container mt-2">
+<div class="absolute top-0 left-0 h-full bg-secondary w-[65%] border-r-2 border-outline flex items-center justify-end pr-2">
+<span class="font-headline text-xs font-bold text-on-primary">65%</span>
+</div>
+</div>
+<p class="font-body text-xs font-bold mt-2 uppercase tracking-wider text-on-surface-variant">Phase 2: Mock Tests &amp; Revision</p>
+</article>
+<!-- Card 3: Verified Fact -->
+<article class="bg-surface text-on-surface border-[4px] border-outline p-5 shadow-[5px_5px_0px_0px_#1a1a1a] rounded-none relative border-l-[12px] border-l-secondary">
+<div class="absolute top-0 right-0 bg-secondary text-on-primary font-headline text-xs font-bold uppercase px-2 py-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Verified Fact
+                     </div>
+<div class="mt-4">
+<h4 class="font-headline text-lg font-bold uppercase tracking-tight mb-2">JEE Main 2024 Eligibility</h4>
+<p class="font-body text-sm font-medium">Candidates must have secured at least 75% marks in the Class 12 examination, or be in the top 20 percentile in the respective Board.</p>
+</div>
+</article>
+<!-- Card 4: AI Insight -->
+<article class="bg-[#1a1a1a] text-on-primary border-[4px] border-outline p-5 shadow-[5px_5px_0px_0px_#ffcc00] rounded-none relative">
+<div class="absolute top-0 right-0 bg-tertiary text-on-primary font-headline text-xs font-bold uppercase px-2 py-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">memory</span> AI Analysis
+                    </div>
+<div class="mt-4">
+<h4 class="font-headline text-xl font-bold uppercase tracking-tight mb-2 text-primary-container">Why This Path?</h4>
+<p class="font-body text-sm font-medium opacity-90 leading-relaxed">Based on your recent aptitude scores in Spatial Reasoning (92nd percentile) and logical deduction, Architecture or Design Engineering strongly align with your cognitive profile.</p>
+</div>
+</article>
+</div>
+</section>
+<!-- Bottom Section: Quick Prompts -->
+<section class="mb-6">
+<h3 class="font-headline text-lg font-bold uppercase tracking-tighter mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined">bolt</span> Quick Prompts
+            </h3>
+<div class="flex flex-wrap gap-3">
+<button class="bg-surface border-2 border-outline px-4 py-2 font-headline text-sm font-bold uppercase shadow-[2px_2px_0px_0px_#1a1a1a] brutalist-button-active hover:bg-primary-container transition-colors">
+                    What after 12th?
+                </button>
+<button class="bg-surface border-2 border-outline px-4 py-2 font-headline text-sm font-bold uppercase shadow-[2px_2px_0px_0px_#1a1a1a] brutalist-button-active hover:bg-primary-container transition-colors">
+                    Am I eligible for JEE?
+                </button>
+<button class="bg-surface border-2 border-outline px-4 py-2 font-headline text-sm font-bold uppercase shadow-[2px_2px_0px_0px_#1a1a1a] brutalist-button-active hover:bg-primary-container transition-colors">
+                    Career in Design?
+                </button>
+<button class="bg-surface border-2 border-outline px-4 py-2 font-headline text-sm font-bold uppercase shadow-[2px_2px_0px_0px_#1a1a1a] brutalist-button-active hover:bg-primary-container transition-colors">
+                    Best Mock Tests?
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer: Fixed Input Bar -->
+<footer class="fixed bottom-0 left-0 w-full z-50 bg-[#f5f0e8] border-t-[4px] border-outline p-4 flex gap-3 shadow-[0px_-4px_0px_0px_rgba(26,26,26,0.1)]">
+<div class="flex-grow relative">
+<input class="w-full h-full bg-white border-[3px] border-outline font-body text-base px-4 py-3 focus:outline-none focus:ring-0 focus:border-tertiary placeholder:text-on-surface-variant font-medium rounded-none" placeholder="Ask your mentor..." type="text"/>
+</div>
+<button class="bg-outline text-on-primary font-headline text-lg font-black uppercase px-6 py-3 border-[3px] border-outline shadow-[4px_4px_0px_0px_#ffcc00] brutalist-button-active flex items-center justify-center hover:bg-tertiary transition-colors">
+            SEND
+        </button>
+</footer>
+</body></html>

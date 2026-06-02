@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Margadarshak Parent Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&amp;family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f5f0e8",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#eee9e0",
+                    "secondary-fixed-dim": "#ffb3ab",
+                    "surface-dim": "#d6d1c9",
+                    "surface-container-low": "#f2ede5",
+                    "on-secondary": "#1a1a1a",
+                    "outline": "#1a1a1a",
+                    "on-secondary-fixed": "#1a1a1a",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#1a1a1a",
+                    "on-secondary-container": "#1a1a1a",
+                    "secondary": "#e63b2e",
+                    "on-surface": "#1a1a1a",
+                    "inverse-surface": "#1a1a1a",
+                    "inverse-primary": "#f5f0e8",
+                    "on-background": "#1a1a1a",
+                    "surface-variant": "#e8e3da",
+                    "surface-bright": "#faf7f2",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#1a1a1a",
+                    "primary-container": "#ffcc00",
+                    "tertiary-fixed-dim": "#a8c6ff",
+                    "on-tertiary-fixed": "#1a1a1a",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e8e3da",
+                    "on-surface-variant": "#4a4a4a",
+                    "inverse-on-surface": "#f5f0e8",
+                    "tertiary-container": "#d6e3ff",
+                    "primary": "#1a1a1a",
+                    "primary-fixed": "#ffcc00",
+                    "secondary-fixed": "#ffdad6",
+                    "on-primary-fixed": "#1a1a1a",
+                    "on-primary-container": "#1a1a1a",
+                    "surface-container-highest": "#e2ddd4",
+                    "error": "#cc0000",
+                    "background": "#f5f0e8",
+                    "outline-variant": "#d0cbc3",
+                    "on-secondary-fixed-variant": "#1a1a1a",
+                    "tertiary-fixed": "#d6e3ff",
+                    "tertiary": "#0055ff",
+                    "primary-fixed-dim": "#e6b800",
+                    "on-tertiary-container": "#1a1a1a",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#1a1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "0px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk", "sans-serif"],
+                    "display": ["Space Grotesk", "sans-serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Space Grotesk", "sans-serif"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(26,26,26,1);
+        }
+        .neo-shadow-lg {
+            box-shadow: 8px 8px 0px 0px rgba(26,26,26,1);
+        }
+        .neo-shadow-hover:hover {
+            box-shadow: 2px 2px 0px 0px rgba(26,26,26,1);
+            transform: translate(2px, 2px);
+            transition: all 0.2s ease;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen flex flex-col pt-20 pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b-4 border-primary flex justify-between items-center px-6 py-4 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]">
+<button class="text-primary hover:bg-primary-container p-2 transition-colors border-2 border-transparent hover:border-primary">
+<span class="material-symbols-outlined text-3xl font-bold" style="font-variation-settings: 'FILL' 1;">school</span>
+</button>
+<h1 class="font-headline font-black text-2xl uppercase tracking-tighter text-primary">MARGADARSHAK</h1>
+<div class="flex items-center gap-2 font-headline font-bold uppercase text-primary border-2 border-primary px-3 py-1 bg-surface-container hover:bg-primary-container transition-colors cursor-pointer neo-shadow-hover">
+<span>Parent Profile</span>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col gap-8 md:gap-12 mt-8">
+<!-- Alerts & Important Info (Top Priority) -->
+<section class="w-full">
+<div class="bg-secondary text-on-error border-4 border-primary p-4 flex items-center justify-between neo-shadow gap-4 flex-wrap">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl font-bold">warning</span>
+<h2 class="font-headline font-bold text-lg md:text-xl uppercase tracking-tight">Important Alert: JEE Main Registration Ends in 2 Days</h2>
+</div>
+<button class="bg-surface text-primary font-headline font-bold px-6 py-2 border-2 border-primary uppercase hover:bg-primary-container transition-colors neo-shadow-hover">
+                    Take Action
+                </button>
+</div>
+</section>
+<!-- Child Summary Bento -->
+<section class="w-full">
+<h2 class="font-headline font-black text-4xl md:text-5xl uppercase tracking-tighter mb-6 text-primary border-b-4 border-primary pb-2 inline-block">Child Summary</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Main Profile Box -->
+<div class="md:col-span-2 bg-surface border-4 border-primary p-6 md:p-8 neo-shadow relative overflow-hidden flex flex-col justify-between group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container -mr-16 -mt-16 rounded-full opacity-50"></div>
+<div>
+<p class="font-headline font-bold text-sm uppercase text-on-surface-variant mb-2">Student Profile</p>
+<h3 class="font-headline font-black text-3xl md:text-5xl uppercase leading-none mb-4">Rahul <br/><span class="text-tertiary">Class 12th</span> <br/>Science (PCM)</h3>
+</div>
+<div class="mt-8 pt-6 border-t-4 border-primary">
+<div class="flex justify-between items-end mb-2">
+<span class="font-headline font-bold uppercase text-lg">Engineering Roadmap</span>
+<span class="font-headline font-black text-2xl">60%</span>
+</div>
+<div class="w-full h-6 bg-surface-container border-2 border-primary relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-primary-container w-[60%] border-r-2 border-primary"></div>
+</div>
+<p class="font-body text-sm font-medium mt-3 text-on-surface-variant">Next Milestone: Complete Mock Test Series 3</p>
+</div>
+</div>
+<!-- Support Actions -->
+<div class="bg-surface border-4 border-primary p-6 neo-shadow flex flex-col gap-4">
+<h3 class="font-headline font-bold text-xl uppercase border-b-2 border-primary pb-2 mb-2">Quick Actions</h3>
+<button class="w-full bg-primary-container text-primary font-headline font-bold py-3 px-4 border-2 border-primary uppercase flex items-center justify-between hover:bg-primary hover:text-surface transition-colors neo-shadow-hover">
+                        Discuss with Rahul
+                        <span class="material-symbols-outlined">forum</span>
+</button>
+<button class="w-full bg-tertiary text-on-tertiary font-headline font-bold py-3 px-4 border-2 border-primary uppercase flex items-center justify-between hover:bg-primary hover:text-surface transition-colors neo-shadow-hover">
+                        Review Requirements
+                        <span class="material-symbols-outlined">fact_check</span>
+</button>
+<button class="w-full bg-surface-container text-primary font-headline font-bold py-3 px-4 border-2 border-primary uppercase flex items-center justify-between hover:bg-primary-container transition-colors neo-shadow-hover">
+                        Save to Family Bridge
+                        <span class="material-symbols-outlined">family_restroom</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Recommended Paths -->
+<section class="w-full">
+<h2 class="font-headline font-black text-4xl md:text-5xl uppercase tracking-tighter mb-6 text-primary border-b-4 border-primary pb-2 inline-block">Recommended Paths</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Path 1 -->
+<div class="bg-surface border-4 border-primary neo-shadow flex flex-col h-full hover:-translate-y-2 transition-transform duration-300">
+<div class="h-40 bg-primary-container border-b-4 border-primary relative overflow-hidden p-4 flex items-end">
+<img alt="Robotics engineering laboratory with students working on electronic components" class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-60" data-alt="Robotics engineering laboratory with students working on electronic components, bright lighting, focus on technology" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzGy5KHyqqUi8HvqlPGG6jwOOyM1ELh1MrYjb1Qm9CgCkgGvyshTBE4DeDx7Ix6V0J5uTDnwX_klHQJYlQKYzA62Np4m_P580ZvDwqLkft5sEmHDvIxBfo7vRJCwrMgalG4WTI9sZl3VyPs2FHi0rzYaYPJBAGnq-30uRqUAjieIdPAMNbPLNDcv4HHgjqQXFttL7hWxSn6j1liM0dy1_CuB4FO3FVTEGz28me6WVSATN5ka8YcZZCM98nSMn1pYIJmhnjYz4nByae"/>
+<h3 class="font-headline font-black text-2xl uppercase relative z-10 text-primary bg-surface inline-block px-2 border-2 border-primary">Engineering after 12th</h3>
+</div>
+<div class="p-6 flex flex-col flex-grow gap-4">
+<div class="flex gap-2 flex-wrap">
+<span class="bg-surface-container font-headline font-bold text-xs uppercase px-2 py-1 border border-primary">Duration: 4 Years</span>
+<span class="bg-surface-container font-headline font-bold text-xs uppercase px-2 py-1 border border-primary">Cost: Medium</span>
+</div>
+<div class="bg-tertiary-container border-2 border-primary p-3 relative">
+<span class="material-symbols-outlined absolute -top-3 -right-3 bg-surface border-2 border-primary rounded-full p-1 text-tertiary text-sm">verified</span>
+<p class="font-body text-sm font-bold">Why it matches: Aligns perfectly with his PCM background and stated interest in mechanics.</p>
+</div>
+<div class="mt-auto pt-4">
+<button class="w-full bg-primary text-surface font-headline font-bold py-2 border-2 border-primary uppercase hover:bg-tertiary transition-colors">Explore Details</button>
+</div>
+</div>
+</div>
+<!-- Path 2 -->
+<div class="bg-surface border-4 border-primary neo-shadow flex flex-col h-full hover:-translate-y-2 transition-transform duration-300">
+<div class="h-40 bg-secondary-fixed border-b-4 border-primary relative overflow-hidden p-4 flex items-end">
+<img alt="Design student working on sketches and color palettes on a desk" class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-60" data-alt="Design student working on sketches and color palettes on a desk, creative mess, natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBETBCS-RGDOc6J95xgNk8Akx8RSwp4Uha-A6Mc4uLL0RbZy-W7GBwkzk7Q-xrvkxc1w6BqL1VV3-4nMBM-lBBwPuZYH0cq84ayF8rFDntuw5dndxu00LvGLledake_ZwZbVnwuNOfGEtweYP3lyNdiuSmVf_2OHXqDmmrIFw-QOcjbByYW0FWMG0uch-Ms25E4wYL2WfY6FXR4Kp2cxnXkjKgOHTQyUy0S0yM6WT3GJ9Bvy8AIaLQ31JhMq9MRnSjbgqwLBQdlwyie"/>
+<h3 class="font-headline font-black text-2xl uppercase relative z-10 text-primary bg-surface inline-block px-2 border-2 border-primary">Design Studies</h3>
+</div>
+<div class="p-6 flex flex-col flex-grow gap-4">
+<div class="flex gap-2 flex-wrap">
+<span class="bg-surface-container font-headline font-bold text-xs uppercase px-2 py-1 border border-primary">Duration: 3-4 Years</span>
+<span class="bg-surface-container font-headline font-bold text-xs uppercase px-2 py-1 border border-primary">Cost: High</span>
+</div>
+<div class="bg-tertiary-container border-2 border-primary p-3 relative">
+<span class="material-symbols-outlined absolute -top-3 -right-3 bg-surface border-2 border-primary rounded-full p-1 text-tertiary text-sm">verified</span>
+<p class="font-body text-sm font-bold">Why it matches: High scores in creative aptitude tests; alternative career interest.</p>
+</div>
+<div class="mt-auto pt-4">
+<button class="w-full bg-primary text-surface font-headline font-bold py-2 border-2 border-primary uppercase hover:bg-tertiary transition-colors">Explore Details</button>
+</div>
+</div>
+</div>
+<!-- Path 3 -->
+<div class="bg-surface border-4 border-primary neo-shadow flex flex-col h-full hover:-translate-y-2 transition-transform duration-300">
+<div class="h-40 bg-surface-dim border-b-4 border-primary relative overflow-hidden p-4 flex items-end">
+<img alt="Abstract geometric pattern resembling military camouflage or precision" class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-60" data-alt="Abstract geometric pattern resembling military camouflage or precision, high contrast, sharp lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDt6BeAdvARIxTz0EkCNdcetCpbrGiMlUn5UfHBcc4FaHaDnb_dvwYWPlkb-zZLaF8lSgrw2e2XRkMeslAFotrpi7fw5tzJ958V8eLebQjjdKaKe2zUkLttKKEW8R3SUVMPu4b9E84KS-M0mtpsOv7vmEL4OtntDMr0tFxREbjZ9sgTLLHToQue60OvYkdDy4OAmS5VrhkRzLCH-1n2XWuIbxt4sLNdsDxZVGuZlUrAyLcKGCVPdRYQtYx5Ukm6cmK0wZewvejFMRup"/>
+<h3 class="font-headline font-black text-2xl uppercase relative z-10 text-primary bg-surface inline-block px-2 border-2 border-primary">Defense Services</h3>
+</div>
+<div class="p-6 flex flex-col flex-grow gap-4">
+<div class="flex gap-2 flex-wrap">
+<span class="bg-surface-container font-headline font-bold text-xs uppercase px-2 py-1 border border-primary">Duration: 3-4 Years</span>
+<span class="bg-surface-container font-headline font-bold text-xs uppercase px-2 py-1 border border-primary">Cost: Low</span>
+</div>
+<div class="bg-tertiary-container border-2 border-primary p-3 relative">
+<span class="material-symbols-outlined absolute -top-3 -right-3 bg-surface border-2 border-primary rounded-full p-1 text-tertiary text-sm">verified</span>
+<p class="font-body text-sm font-bold">Why it matches: Strong physical fitness scores and expressed desire for discipline.</p>
+</div>
+<div class="mt-auto pt-4">
+<button class="w-full bg-primary text-surface font-headline font-bold py-2 border-2 border-primary uppercase hover:bg-tertiary transition-colors">Explore Details</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Awareness & Comparison Grid -->
+<section class="w-full">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+<!-- Awareness Cards -->
+<div>
+<h2 class="font-headline font-black text-3xl md:text-4xl uppercase tracking-tighter mb-6 text-primary border-b-4 border-primary pb-2 inline-block">Parent Awareness</h2>
+<div class="flex flex-col gap-6">
+<!-- Article 1 -->
+<div class="bg-surface border-4 border-primary p-5 neo-shadow hover:bg-primary-container transition-colors cursor-pointer group">
+<div class="flex items-start gap-4">
+<div class="bg-primary text-surface p-3 border-2 border-primary group-hover:bg-surface group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl font-bold">account_balance</span>
+</div>
+<div>
+<span class="font-headline text-xs font-bold uppercase text-tertiary tracking-widest mb-1 block">Article</span>
+<h4 class="font-headline font-bold text-xl uppercase leading-tight mb-2">Govt vs Private: The Real Cost</h4>
+<p class="font-body text-sm text-on-surface-variant line-clamp-2">Understanding the hidden fees, ROI, and long-term financial implications of different institution types.</p>
+</div>
+</div>
+</div>
+<!-- Article 2 -->
+<div class="bg-surface border-4 border-primary p-5 neo-shadow hover:bg-secondary-fixed transition-colors cursor-pointer group">
+<div class="flex items-start gap-4">
+<div class="bg-primary text-surface p-3 border-2 border-primary group-hover:bg-surface group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl font-bold">psychology_alt</span>
+</div>
+<div>
+<span class="font-headline text-xs font-bold uppercase text-secondary tracking-widest mb-1 block">Debunked</span>
+<h4 class="font-headline font-bold text-xl uppercase leading-tight mb-2">Top 5 Career Myths</h4>
+<p class="font-body text-sm text-on-surface-variant line-clamp-2">"Engineering is the only safe bet" and other common misconceptions holding students back.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Path Comparison -->
+<div>
+<h2 class="font-headline font-black text-3xl md:text-4xl uppercase tracking-tighter mb-6 text-primary border-b-4 border-primary pb-2 inline-block">Path Comparison</h2>
+<div class="bg-surface border-4 border-primary p-0 neo-shadow">
+<div class="bg-primary text-surface font-headline font-bold uppercase text-center py-3 border-b-4 border-primary text-xl">
+                            Software Eng. <span class="text-primary-container mx-2">VS</span> Product Design
+                        </div>
+<div class="grid grid-cols-2 text-center divide-x-4 divide-primary">
+<!-- Column 1 -->
+<div class="flex flex-col">
+<div class="p-4 border-b-4 border-primary bg-surface-container">
+<span class="font-headline font-bold uppercase text-sm block mb-1">Focus</span>
+<span class="font-body font-bold text-lg">Logic &amp; Code</span>
+</div>
+<div class="p-4 border-b-4 border-primary">
+<span class="font-headline font-bold uppercase text-sm block mb-1">Demand</span>
+<span class="font-body font-bold text-lg text-secondary">Very High</span>
+</div>
+<div class="p-4 bg-surface-container">
+<span class="font-headline font-bold uppercase text-sm block mb-1">Starting Pay</span>
+<span class="font-body font-bold text-lg">High</span>
+</div>
+</div>
+<!-- Column 2 -->
+<div class="flex flex-col">
+<div class="p-4 border-b-4 border-primary bg-surface-container">
+<span class="font-headline font-bold uppercase text-sm block mb-1">Focus</span>
+<span class="font-body font-bold text-lg">User &amp; Aesthetics</span>
+</div>
+<div class="p-4 border-b-4 border-primary">
+<span class="font-headline font-bold uppercase text-sm block mb-1">Demand</span>
+<span class="font-body font-bold text-lg text-tertiary">Growing Fast</span>
+</div>
+<div class="p-4 bg-surface-container">
+<span class="font-headline font-bold uppercase text-sm block mb-1">Starting Pay</span>
+<span class="font-body font-bold text-lg">Medium-High</span>
+</div>
+</div>
+</div>
+<div class="p-4 bg-primary-container border-t-4 border-primary text-center">
+<button class="font-headline font-bold uppercase border-b-2 border-primary hover:text-tertiary hover:border-tertiary transition-colors">View Detailed Breakdown</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center bg-[#f5f0e8] h-20 px-2 border-t-4 border-neutral-900 md:hidden">
+<a class="flex flex-col items-center justify-center text-neutral-900/60 p-2 hover:bg-[#0055ff] hover:text-white transition-all active:scale-95 duration-100 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#ffcc00] text-neutral-900 border-2 border-neutral-900 p-2 scale-105 active:scale-95 duration-100 w-full h-full neo-shadow" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">insights</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase">Paths</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-900/60 p-2 hover:bg-[#0055ff] hover:text-white transition-all active:scale-95 duration-100 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1">school</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase">Study</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-900/60 p-2 hover:bg-[#0055ff] hover:text-white transition-all active:scale-95 duration-100 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase">Profile</span>
+</a>
+</nav>
+</body></html>
