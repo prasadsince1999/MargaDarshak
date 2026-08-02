@@ -4,11 +4,7 @@ import '../../theme/theme.dart';
 import 'app_brutal_panel.dart';
 
 class AppBrutalTabItem {
-  const AppBrutalTabItem({
-    required this.label,
-    this.icon,
-    this.semanticLabel,
-  });
+  const AppBrutalTabItem({required this.label, this.icon, this.semanticLabel});
 
   final String label;
   final IconData? icon;
@@ -49,7 +45,7 @@ class AppBrutalTabs extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onTap: enabled ? () => onChanged(index) : null,
               child: Container(
-                constraints: const BoxConstraints(minHeight: 44),
+                constraints: const BoxConstraints(minHeight: 48),
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.space8,
                   vertical: AppSpacing.space8,

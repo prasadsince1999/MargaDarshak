@@ -13,7 +13,10 @@ abstract final class AppColors {
   static const Color paperLow = Color(0xFFEEE9E0);
   static const Color paperDim = Color(0xFFD6D1C9);
   static const Color accentYellow = Color(0xFFFFCC00);
-  static const Color accentRed = Color(0xFFE63B2E);
+
+  /// Darkened from `#E63B2E` (4.17:1) so white body text on a red fill
+  /// clears WCAG AA at 4.5:1. Measured: 5.21:1.
+  static const Color accentRed = Color(0xFFD02A1D);
   static const Color accentBlue = Color(0xFF0055FF);
   static const Color textPrimary = ink;
   static const Color textSecondary = Color(0xFF4A4A4A);

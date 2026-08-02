@@ -28,11 +28,20 @@ class AppBrutalChip extends StatelessWidget {
     final active = enabled && onTap != null;
     final resolvedTone = selected ? tone : AppBrutalTone.paper;
     final style = appBrutalToneStyle(resolvedTone);
-    final borderWidth = selected ? AppShape.borderStrong : AppShape.borderDefault;
+    final borderWidth = selected
+        ? AppShape.borderStrong
+        : AppShape.borderDefault;
 
     final chip = Container(
+      // Chips are the primary interaction across onboarding and the filter
+      // rows, so they must clear the 48dp minimum touch target. Padding alone
+      // left them at ~36-40dp.
+      constraints: onTap == null
+          ? null
+          : const BoxConstraints(minHeight: 48, minWidth: 48),
+      alignment: onTap == null ? null : Alignment.center,
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.space8,
+        horizontal: AppSpacing.space12,
         vertical: AppSpacing.space8,
       ),
       decoration: appBrutalDecoration(
