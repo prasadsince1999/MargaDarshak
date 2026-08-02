@@ -7,7 +7,7 @@ final List<Course> seedCourses = [
   // â”€â”€â”€ Intermediate / 10+2 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Course(
     id: 'course_pcm_intermediate',
-    name: 'Science â€” PCM (Class 11-12)',
+    name: 'Science - PCM (Class 11-12)',
     type: CourseType.intermediate,
     durationMonths: 24,
     description:
@@ -28,7 +28,7 @@ final List<Course> seedCourses = [
   ),
   Course(
     id: 'course_pcb_intermediate',
-    name: 'Science â€” PCB (Class 11-12)',
+    name: 'Science - PCB (Class 11-12)',
     type: CourseType.intermediate,
     durationMonths: 24,
     description:
@@ -160,7 +160,7 @@ final List<Course> seedCourses = [
     type: CourseType.diploma,
     durationMonths: 36,
     description:
-        'Polytechnic diploma â€” hands-on technical training after 10th. '
+        'Polytechnic diploma - hands-on technical training after 10th. '
         'Can lateral-entry to B.Tech 2nd year (AICTE 10% supernumerary).',
     minimumClass: 10,
     requiredSubjects: ['Mathematics', 'Science'],
@@ -180,7 +180,7 @@ final List<Course> seedCourses = [
   // â”€â”€â”€ ITI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Course(
     id: 'course_iti_electrician',
-    name: 'ITI â€” Electrician (2 years)',
+    name: 'ITI - Electrician (2 years)',
     type: CourseType.iti,
     durationMonths: 24,
     description:
@@ -199,7 +199,7 @@ final List<Course> seedCourses = [
   ),
   Course(
     id: 'course_iti_fitter',
-    name: 'ITI â€” Fitter (2 years)',
+    name: 'ITI - Fitter (2 years)',
     type: CourseType.iti,
     durationMonths: 24,
     description:
@@ -219,7 +219,7 @@ final List<Course> seedCourses = [
   // â”€â”€â”€ Paramedical â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Course(
     id: 'course_dmlt',
-    name: 'DMLT â€” Diploma in Medical Lab Technology (2 years)',
+    name: 'DMLT - Diploma in Medical Lab Technology (2 years)',
     type: CourseType.paramedical,
     durationMonths: 24,
     description:
@@ -237,7 +237,7 @@ final List<Course> seedCourses = [
   ),
   Course(
     id: 'course_drt',
-    name: 'DRT â€” Diploma in Radiology Technology (2 years)',
+    name: 'DRT - Diploma in Radiology Technology (2 years)',
     type: CourseType.paramedical,
     durationMonths: 24,
     description:

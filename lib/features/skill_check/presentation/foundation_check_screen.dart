@@ -174,7 +174,7 @@ class _IntroView extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.space12),
                 Text(
-                  'VERIFIED\nSKILL CHECK',
+                  'VERIFIED SKILL CHECK',
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
                     color: AppColors.onTertiary,
                     fontWeight: FontWeight.w900,
@@ -252,7 +252,7 @@ class _IntroView extends StatelessWidget {
                             ? AppColors.primaryContainer
                             : AppColors.surface,
                         shadowOffset: selectedSubjects.contains(subject)
-              ? AppShape.shadowDistanceSm
+                            ? AppShape.shadowDistanceSm
                             : 0,
                       ),
                       child: Row(
@@ -555,7 +555,7 @@ class _QuestionView extends StatelessWidget {
                       color: selected
                           ? AppColors.primaryContainer
                           : AppColors.surface,
-          shadowOffset: selected ? AppShape.shadowDistanceSm : 0,
+                      shadowOffset: selected ? AppShape.shadowDistanceSm : 0,
                     ),
                     child: Row(
                       children: [

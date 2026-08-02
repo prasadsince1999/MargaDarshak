@@ -223,10 +223,7 @@ class _ExploreTab extends ConsumerWidget {
       if (branchRoadmaps == null || branchRoadmaps.isEmpty) continue;
 
       widgets.add(
-        AppBrutalSectionHeader(
-          title: _branchTitle(branch),
-          eyebrow: 'Branch',
-        ),
+        AppBrutalSectionHeader(title: _branchTitle(branch), eyebrow: 'Branch'),
       );
       widgets.add(const SizedBox(height: AppSpacing.space12));
 
@@ -467,7 +464,8 @@ class _MyPlanTab extends ConsumerWidget {
         child: AppBrutalEmptyState(
           icon: Icons.bookmark_border_rounded,
           title: 'No plan yet',
-          message: 'Go to Explore, tap a roadmap, and pin it as your primary path.',
+          message:
+              'Go to Explore, tap a roadmap, and pin it as your primary path.',
         ),
       ),
     );
@@ -512,7 +510,7 @@ class _ChecksTab extends ConsumerWidget {
               title: 'No goal set',
               message: 'Set a goal to unlock readiness checks.',
               actionLabel: 'Set a goal',
-              onAction: () => context.push('/profile'),
+              onAction: () => context.push('/goals'),
             )
           else
             _buildGoalCard(context, gp, ref),
@@ -533,7 +531,32 @@ class _ChecksTab extends ConsumerWidget {
             const SizedBox(height: AppSpacing.space12),
           ],
 
-          // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Readiness checks (goal-dependent) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+          // --- Direct check actions ---
+          const AppBrutalSectionHeader(title: 'Quick Checks', eyebrow: 'Tools'),
+          const SizedBox(height: AppSpacing.space8),
+          _CheckActionCard(
+            title: 'Foundation Check',
+            subtitle: 'Verified skill assessment with parent mode.',
+            icon: Icons.psychology_rounded,
+            onTap: () => context.push('/foundation-check'),
+          ),
+          const SizedBox(height: AppSpacing.space8),
+          _CheckActionCard(
+            title: 'Future Ready',
+            subtitle: 'Document readiness and data consistency check.',
+            icon: Icons.verified_user_rounded,
+            onTap: () => context.push('/future-ready'),
+          ),
+          const SizedBox(height: AppSpacing.space8),
+          _CheckActionCard(
+            title: 'Exam Hub',
+            subtitle: 'Explore exams, eligibility, and prep paths.',
+            icon: Icons.assignment_rounded,
+            onTap: () => context.push('/exams'),
+          ),
+          const SizedBox(height: AppSpacing.space16),
+
+          // ——— Readiness checks (goal-dependent) —————————————————————————————————————————————————
           if (gp.hasGoal && gp.studentGoalId != null) ...[
             const AppBrutalSectionHeader(
               title: 'Readiness checks',
@@ -724,7 +747,7 @@ class _ChecksTab extends ConsumerWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Ã¢â‚¬Â¢ '),
+                        const Text('• '),
                         Expanded(
                           child: Text(m, style: theme.textTheme.bodySmall),
                         ),
@@ -842,10 +865,10 @@ class _SmartFeatureCardTile extends StatelessWidget {
 
     return AppBrutalCard(
       tone: implemented ? AppBrutalTone.yellow : AppBrutalTone.low,
-      shadowOffset: implemented
-          ? AppShape.shadowOffsetSm
-          : const Offset(2, 2),
-      semanticLabel: implemented ? 'Open ${card.title}' : '${card.title} coming soon',
+      shadowOffset: implemented ? AppShape.shadowOffsetSm : const Offset(2, 2),
+      semanticLabel: implemented
+          ? 'Open ${card.title}'
+          : '${card.title} coming soon',
       onTap: implemented && card.route != null
           ? () {
               if (card.route!.startsWith('/ai')) {
@@ -887,10 +910,7 @@ class _SmartFeatureCardTile extends StatelessWidget {
           if (implemented)
             const Icon(Icons.chevron_right_rounded, size: 20)
           else
-            const AppBrutalChip(
-              label: 'SOON',
-              icon: Icons.schedule_rounded,
-            ),
+            const AppBrutalChip(label: 'SOON', icon: Icons.schedule_rounded),
         ],
       ),
     );
@@ -932,8 +952,6 @@ String _stageRoadmapIntro(EducationStage stage) => switch (stage) {
   EducationStage.other =>
     'Diagnostic mode: browse branches broadly before locking a path.',
 };
-
-
 
 // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Foundation Repair Suggestions Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
@@ -1042,4 +1060,49 @@ class _FoundationRepairSection extends ConsumerWidget {
     DiagnosisLevel.weak => Icons.fitness_center_rounded,
     _ => Icons.auto_fix_high_rounded,
   };
+}
+
+class _CheckActionCard extends StatelessWidget {
+  const _CheckActionCard({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBrutalPanel(
+      tone: AppBrutalTone.raised,
+      semanticLabel: title,
+      onTap: onTap,
+      child: Row(
+        children: [
+          Icon(icon, size: 28),
+          const SizedBox(width: AppSpacing.space12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title.toUpperCase(),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.space4),
+                Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ),
+          ),
+          const Icon(Icons.chevron_right_rounded),
+        ],
+      ),
+    );
+  }
 }

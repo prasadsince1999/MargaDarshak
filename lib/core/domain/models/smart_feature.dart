@@ -27,12 +27,30 @@ extension SmartFeatureGroupX on SmartFeatureGroup {
   };
 
   IconData get icon => switch (this) {
-    SmartFeatureGroup.goalChecks => const IconData(0xe153, fontFamily: 'MaterialIcons'), // flag
-    SmartFeatureGroup.examStrategy => const IconData(0xef3d, fontFamily: 'MaterialIcons'), // assignment
-    SmartFeatureGroup.streamSubject => const IconData(0xf0569, fontFamily: 'MaterialIcons'), // alt_route
-    SmartFeatureGroup.admissionSupport => const IconData(0xe8e8, fontFamily: 'MaterialIcons'), // verified_user
-    SmartFeatureGroup.parentWellbeing => const IconData(0xe32a, fontFamily: 'MaterialIcons'), // favorite
-    SmartFeatureGroup.trustLayer => const IconData(0xe8e8, fontFamily: 'MaterialIcons'), // shield
+    SmartFeatureGroup.goalChecks => const IconData(
+      0xe153,
+      fontFamily: 'MaterialIcons',
+    ), // flag
+    SmartFeatureGroup.examStrategy => const IconData(
+      0xef3d,
+      fontFamily: 'MaterialIcons',
+    ), // assignment
+    SmartFeatureGroup.streamSubject => const IconData(
+      0xf0569,
+      fontFamily: 'MaterialIcons',
+    ), // alt_route
+    SmartFeatureGroup.admissionSupport => const IconData(
+      0xe8e8,
+      fontFamily: 'MaterialIcons',
+    ), // verified_user
+    SmartFeatureGroup.parentWellbeing => const IconData(
+      0xe32a,
+      fontFamily: 'MaterialIcons',
+    ), // favorite
+    SmartFeatureGroup.trustLayer => const IconData(
+      0xe8e8,
+      fontFamily: 'MaterialIcons',
+    ), // shield
   };
 }
 

@@ -30,10 +30,7 @@ class AppBrutalScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: SafeArea(
-        bottom: safeBottom,
-        child: body,
-      ),
+      body: SafeArea(bottom: safeBottom, child: body),
       bottomNavigationBar: bottomNav,
     );
   }

@@ -143,7 +143,10 @@ final List<Roadmap> seedClass11Roadmaps = [
     tags: ['Class 11', 'PCMB', 'flexible', 'JEE', 'NEET', 'both'],
     visibleStages: [EducationStage.class11],
     linkedGoalIds: ['goal_engineering', 'goal_medical'],
-    backupRoadmapIds: ['class11_pcm_engineering_defence_route', 'class11_pcb_medical_health_route'],
+    backupRoadmapIds: [
+      'class11_pcm_engineering_defence_route',
+      'class11_pcb_medical_health_route',
+    ],
     stages: [
       RoadmapStage(
         id: 'c11pcmb_s1',

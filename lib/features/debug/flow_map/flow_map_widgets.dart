@@ -59,8 +59,8 @@ class FlowNode extends StatelessWidget {
             BoxShadow(
               color: shadow,
               offset: const Offset(
-                      AppShape.shadowDistanceSm,
-                      AppShape.shadowDistanceSm,
+                AppShape.shadowDistanceSm,
+                AppShape.shadowDistanceSm,
               ),
             ),
           ],
@@ -166,19 +166,14 @@ class FlowChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = selected
-        ? (color ?? AppColors.accentYellow)
-        : AppColors.paper;
+    final bg = selected ? (color ?? AppColors.accentYellow) : AppColors.paper;
     final isBrightBg =
         selected &&
         (color == AppColors.accentBlue || color == AppColors.accentRed);
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 4,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
           color: bg,
           border: Border.all(

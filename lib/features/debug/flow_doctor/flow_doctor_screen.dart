@@ -733,12 +733,18 @@ class _FlowDoctorScreenState extends ConsumerState<FlowDoctorScreen> {
             itemBuilder: (context, i) {
               final item = filtered[i];
               final (icon, color) = switch (item.severity) {
-                Severity.pass => (Icons.check_circle_rounded, AppColors.successOnSurface),
+                Severity.pass => (
+                  Icons.check_circle_rounded,
+                  AppColors.successOnSurface,
+                ),
                 Severity.warning => (
                   Icons.warning_amber_rounded,
                   AppColors.warningOnSurface,
                 ),
-                Severity.error => (Icons.cancel_rounded, AppColors.errorOnSurface),
+                Severity.error => (
+                  Icons.cancel_rounded,
+                  AppColors.errorOnSurface,
+                ),
               };
 
               return Padding(

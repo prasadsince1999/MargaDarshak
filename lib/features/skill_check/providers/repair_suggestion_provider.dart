@@ -33,7 +33,8 @@ final _repairCatalogue = <String, RepairSuggestion>{
   'algebra_foundation_7_day': const RepairSuggestion(
     id: 'algebra_foundation_7_day',
     title: 'Algebra Foundation',
-    description: 'Master linear equations, expressions, and basic '
+    description:
+        'Master linear equations, expressions, and basic '
         'algebraic manipulation in 7 focused days.',
     durationDays: 7,
     subject: 'Mathematics',
@@ -42,7 +43,8 @@ final _repairCatalogue = <String, RepairSuggestion>{
   'fractions_basics_5_day': const RepairSuggestion(
     id: 'fractions_basics_5_day',
     title: 'Fractions & Decimals',
-    description: 'Build confidence with fraction operations, '
+    description:
+        'Build confidence with fraction operations, '
         'decimal conversion, and word problems.',
     durationDays: 5,
     subject: 'Mathematics',
@@ -51,7 +53,8 @@ final _repairCatalogue = <String, RepairSuggestion>{
   'geometry_basics_7_day': const RepairSuggestion(
     id: 'geometry_basics_7_day',
     title: 'Geometry Fundamentals',
-    description: 'Angles, triangles, circles, and coordinate '
+    description:
+        'Angles, triangles, circles, and coordinate '
         'geometry basics for a solid foundation.',
     durationDays: 7,
     subject: 'Mathematics',
@@ -60,7 +63,8 @@ final _repairCatalogue = <String, RepairSuggestion>{
   'physics_mechanics_10_day': const RepairSuggestion(
     id: 'physics_mechanics_10_day',
     title: 'Mechanics Foundation',
-    description: 'Newton\'s laws, motion, and force diagrams '
+    description:
+        'Newton\'s laws, motion, and force diagrams '
         'with worked examples and practice.',
     durationDays: 10,
     subject: 'Science',
@@ -69,7 +73,8 @@ final _repairCatalogue = <String, RepairSuggestion>{
   'chemistry_basics_7_day': const RepairSuggestion(
     id: 'chemistry_basics_7_day',
     title: 'Chemistry Essentials',
-    description: 'Atoms, molecules, chemical reactions, and '
+    description:
+        'Atoms, molecules, chemical reactions, and '
         'balancing equations step by step.',
     durationDays: 7,
     subject: 'Science',
@@ -78,7 +83,8 @@ final _repairCatalogue = <String, RepairSuggestion>{
   'biology_basics_5_day': const RepairSuggestion(
     id: 'biology_basics_5_day',
     title: 'Biology Foundations',
-    description: 'Cell biology, body systems, and classification '
+    description:
+        'Cell biology, body systems, and classification '
         'essentials for a strong base.',
     durationDays: 5,
     subject: 'Science',
@@ -87,7 +93,8 @@ final _repairCatalogue = <String, RepairSuggestion>{
   'english_grammar_5_day': const RepairSuggestion(
     id: 'english_grammar_5_day',
     title: 'Grammar & Comprehension',
-    description: 'Tenses, sentence structure, and reading '
+    description:
+        'Tenses, sentence structure, and reading '
         'comprehension drills.',
     durationDays: 5,
     subject: 'English',
@@ -96,7 +103,8 @@ final _repairCatalogue = <String, RepairSuggestion>{
   'reasoning_foundation_7_day': const RepairSuggestion(
     id: 'reasoning_foundation_7_day',
     title: 'Reasoning & Aptitude',
-    description: 'Number series, analogies, and logical '
+    description:
+        'Number series, analogies, and logical '
         'deduction practice for competitive readiness.',
     durationDays: 7,
     subject: 'Reasoning',

@@ -145,14 +145,8 @@ extension EducationStageX on EducationStage {
   /// Prevents Class 10 roadmaps from showing to Graduate users.
   List<EducationStage> get stageFamily => switch (this) {
     EducationStage.class9 => [EducationStage.class9],
-    EducationStage.class10 => [
-      EducationStage.class10,
-      EducationStage.class11,
-    ],
-    EducationStage.class11 => [
-      EducationStage.class11,
-      EducationStage.class12,
-    ],
+    EducationStage.class10 => [EducationStage.class10, EducationStage.class11],
+    EducationStage.class11 => [EducationStage.class11, EducationStage.class12],
     EducationStage.class12 => [
       EducationStage.class12,
       EducationStage.undergraduate,
@@ -161,10 +155,7 @@ extension EducationStageX on EducationStage {
       EducationStage.diploma,
       EducationStage.undergraduate,
     ],
-    EducationStage.iti => [
-      EducationStage.iti,
-      EducationStage.diploma,
-    ],
+    EducationStage.iti => [EducationStage.iti, EducationStage.diploma],
     EducationStage.undergraduate => [
       EducationStage.undergraduate,
       EducationStage.graduate,
@@ -244,17 +235,17 @@ extension AcademicStreamX on AcademicStream {
 
 String stageHomeTitle(EducationStage stage) {
   return switch (stage) {
-    EducationStage.class9 => 'FOUNDATION\nEXPLORER',
-    EducationStage.class10 => 'AFTER 10TH\nDECISION',
-    EducationStage.class11 => 'STREAM\nREALITY',
-    EducationStage.class12 => 'EXAM\nCOMMAND',
-    EducationStage.diploma => 'DIPLOMA\nBRIDGE',
-    EducationStage.iti => 'TRADE TO\nCAREER',
-    EducationStage.undergraduate => 'UNDERGRAD\nLAUNCH',
-    EducationStage.graduate => 'GRADUATE\nNEXT STEP',
-    EducationStage.postgraduate => 'ADVANCED\nSPECIALIZATION',
-    EducationStage.dropper => 'RETAKE\nWITH PLAN',
-    EducationStage.other => 'FIND YOUR\nSTART',
+    EducationStage.class9 => 'FOUNDATION EXPLORER',
+    EducationStage.class10 => 'AFTER 10TH DECISION',
+    EducationStage.class11 => 'STREAM REALITY',
+    EducationStage.class12 => 'EXAM COMMAND',
+    EducationStage.diploma => 'DIPLOMA BRIDGE',
+    EducationStage.iti => 'TRADE TO CAREER',
+    EducationStage.undergraduate => 'UNDERGRAD LAUNCH',
+    EducationStage.graduate => 'GRADUATE NEXT STEP',
+    EducationStage.postgraduate => 'ADVANCED SPECIALIZATION',
+    EducationStage.dropper => 'RETAKE WITH PLAN',
+    EducationStage.other => 'FIND YOUR START',
   };
 }
 

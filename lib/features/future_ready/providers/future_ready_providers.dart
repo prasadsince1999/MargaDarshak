@@ -62,8 +62,8 @@ class DocumentStatusNotifier extends Notifier<List<UserDocumentStatus>> {
 
 final documentStatusListProvider =
     NotifierProvider<DocumentStatusNotifier, List<UserDocumentStatus>>(
-  DocumentStatusNotifier.new,
-);
+      DocumentStatusNotifier.new,
+    );
 
 // ─── Consistency check list ──────────────────────────────────────────────
 
@@ -114,8 +114,8 @@ class ConsistencyCheckNotifier extends Notifier<List<UserConsistencyCheck>> {
 
 final consistencyCheckListProvider =
     NotifierProvider<ConsistencyCheckNotifier, List<UserConsistencyCheck>>(
-  ConsistencyCheckNotifier.new,
-);
+      ConsistencyCheckNotifier.new,
+    );
 
 // ─── Computed readiness ──────────────────────────────────────────────────
 

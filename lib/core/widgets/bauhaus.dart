@@ -76,10 +76,7 @@ class BauhausScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surface,
-      body: SafeArea(
-        bottom: false,
-        child: body,
-      ),
+      body: SafeArea(bottom: false, child: body),
       bottomNavigationBar: showBottomNav
           ? BauhausBottomNav(activeItem: activeItem)
           : null,

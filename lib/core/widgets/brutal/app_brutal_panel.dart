@@ -84,13 +84,7 @@ BoxDecoration appBrutalDecoration({
     border: Border.all(color: style.border, width: borderWidth),
     boxShadow: shadowOffset == Offset.zero
         ? null
-        : [
-            BoxShadow(
-              color: style.shadow,
-              offset: shadowOffset,
-              blurRadius: 0,
-            ),
-          ],
+        : [BoxShadow(color: style.shadow, offset: shadowOffset, blurRadius: 0)],
   );
 }
 

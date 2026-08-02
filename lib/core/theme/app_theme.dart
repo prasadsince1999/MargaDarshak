@@ -57,10 +57,7 @@ abstract final class AppTheme {
     required Color primaryFill,
     required Color primaryText,
   }) {
-    final borderSide = BorderSide(
-      color: border,
-      width: AppShape.borderStrong,
-    );
+    final borderSide = BorderSide(color: border, width: AppShape.borderStrong);
 
     return ThemeData(
       useMaterial3: true,
@@ -141,7 +138,9 @@ abstract final class AppTheme {
           borderRadius: AppShape.inputRadius,
           borderSide: borderSide,
         ),
-        labelStyle: textTheme.labelLarge?.copyWith(color: colorScheme.onSurface),
+        labelStyle: textTheme.labelLarge?.copyWith(
+          color: colorScheme.onSurface,
+        ),
         hintStyle: textTheme.bodyLarge?.copyWith(color: mutedText),
         prefixIconColor: colorScheme.onSurface,
         contentPadding: const EdgeInsets.symmetric(

@@ -18,7 +18,10 @@ final List<Roadmap> seedClass12Roadmaps = [
     tags: ['Class 12', 'PCM', 'JEE', 'B.Tech', 'engineering'],
     visibleStages: [EducationStage.class12],
     linkedGoalIds: ['goal_engineering', 'goal_data_ai'],
-    backupRoadmapIds: ['class12_pcm_bsc_data_route', 'dropper_after12_jee_route'],
+    backupRoadmapIds: [
+      'class12_pcm_bsc_data_route',
+      'dropper_after12_jee_route',
+    ],
     stages: [
       RoadmapStage(
         id: 'c12btech_s1',
@@ -157,7 +160,10 @@ final List<Roadmap> seedClass12Roadmaps = [
     tags: ['Class 12', 'PCB', 'NEET', 'MBBS', 'medical'],
     visibleStages: [EducationStage.class12],
     linkedGoalIds: ['goal_medical'],
-    backupRoadmapIds: ['class12_pcb_allied_health_route', 'dropper_after12_neet_route'],
+    backupRoadmapIds: [
+      'class12_pcb_allied_health_route',
+      'dropper_after12_neet_route',
+    ],
     stages: [
       RoadmapStage(
         id: 'c12neet_s1',
@@ -458,7 +464,13 @@ final List<Roadmap> seedClass12Roadmaps = [
     targetClass: 12,
     branch: AfterTenthBranch.intermediate,
     icon: 'school',
-    tags: ['Class 12', 'CUET', 'central university', 'UG admission', 'all streams'],
+    tags: [
+      'Class 12',
+      'CUET',
+      'central university',
+      'UG admission',
+      'all streams',
+    ],
     visibleStages: [EducationStage.class12],
     linkedGoalIds: [],
     backupRoadmapIds: [],

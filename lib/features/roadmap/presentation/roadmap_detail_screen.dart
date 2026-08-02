@@ -174,8 +174,7 @@ class _RoadmapDetailContent extends ConsumerWidget {
               spacing: AppSpacing.space8,
               runSpacing: AppSpacing.space8,
               children: [
-                for (final tag in roadmap.tags)
-                  AppBrutalChip(label: tag),
+                for (final tag in roadmap.tags) AppBrutalChip(label: tag),
               ],
             ),
           ],
@@ -270,7 +269,8 @@ class _RoadmapDetailContent extends ConsumerWidget {
                 icon: Icons.record_voice_over_rounded,
                 variant: AppBrutalButtonVariant.outline,
                 fullWidth: false,
-                onPressed: () => context.push('/survey/institution_feedback_v1'),
+                onPressed: () =>
+                    context.push('/survey/institution_feedback_v1'),
               ),
             ],
           ),
@@ -651,13 +651,15 @@ class _ConfidenceNote extends ConsumerWidget {
     final confidence = ref.watch(guidanceConfidenceProvider);
     final (icon, message, tone) = _copy(confidence);
     final foreground = switch (tone) {
-      AppBrutalTone.red || AppBrutalTone.blue || AppBrutalTone.ink =>
-        AppColors.textInverse,
+      AppBrutalTone.red ||
+      AppBrutalTone.blue ||
+      AppBrutalTone.ink => AppColors.textInverse,
       _ => AppColors.textPrimary,
     };
     final bodyColor = switch (tone) {
-      AppBrutalTone.red || AppBrutalTone.blue || AppBrutalTone.ink =>
-        AppColors.textInverse,
+      AppBrutalTone.red ||
+      AppBrutalTone.blue ||
+      AppBrutalTone.ink => AppColors.textInverse,
       _ => AppColors.textSecondary,
     };
 
@@ -1207,10 +1209,7 @@ class _GoalFitSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppBrutalSectionHeader(
-          eyebrow: 'Goal fit',
-          title: goal.title,
-        ),
+        AppBrutalSectionHeader(eyebrow: 'Goal fit', title: goal.title),
         const SizedBox(height: AppSpacing.space12),
 
         // Subject alignment.
@@ -1305,7 +1304,9 @@ class _GoalFitSection extends ConsumerWidget {
 
         // Exam overlap.
         AppBrutalPanel(
-          tone: sharedExams.isNotEmpty ? AppBrutalTone.green : AppBrutalTone.low,
+          tone: sharedExams.isNotEmpty
+              ? AppBrutalTone.green
+              : AppBrutalTone.low,
           shadowOffset: AppShape.shadowOffsetSm,
           child: Row(
             children: [

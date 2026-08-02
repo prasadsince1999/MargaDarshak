@@ -19,7 +19,10 @@ final List<Roadmap> seedClass9Roadmaps = [
     tags: ['Class 9', 'foundation', 'study habits', 'preparation'],
     visibleStages: [EducationStage.class9],
     linkedGoalIds: [],
-    backupRoadmapIds: ['class9_subject_discovery', 'class9_study_habit_roadmap'],
+    backupRoadmapIds: [
+      'class9_subject_discovery',
+      'class9_study_habit_roadmap',
+    ],
     stages: [
       RoadmapStage(
         id: 'c9f_s1',

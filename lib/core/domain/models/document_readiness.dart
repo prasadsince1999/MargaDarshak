@@ -132,8 +132,11 @@ class DocumentType {
   final Set<SocialCategory> applicableCategories;
 
   /// Check if this document is relevant for a given user profile.
-  bool isRelevantFor(EducationStage stage, SocialCategory category,
-      PwdStatus pwd) {
+  bool isRelevantFor(
+    EducationStage stage,
+    SocialCategory category,
+    PwdStatus pwd,
+  ) {
     // Stage check: document needed at the current or next stage.
     if (!neededAtStages.contains(stage) &&
         !neededAtStages.contains(nextStageFor(stage))) {
@@ -157,19 +160,20 @@ class DocumentType {
   }
 
   /// Simple next-stage mapping for forward-looking logic.
-  static EducationStage nextStageFor(EducationStage current) => switch (current) {
-    EducationStage.class9 => EducationStage.class10,
-    EducationStage.class10 => EducationStage.class11,
-    EducationStage.class11 => EducationStage.class12,
-    EducationStage.class12 => EducationStage.undergraduate,
-    EducationStage.diploma => EducationStage.undergraduate,
-    EducationStage.iti => EducationStage.diploma,
-    EducationStage.undergraduate => EducationStage.graduate,
-    EducationStage.graduate => EducationStage.postgraduate,
-    EducationStage.postgraduate => EducationStage.postgraduate,
-    EducationStage.dropper => EducationStage.undergraduate,
-    EducationStage.other => EducationStage.undergraduate,
-  };
+  static EducationStage nextStageFor(EducationStage current) =>
+      switch (current) {
+        EducationStage.class9 => EducationStage.class10,
+        EducationStage.class10 => EducationStage.class11,
+        EducationStage.class11 => EducationStage.class12,
+        EducationStage.class12 => EducationStage.undergraduate,
+        EducationStage.diploma => EducationStage.undergraduate,
+        EducationStage.iti => EducationStage.diploma,
+        EducationStage.undergraduate => EducationStage.graduate,
+        EducationStage.graduate => EducationStage.postgraduate,
+        EducationStage.postgraduate => EducationStage.postgraduate,
+        EducationStage.dropper => EducationStage.undergraduate,
+        EducationStage.other => EducationStage.undergraduate,
+      };
 }
 
 // ─── User document status (persisted) ────────────────────────────────────
@@ -207,8 +211,8 @@ class UserDocumentStatus {
         (v) => v.name == j['status'],
         orElse: () => DocumentStatus.unchecked,
       ),
-      updatedAt: DateTime.tryParse(j['updatedAt'] as String? ?? '') ??
-          DateTime.now(),
+      updatedAt:
+          DateTime.tryParse(j['updatedAt'] as String? ?? '') ?? DateTime.now(),
     );
   }
 }

@@ -34,10 +34,7 @@ class AppBrutalStatusBadge extends StatelessWidget {
         AppBrutalTone.red,
         icon ?? Icons.cancel_rounded,
       ),
-      AppBrutalStatus.info => (
-        AppBrutalTone.blue,
-        icon ?? Icons.info_rounded,
-      ),
+      AppBrutalStatus.info => (AppBrutalTone.blue, icon ?? Icons.info_rounded),
     };
     final style = appBrutalToneStyle(tone);
 

@@ -88,8 +88,7 @@ class FutureReadiness {
         )
         .length;
 
-    final docScore =
-        totalRelevant > 0 ? readyCount / totalRelevant : 0.0;
+    final docScore = totalRelevant > 0 ? readyCount / totalRelevant : 0.0;
     final consistencyScore = allFields.isNotEmpty
         ? consistencyChecked / allFields.length
         : 0.0;
@@ -191,8 +190,9 @@ class FutureReadiness {
       );
     }
     if (lower.contains('class 10') || lower.contains('class 12')) {
-      final id =
-          lower.contains('12') ? 'doc_class12_marksheet' : 'doc_class10_marksheet';
+      final id = lower.contains('12')
+          ? 'doc_class12_marksheet'
+          : 'doc_class10_marksheet';
       return catalog.cast<DocumentType?>().firstWhere(
         (d) => d!.id == id,
         orElse: () => null,

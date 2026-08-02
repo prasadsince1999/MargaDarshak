@@ -49,9 +49,9 @@ class AppBrutalDialog extends StatelessWidget {
           children: [
             Text(
               title.toUpperCase(),
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w900,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w900),
             ),
             const SizedBox(height: AppSpacing.space12),
             child,

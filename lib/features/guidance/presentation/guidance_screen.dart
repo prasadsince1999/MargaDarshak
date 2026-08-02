@@ -35,7 +35,7 @@ class GuidanceScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              isParent ? 'SUPPORT\nWITHOUT GUESSING' : 'WHAT DO\nYOU NEED?',
+              isParent ? 'SUPPORT WITHOUT GUESSING' : 'WHAT DO YOU NEED?',
               style: Theme.of(context).textTheme.displayMedium?.copyWith(
                 height: 0.9,
                 fontWeight: FontWeight.w900,

@@ -18,7 +18,10 @@ final List<Roadmap> seedGraduateRoadmaps = [
     tags: ['job', 'placement', 'resume', 'interview', 'private sector'],
     visibleStages: [EducationStage.graduate],
     linkedGoalIds: ['goal_data_ai', 'goal_engineering'],
-    backupRoadmapIds: ['graduate_govt_exam_route', 'graduate_skill_upgrade_route'],
+    backupRoadmapIds: [
+      'graduate_govt_exam_route',
+      'graduate_skill_upgrade_route',
+    ],
     stages: [
       RoadmapStage(
         id: 'gj_s1',

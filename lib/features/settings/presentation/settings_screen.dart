@@ -152,8 +152,8 @@ class SettingsScreen extends ConsumerWidget {
                 ],
                 const SizedBox(height: AppSpacing.space16),
                 Text(
-                  'Verified education decision infrastructure.\n'
-                  'Trust-first. No ads. No data sale.',
+                  'Verified education decision system.\n'
+                  'Decision clarity first. No ads. No data sale.',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: AppColors.textSecondary,
                     height: 1.5,

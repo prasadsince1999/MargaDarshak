@@ -52,11 +52,7 @@ final List<Roadmap> _afterTenthRoadmaps = [
       'career_civil_eng',
       'career_data_scientist',
     ],
-    linkedGoalIds: [
-      'goal_engineering',
-      'goal_data_ai',
-      'goal_defence',
-    ],
+    linkedGoalIds: ['goal_engineering', 'goal_data_ai', 'goal_defence'],
     backupRoadmapIds: ['roadmap_pcb', 'roadmap_diploma_mech'],
     stages: [
       RoadmapStage(

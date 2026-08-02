@@ -54,7 +54,7 @@ class _SupervisorScreenState extends ConsumerState<SupervisorScreen> {
                   ),
                   const SizedBox(height: AppSpacing.space12),
                   Text(
-                    'SUPERVISOR\nCONFIRMATION',
+                    'SUPERVISOR CONFIRMATION',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       color: AppColors.onTertiary,
                       fontWeight: FontWeight.w900,
@@ -93,7 +93,7 @@ class _SupervisorScreenState extends ConsumerState<SupervisorScreen> {
                         ? AppColors.primaryContainer
                         : AppColors.surface,
                     shadowOffset: _selectedType == type
-              ? AppShape.shadowDistanceSm
+                        ? AppShape.shadowDistanceSm
                         : 0,
                   ),
                   child: Row(

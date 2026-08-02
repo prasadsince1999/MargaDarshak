@@ -53,7 +53,7 @@ class _StreamComparatorScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isParent ? 'DISCUSS\nWITH DATA' : 'COMPARE\nPATHS',
+                  isParent ? 'DISCUSS WITH DATA' : 'COMPARE PATHS',
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
                     height: 0.9,
                     fontWeight: FontWeight.w900,

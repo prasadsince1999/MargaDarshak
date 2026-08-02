@@ -765,9 +765,7 @@ class _OnboardingFlowSimulatorState
                   vertical: AppSpacing.space8,
                 ),
                 decoration: BoxDecoration(
-                  color: active
-                      ? AppColors.accentYellow
-                      : AppColors.paper,
+                  color: active ? AppColors.accentYellow : AppColors.paper,
                   border: Border.all(
                     color: AppColors.borderPrimary,
                     width: AppShape.borderWidthThick,
@@ -800,9 +798,7 @@ class _OnboardingFlowSimulatorState
                   vertical: AppSpacing.space4,
                 ),
                 decoration: BoxDecoration(
-                  color: active
-                      ? AppColors.accentYellow
-                      : AppColors.paper,
+                  color: active ? AppColors.accentYellow : AppColors.paper,
                   border: Border.all(
                     color: AppColors.borderPrimary,
                     width: AppShape.borderWidthThick,

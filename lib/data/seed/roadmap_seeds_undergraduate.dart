@@ -342,7 +342,10 @@ final List<Roadmap> seedUndergraduateRoadmaps = [
     tags: ['career switch', 'pivot', 'skill change', 'reskill'],
     visibleStages: [EducationStage.undergraduate],
     linkedGoalIds: [],
-    backupRoadmapIds: ['ug_internship_skill_route', 'graduate_skill_upgrade_route'],
+    backupRoadmapIds: [
+      'ug_internship_skill_route',
+      'graduate_skill_upgrade_route',
+    ],
     stages: [
       RoadmapStage(
         id: 'ucs_s1',

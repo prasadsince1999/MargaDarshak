@@ -64,9 +64,7 @@ class AppBrutalBottomNav extends StatelessWidget {
                 selected: selected,
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: enabled && !selected
-                      ? () => onChanged(item.id)
-                      : null,
+                  onTap: enabled && !selected ? () => onChanged(item.id) : null,
                   child: Container(
                     decoration: BoxDecoration(
                       color: background,
@@ -78,7 +76,11 @@ class AppBrutalBottomNav extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(item.icon, size: AppIconSizes.lg, color: foreground),
+                        Icon(
+                          item.icon,
+                          size: AppIconSizes.lg,
+                          color: foreground,
+                        ),
                         const SizedBox(height: AppSpacing.space4),
                         FittedBox(
                           fit: BoxFit.scaleDown,

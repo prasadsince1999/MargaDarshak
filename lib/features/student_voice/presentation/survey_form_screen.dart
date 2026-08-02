@@ -303,7 +303,7 @@ class _RatingInput extends StatelessWidget {
               color: selected
                   ? AppColors.primaryContainer
                   : AppColors.surfaceVariant,
-          shadowOffset: selected ? AppShape.shadowDistanceSm : 0,
+              shadowOffset: selected ? AppShape.shadowDistanceSm : 0,
             ),
             child: Center(
               child: Text(

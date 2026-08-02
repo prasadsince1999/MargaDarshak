@@ -11,7 +11,6 @@ import '../../core/domain/models/models.dart';
 /// No uploads, no verification — this is a self-reported checklist.
 final List<DocumentType> seedDocumentTypes = [
   // ─── Universal Documents ────────────────────────────────────────────
-
   DocumentType(
     id: 'doc_aadhaar',
     name: 'Aadhaar Card',
@@ -24,7 +23,8 @@ final List<DocumentType> seedDocumentTypes = [
         'A student from UP couldn\'t register for NEET because his '
         'Aadhaar name had a spelling error. Correction took 3 weeks — '
         'he missed the registration deadline.',
-    suggestedAction: 'Visit nearest Aadhaar centre or update online at myaadhaar.uidai.gov.in',
+    suggestedAction:
+        'Visit nearest Aadhaar centre or update online at myaadhaar.uidai.gov.in',
     neededAtStages: [
       EducationStage.class9,
       EducationStage.class10,
@@ -49,7 +49,8 @@ final List<DocumentType> seedDocumentTypes = [
     consequence:
         'Required for age verification. Without it, exam registration '
         'gets stuck at the document upload step.',
-    suggestedAction: 'Available from municipal corporation or gram panchayat office',
+    suggestedAction:
+        'Available from municipal corporation or gram panchayat office',
     neededAtStages: [
       EducationStage.class9,
       EducationStage.class10,
@@ -60,7 +61,6 @@ final List<DocumentType> seedDocumentTypes = [
   ),
 
   // ─── Academic Documents ──────────────────────────────────────────────
-
   DocumentType(
     id: 'doc_class10_marksheet',
     name: 'Class 10 Mark Sheet',
@@ -103,7 +103,6 @@ final List<DocumentType> seedDocumentTypes = [
   ),
 
   // ─── Identity & Financial ──────────────────────────────────────────
-
   DocumentType(
     id: 'doc_pan_card',
     name: 'PAN Card',
@@ -115,7 +114,8 @@ final List<DocumentType> seedDocumentTypes = [
     consequence:
         'Needed for scholarship disbursement to bank. Many students '
         'get stuck at the bank account verification step without PAN.',
-    suggestedAction: 'Apply online at onlineservices.nsdl.com or visit PAN centre',
+    suggestedAction:
+        'Apply online at onlineservices.nsdl.com or visit PAN centre',
     neededAtStages: [
       EducationStage.class12,
       EducationStage.undergraduate,
@@ -135,7 +135,8 @@ final List<DocumentType> seedDocumentTypes = [
     consequence:
         'Scholarship money goes to student\'s bank account. If the '
         'name doesn\'t match Aadhaar, the payment gets rejected.',
-    suggestedAction: 'Open a zero-balance savings account at any nationalized bank',
+    suggestedAction:
+        'Open a zero-balance savings account at any nationalized bank',
     neededAtStages: [
       EducationStage.class11,
       EducationStage.class12,
@@ -146,7 +147,6 @@ final List<DocumentType> seedDocumentTypes = [
   ),
 
   // ─── Category / Reservation Documents ──────────────────────────────
-
   DocumentType(
     id: 'doc_income_cert',
     name: 'Income Certificate',
@@ -244,7 +244,6 @@ final List<DocumentType> seedDocumentTypes = [
   ),
 
   // ─── Application Essentials ───────────────────────────────────────
-
   DocumentType(
     id: 'doc_photos',
     name: 'Passport-size Photographs',
@@ -256,7 +255,8 @@ final List<DocumentType> seedDocumentTypes = [
     consequence:
         'Rejected forms due to wrong photo specifications is common. '
         'Follow exact size and background requirements per exam.',
-    suggestedAction: 'Get 20+ copies. White background, recent (within 6 months)',
+    suggestedAction:
+        'Get 20+ copies. White background, recent (within 6 months)',
     neededAtStages: [
       EducationStage.class11,
       EducationStage.class12,
@@ -315,8 +315,11 @@ final List<ConsistencyField> seedConsistencyFields = [
     id: 'name',
     label: 'Student Name',
     documentsToCheck: [
-      'Aadhaar', 'Birth Certificate', 'School ID',
-      'Mark Sheets', 'Bank Account',
+      'Aadhaar',
+      'Birth Certificate',
+      'School ID',
+      'Mark Sheets',
+      'Bank Account',
     ],
     impactLevel: 'HIGH',
     effortMinutes: 10,
@@ -325,7 +328,9 @@ final List<ConsistencyField> seedConsistencyFields = [
     id: 'parent_name',
     label: 'Parent / Guardian Name',
     documentsToCheck: [
-      'Aadhaar', 'Birth Certificate', 'School Records',
+      'Aadhaar',
+      'Birth Certificate',
+      'School Records',
       'Income Certificate',
     ],
     impactLevel: 'HIGH',
@@ -335,7 +340,9 @@ final List<ConsistencyField> seedConsistencyFields = [
     id: 'dob',
     label: 'Date of Birth',
     documentsToCheck: [
-      'Aadhaar', 'Birth Certificate', 'Class 10 Mark Sheet',
+      'Aadhaar',
+      'Birth Certificate',
+      'Class 10 Mark Sheet',
       'School Records',
     ],
     impactLevel: 'HIGH',
@@ -345,7 +352,8 @@ final List<ConsistencyField> seedConsistencyFields = [
     id: 'category',
     label: 'Category (General / SC / ST / OBC)',
     documentsToCheck: [
-      'Caste Certificate', 'School Records',
+      'Caste Certificate',
+      'School Records',
       'Scholarship Applications',
     ],
     impactLevel: 'MEDIUM',
@@ -354,9 +362,7 @@ final List<ConsistencyField> seedConsistencyFields = [
   ConsistencyField(
     id: 'board',
     label: 'Board Name',
-    documentsToCheck: [
-      'Mark Sheets', 'School Records', 'Exam Registrations',
-    ],
+    documentsToCheck: ['Mark Sheets', 'School Records', 'Exam Registrations'],
     impactLevel: 'LOW',
     effortMinutes: 5,
   ),

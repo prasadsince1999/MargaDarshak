@@ -138,25 +138,6 @@ const _allFeatures = <SmartFeatureCard>[
     aiPrompt: 'Assess my readiness for each target exam.',
   ),
 
-  // ─── 8. Stream Outcome Explainer ───────────────────────────────
-  SmartFeatureCard(
-    id: 'stream_outcomes',
-    title: 'Stream Outcomes',
-    subtitle: 'What each stream opens and closes for your future.',
-    icon: Icons.alt_route_rounded,
-    group: SmartFeatureGroup.streamSubject,
-    visibleStages: [
-      EducationStage.class9,
-      EducationStage.class10,
-      EducationStage.class11,
-      EducationStage.class12,
-    ],
-    isImplemented: true,
-    route: '/subject-impact',
-    homePriority: 99,
-    aiPrompt: 'Explain what careers my stream opens and closes.',
-  ),
-
   // ─── 9. Wrong Stream Bridge Finder ─────────────────────────────
   SmartFeatureCard(
     id: 'wrong_stream_bridge',

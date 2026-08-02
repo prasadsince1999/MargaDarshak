@@ -68,7 +68,7 @@ class _ExamList extends StatelessWidget {
       ),
       children: [
         Text(
-          isParent ? 'ELIGIBILITY\nCHECK' : 'ENTRANCE\nEXAMS',
+          isParent ? 'ELIGIBILITY CHECK' : 'ENTRANCE EXAMS',
           style: Theme.of(context).textTheme.displaySmall?.copyWith(
             height: 0.9,
             fontWeight: FontWeight.w900,
