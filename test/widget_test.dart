@@ -1,86 +1,107 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 import 'package:margadarshak/core/domain/models/models.dart';
 import 'package:margadarshak/core/providers/user_provider.dart';
-import 'package:margadarshak/core/theme/theme.dart';
-import 'package:margadarshak/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:margadarshak/core/storage/local_persistence.dart';
+import 'package:margadarshak/features/home/presentation/home_screen.dart';
 import 'package:margadarshak/main.dart';
 
-class SeededUserNotifier extends UserNotifier {
-  SeededUserNotifier(this.profile);
-
-  final UserProfile? profile;
-
-  @override
-  UserProfile? build() => profile;
-}
+import 'support/test_harness.dart';
 
 void main() {
   Future<void> pumpApp(WidgetTester tester, {UserProfile? profile}) async {
-    final overrides = [
-      if (profile != null)
-        userProvider.overrideWith(() => SeededUserNotifier(profile)),
-    ];
+    final persistence = await createTestPersistence();
+    if (profile != null) {
+      await persistence.setOnboardingCompleted(true);
+    }
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: overrides,
+        overrides: [
+          localPersistenceProvider.overrideWithValue(persistence),
+          if (profile != null)
+            userProvider.overrideWith(() => SeededUserNotifier(profile)),
+        ],
         child: const MargadarshakApp(),
       ),
     );
     await tester.pump();
   }
 
-  testWidgets('App boots into splash before routing onward', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('App boots into splash before routing onward', (tester) async {
     await pumpApp(tester);
 
     expect(find.byKey(const Key('splash_wordmark')), findsOneWidget);
     expect(find.byKey(const Key('splash_tagline')), findsOneWidget);
   });
 
-  testWidgets('Splash routes not-onboarded users to onboarding', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('Splash routes a new user to onboarding', (tester) async {
     await pumpApp(tester);
 
     await tester.pump(const Duration(milliseconds: 1800));
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const Key('path_selection_heading')), findsOneWidget);
-    expect(find.text('STEP 1 OF 4'), findsOneWidget);
     expect(find.byKey(const Key('role_card_student')), findsOneWidget);
+    expect(find.byKey(const Key('role_card_parent')), findsOneWidget);
+    // 7 steps for a student; the parent step is appended only once the
+    // parent role is chosen.
+    expect(find.text('STEP 1 OF 7'), findsOneWidget);
   });
 
-  testWidgets('Splash routes onboarded users to home', (
-    WidgetTester tester,
+  testWidgets('Choosing the parent role adds the parent context step', (
+    tester,
   ) async {
-    final profile = UserProfile(
-      id: 'user-1',
-      name: 'Aarav',
-      role: UserRole.student,
-      currentClass: 10,
-      board: 'CBSE',
-      domicileState: 'OD',
-      createdAt: DateTime(2026, 1, 1),
-      updatedAt: DateTime(2026, 1, 1),
-    );
+    await pumpApp(tester);
+    await tester.pump(const Duration(milliseconds: 1800));
+    await tester.pumpAndSettle();
 
-    await pumpApp(tester, profile: profile);
+    await tester.tap(find.byKey(const Key('role_card_parent')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('STEP 2 OF 8'), findsOneWidget);
+  });
+
+  testWidgets('Splash routes an onboarded user to home', (tester) async {
+    await pumpApp(
+      tester,
+      profile: profileFor(
+        stage: EducationStage.class10,
+        role: UserRole.student,
+      ),
+    );
 
     await tester.pump(const Duration(milliseconds: 1800));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('student_home_heading')), findsOneWidget);
-    expect(find.text('HELLO,\nAARAV'), findsOneWidget);
-    expect(find.text('WHAT AFTER\n10TH?'), findsOneWidget);
+    // Names render in natural case, not shouted.
+    expect(find.text('Hello, Aarav'), findsOneWidget);
+  });
+
+  testWidgets('Home greets without a name rather than inventing one', (
+    tester,
+  ) async {
+    // Pumped directly: a profile with no name is not "onboarded", so the
+    // router would send it back to onboarding.
+    await pumpScreen(
+      tester,
+      const HomeScreen(),
+      profile: profileFor(
+        stage: EducationStage.class10,
+        role: UserRole.student,
+        name: '',
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hello'), findsOneWidget);
+    expect(find.textContaining('Rahul'), findsNothing);
   });
 
   testWidgets('Splash layout stays stable on narrow mobile widths', (
-    WidgetTester tester,
+    tester,
   ) async {
     tester.view.physicalSize = const Size(320, 640);
     tester.view.devicePixelRatio = 1.0;
@@ -93,39 +114,20 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Onboarding renders core controls with the refreshed theme', (
-    WidgetTester tester,
+  testWidgets('Identity step blocks until name and DOB are given', (
+    tester,
   ) async {
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp(
-          theme: AppTheme.light,
-          home: const OnboardingScreen(),
-        ),
-      ),
-    );
+    await pumpApp(tester);
+    await tester.pump(const Duration(milliseconds: 1800));
     await tester.pumpAndSettle();
-
-    expect(find.byKey(const Key('path_selection_heading')), findsOneWidget);
-    expect(find.text('NEED HELP DECIDING?'), findsOneWidget);
-    expect(find.byType(FilledButton), findsNothing);
 
     await tester.tap(find.byKey(const Key('role_card_student')));
     await tester.pumpAndSettle();
+    expect(find.text('STEP 2 OF 7'), findsOneWidget);
 
-    expect(find.byType(TextField), findsOneWidget);
-    expect(find.byKey(const Key('details_heading')), findsOneWidget);
-    expect(find.text('FULL NAME'), findsOneWidget);
-    expect(find.text('NEXT'), findsOneWidget);
-    expect(find.text('BACK'), findsOneWidget);
-
+    // Next must not advance while the required fields are empty.
     await tester.tap(find.text('NEXT'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('NEXT'));
-    await tester.pumpAndSettle();
-
-    expect(find.byKey(const Key('language_heading')), findsOneWidget);
-    expect(find.byKey(const Key('language_option_english')), findsOneWidget);
-    expect(find.text('GET STARTED'), findsOneWidget);
+    expect(find.text('STEP 2 OF 7'), findsOneWidget);
   });
 }
