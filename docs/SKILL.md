@@ -1,477 +1,174 @@
 ---
 name: flutter-rules
 description: >
-  Dart 3 and Flutter coding rules for Project Jarvis covering naming, layering,
-  widget rebuild discipline, 120fps rendering budgets, Impeller behavior,
-  isolate offloading, Dart 3 sealed classes / pattern matching, platform
-  channel patterns, stream idioms, enterprise security (Hive AES-256, SSL
-  pinning, obfuscation, jailbreak detection), and the unit/widget/integration
-  testing pyramid. Use whenever writing, editing, reviewing, or refactoring
-  any `.dart` file; working on Platform Channels, native bridges, audio
-  buffers; touching state management, async flows, or layer boundaries;
-  handling sensitive user data, auth tokens, biometric markers, or API keys;
-  wiring up network clients; diagnosing jank, dropped frames, or memory
-  bloat — even if the request does not explicitly name "Flutter rules."
+  Flutter 3 / Dart 3 coding rules for Mārgadarshak — layering, Riverpod
+  discipline, widget rebuild control, the Bauhaus token system, storage and
+  privacy constraints, and the testing approach. Use whenever writing,
+  editing, reviewing or refactoring any `.dart` file in this repo.
 ---
 
-# Flutter / Dart Rules — Project Jarvis
+# Flutter / Dart Rules — Mārgadarshak
 
-A synthesis of project-specific conventions and professional-grade Flutter /
-Dart 3 practices. Enforce on every `.dart` file.
+> Read `docs/03-design-system.md` for tokens and `docs/04-engineering.md` for
+> screen patterns and the QA checklist. This file covers code structure.
 
 ---
 
-## 1. Naming & File Hygiene
+## 1. The actual stack
 
-- Files, packages, directories: `lowercase_with_underscores`
-- Types (classes, enums, typedefs): `UpperCamelCase`
-- Variables, methods, params: `lowerCamelCase`
-- Private identifiers: leading underscore (`_internalState`)
-- Constants: `lowerCamelCase` for `const` locals/fields, `SCREAMING_SNAKE_CASE`
-  only for top-level ABI-style constants crossing platform channels
+Do not assume anything beyond this list exists.
 
-### File Headers
+| Layer | What we use |
+|---|---|
+| Framework | Flutter 3.44 · Dart 3.12 |
+| State | `flutter_riverpod` ^3.3 (+ `riverpod_annotation`) |
+| Routing | `go_router` ^17.2 |
+| Storage | `shared_preferences` ^2.5 only |
+| Formatting | `intl` ^0.20 |
+| Lints | `flutter_lints` ^6.0 |
 
-Every `.dart` file must start with a 3-line header:
-```dart
-// FILE: filename.dart
-// LAYER: SERVICE | MODEL | FEATURE | PROVIDER | APP | TEST
-// PURPOSE: One-sentence description of what this file does.
-```
+**Not present, do not reference:** Firebase, Isar, Hive, `flutter_secure_storage`,
+any HTTP client, any AI SDK, `google_fonts` (removed deliberately — fonts are
+bundled assets), platform channels, native plugins beyond `shared_preferences`.
 
-### Imports (Ordered)
-
-1. `dart:` core libraries
-2. `package:` dependencies
-3. Relative project imports
-
-Run `dart format` on every changed file. Use `flutter_lints`. Line length 100.
+`lib/services/{ai,auth,data_sync}` contain only `.gitkeep.dart`. There is no
+backend. **The app makes zero network calls** — all content is compile-time
+Dart seed data under `lib/data/seed/`. Keep it that way unless a network
+dependency is an explicit product decision, because it is the reason the app
+works for a student on patchy mobile data.
 
 ---
 
-## 2. Performance: Frame Budgets & Jank Diagnosis
+## 2. Naming & file hygiene
 
-Flutter renders at the display's refresh rate. Every frame must finish build +
-layout + paint + raster inside the budget or the frame is dropped.
-
-| Refresh | Budget | Notes |
-|:--|:--|:--|
-| 60 fps | ~16.6 ms | Baseline; legacy hardware |
-| 90 fps | ~11.1 ms | Mid-range modern devices |
-| 120 fps | ~8.3 ms | Flagship; demands aggressive optimization |
-
-### Diagnosing Jank
-
-- Profile with **`flutter run --profile`**, never `--debug` (debug mode keeps
-  assertions that skew timings).
-- Open **DevTools → Performance → Flutter frames chart** and read per-thread
-  time for UI (Dart) and Raster (GPU).
-- If UI thread is hot → reduce rebuild radius, move work to isolates.
-- If Raster thread is hot → reduce overdraw, add `RepaintBoundary`, avoid
-  `Opacity`/`Clip`/`saveLayer()` during animation.
-
-### Threading Model (Flutter 3.29+)
-
-Dart runs on the platform's main thread on Android/iOS — no separate UI
-thread. Platform calls are direct and synchronous-capable, but **blocking
-Dart still blocks the frame**. Offload heavy work.
+- Files, directories: `lowercase_with_underscores`
+- Types: `UpperCamelCase` · members: `lowerCamelCase` · private: `_leading`
+- Run `dart format` on every changed file. Line length 80 (dart default).
+- `flutter analyze` must be clean before any commit. It currently is — keep it.
 
 ---
 
-## 3. Rebuild Radius Control
+## 3. Layer boundaries
 
-The #1 cause of Flutter jank is unnecessary `build()` calls.
+| Layer | Scope | Directories |
+|---|---|---|
+| Domain | Entities, enums, pure logic | `lib/core/domain/`, `lib/features/*/domain/` |
+| Data | Seed content, repositories | `lib/data/seed/`, `lib/data/repositories/` |
+| Providers | Riverpod state and derivations | `lib/core/providers/`, `lib/features/*/providers/` |
+| UI | Screens and widgets | `lib/features/*/presentation/`, `lib/core/widgets/` |
 
-- **Localize `setState()`** to the smallest widget that owns the mutating
-  state. Do not call it on a screen-level widget for a single spinner.
-- **`const` constructors are mandatory** on any widget that takes no mutating
-  parameters. `const` lets the element tree short-circuit rebuilds.
-- With Provider: use `context.select<P, T>((p) => p.field)` or `Selector` /
-  `Consumer` — never `context.watch<P>()` on whole providers in deep trees.
-- With Bloc: `BlocBuilder` must carry `buildWhen` whenever the state class
-  bundles multiple fields.
-- Never rebuild a list's parent on per-item changes — push the selector
-  into the item widget.
+Domain code must not import `package:flutter/*` except where a type genuinely
+needs it (`IconData`, `Color` on a model). Prefer keeping it out.
 
 ---
 
-## 4. Rendering Optimization
+## 4. Riverpod discipline
 
-### `RepaintBoundary`
-
-Wrap computationally expensive or frequently-repainting subtrees
-(animations, video, real-time progress, charts, particle effects). The
-boundary isolates a display list so surrounding static layers are cached and
-composited instead of repainted.
-
-### Expensive Operations — Use With Care
-
-- **`Opacity`**: forces an off-screen buffer. In animations, use
-  `AnimatedOpacity`, `FadeTransition`, or pre-bake alpha into the color
-  (`Color.withValues(alpha: …)`).
-- **`Clip*` (non-rect)**: dynamic clipping is GPU-heavy. Pre-clip/frame assets
-  where possible. `Clip.hardEdge` is cheaper than `Clip.antiAlias`.
-- **`saveLayer()`**: breaks the GPU pipeline by allocating intermediate
-  buffers. Avoid except where unavoidable.
-- **Blurs, shadows with large `blurRadius`**: expensive; cache via
-  `RepaintBoundary` when static.
-
-### Impeller
-
-Flutter's default engine (Metal on iOS, Vulkan on Android). Shaders are
-AOT-compiled, eliminating runtime shader-compilation jank. Rely on Impeller
-defaults — do not re-introduce custom shader warm-up routines.
+- `effectiveProfileProvider` is the **single source of truth for UI reads**. It
+  resolves parent → child automatically, so a parent's screens show the child's
+  stage. Use `userProvider` only when editing or saving the profile.
+- Derive, don't duplicate: new state that is a function of existing state
+  belongs in a `Provider`, not a field.
+- Watch the narrowest provider that answers the question. Do not `watch` a
+  whole profile to read one field inside a list item.
+- Anything that must survive a background kill has to be written to
+  `LocalPersistence` — Riverpod state is memory only.
 
 ---
 
-## 5. Concurrency & Isolates
+## 5. Widget rules
 
-The main isolate runs UI, gestures, and frame scheduling. Blocking it freezes
-the app.
-
-### Offload to Isolates
-
-Use **`compute(fn, input)`** for:
-- Large JSON parsing (`jsonDecode` of >50 KB payloads)
-- Image filtering / resize / encode
-- Cryptographic hashing, AES-GCM bulk encrypt/decrypt
-- Isar migrations or bulk writes
-- LLM token post-processing (regex sweeps, sentencization)
-
-Isolates have **separate memory heaps** — communicate only via messages
-(primitives, `TransferableTypedData`, or serialized structures). No shared
-mutable state. No direct widget access.
-
-### Long-Running Isolates
-
-For repeated work (streaming inference workers), spawn a long-lived isolate
-with `Isolate.spawn` + a `SendPort` and reuse it. Cold-starting an isolate
-per call costs hundreds of ms.
+- Split large `build()` methods into **widget classes**, not helper methods.
+  Widgets get the `const` short-circuit; methods do not. The onboarding screen
+  is the cautionary example: page-builder methods mean a single chip tap
+  rebuilds the whole page.
+- `const` constructors wherever the widget takes no mutating parameters.
+- No side effects in `build()` — no persistence, no navigation, no I/O.
+- `ListView.builder` / `SliverList` for anything that can grow.
+- Always check `mounted` before using `context` after an `await`.
+- Dispose every controller, subscription and timer.
 
 ---
 
-## 6. Asset & List Management
+## 6. Design tokens — blocked patterns
 
-### Lists
+Outside `lib/core/theme/`, `lib/core/widgets/brutal/` and `lib/features/debug/`:
 
-- **`ListView(children: […])` / `GridView(children: […])` are banned** for any
-  list that can grow. Forces full layout of every child on mount.
-- Use **`ListView.builder`**, **`GridView.builder`**, **`SliverList`**.
-- Tune `cacheExtent` — too low → scroll stutter; too high → memory bloat.
-  Default is usually fine; only change with a measured reason.
-- Give list items stable `Key`s only when reordering / dedup matters.
+| Pattern | Use instead |
+|---|---|
+| `Color(0x…` | `AppColors.*` |
+| Raw `Colors.*` | `AppColors.*` |
+| `BorderRadius.circular(<number>)` | `AppShape.*` |
+| `BoxShadow` with non-zero `blurRadius` | Hard shadows only |
+| `TextStyle(` in a feature screen | `theme.textTheme.*` |
+| `fontFamily:` / `GoogleFonts.` | `AppTypography` — fonts are bundled |
+| Private `_Card` / `_Panel` / `_Chip` | `AppBrutal*` shared widgets |
 
-### Images
+New shared UI goes in `lib/core/widgets/brutal/`. The older `Bauhaus*` set in
+`bauhaus.dart` is legacy — migrate toward `AppBrutal*`, do not add to it.
 
-- Prefer **WebP** over JPEG/PNG (~30% smaller).
-- Supply **`cacheWidth` / `cacheHeight`** (or `memCacheWidth` for
-  `CachedNetworkImage`) so the decoder downscales into RAM. Loading a 4K asset
-  into a 400 px widget wastes ~40× the memory needed.
-- Use `cached_network_image` for network images to avoid redundant fetches.
-
----
-
-## 7. Widget Rules
-
-Widgets render and dispatch intent — nothing else.
-
-- Business logic → services, use-cases, repositories
-- Prefer `const` constructors (reduces rebuilds)
-- Split large `build()` methods into smaller widgets, not helper methods —
-  widgets get the `const` optimization; methods do not.
-- No side effects in `build()`: no network, no persistence, no navigation,
-  no `notifyListeners()`. Side effects belong in `initState`, event handlers,
-  or explicit lifecycle hooks.
+Touch targets are **48 dp minimum**, including chips.
 
 ---
 
-## 8. State Management (ChangeNotifier + Provider)
+## 7. Honesty rules — product-level, enforced in code
 
-- `ChatProvider` = UI state bridge between services and screens
-- Providers hold UI state only — domain state lives in services
-- One source of truth per domain — never duplicate state
-- **Throttle `notifyListeners()` during rapid token streaming** — batch tokens
-  and notify every ~50 ms, not per-token (prevents excessive widget rebuilds)
-- Use `context.select<Provider, T>((p) => p.field)` to limit rebuilds to
-  specific properties instead of rebuilding on every change
+The studio rule is that every build refuses the easy dishonest version of
+itself. In this codebase that means:
 
----
-
-## 9. Async Discipline
-
-- **Never use `Future.delayed` to fix race conditions** — redesign the boundary
-- Async methods must complete their contract before returning
-- Handle cancellation, disposal order, and re-entrancy carefully
-- Getters must not trigger network calls, persistence, or navigation
-- Always check `mounted` before `setState` / `context` use in async callbacks
-- Subscriptions (`StreamSubscription`, `Timer`, `AnimationController`) must be
-  cancelled/disposed in `dispose()`
+- **Never render a plausible-looking number you cannot compute.** No
+  placeholder percentages, scores, durations or costs. If there is no engine
+  behind it, show an explicit empty state saying so.
+- **Never invent user data.** No fallback names, no example interests, no
+  assumed category. Empty means empty, and the UI says "Not set".
+- **Never label self-declared data as verified.**
+- **Never let an untouched default become an asserted fact.** If stage, state
+  or board was not explicitly chosen, do not present it downstream as the
+  student's answer.
+- Sponsored options must always be disclosed and can never affect ranking.
 
 ---
 
-## 10. Side Effect Naming
+## 8. Privacy — DPDP Act 2023
 
-- `fetch`, `save`, `update`, `delete`, `execute`, `sync`, `load` → side effects
-- `get`, `calculate`, `compute` → pure reads only
-- Hidden writes during reads, rendering, or lazy init are banned
+The primary user is usually a minor.
 
----
-
-## 11. Layer Boundaries
-
-| Layer | Scope | Key Directories |
-|:--|:--|:--|
-| Domain | Models, enums, pure logic | `lib/models/`, `lib/features/*/domain/` |
-| App | Services, orchestration, use-cases | `lib/services/`, `lib/ai/`, `lib/features/*/application/` |
-| UI | Screens, widgets, providers | `lib/features/*/presentation/`, `lib/widgets/`, `lib/providers/` |
-| Infra | DB, plugins, platform, repo impls | `lib/repositories/`, `lib/features/*/infrastructure/`, `plugins/`, `android/` |
-
-**Domain must import zero Flutter packages.** If `package:flutter/…` appears
-in `lib/models/**` or a feature's `domain/`, it is a layering bug.
+- `shared_preferences` is **plaintext XML on disk**. Treat everything written
+  there as readable by anyone with the device.
+- Collect sensitive fields (social category, disability status, income,
+  religion) **at the point of use**, never in onboarding, and always with a
+  stated purpose. Use `EligibilityDetailsPrompt`.
+- Data minimisation: if no implemented feature consumes a field, do not ask
+  for it.
+- Right to erasure is implemented — `LocalPersistence.clearAll()` behind
+  Settings → Delete All Local Data. Any new storage key must be added there.
+- No public exposure of a minor's assessment results.
 
 ---
 
-## 12. Feature Architecture (Clean Architecture, Feature-First)
+## 9. Storage
 
-New features follow the `features/health/` reference implementation:
+All persistence goes through `LocalPersistence` with keys declared in
+`LocalStorageKeys`. Keys are versioned (`_v1`) so stale data can be detected.
 
-```
-lib/features/<feature>/
-  domain/         # Entities, value objects, repository interfaces (abstract)
-  infrastructure/ # Repository implementations, data sources, DTOs
-  application/    # Services, use-cases, orchestration, business logic
-  presentation/
-    screens/      # Full-page widgets
-    widgets/      # Reusable UI components
-```
-
-Each feature is self-contained. Cross-feature dependency goes through the
-**application layer** (a service in one feature consumes another feature's
-service or repository interface), never screen-to-screen or
-widget-to-widget.
+- Profile writes are debounced 500 ms; use `saveUserProfileNow` at critical
+  points.
+- Onboarding writes a draft after **every step** so a background kill does not
+  lose the student's answers.
+- Adding a key means adding it to `clearAll()` too.
 
 ---
 
-## 13. Dart 3 Paradigms
+## 10. Testing
 
-### Sealed Classes + Exhaustive Switch
+Current state: `test/widget_test.dart` plus stage × role smoke tests. The
+highest-value tests here are **not** unit tests of pure functions — they are
+smoke tests that walk the 11 stages × 2 roles matrix, because that matrix is
+where this app actually breaks.
 
-Model finite state spaces as `sealed class` hierarchies:
-
-```dart
-sealed class ModelState {}
-final class ModelUnloaded extends ModelState {}
-final class ModelLoading extends ModelState {
-  final double progress;
-  ModelLoading(this.progress);
-}
-final class ModelReady extends ModelState {
-  final String modelId;
-  ModelReady(this.modelId);
-}
-final class ModelError extends ModelState {
-  final Object error;
-  ModelError(this.error);
-}
-```
-
-Consume with switch **expressions** so the compiler enforces exhaustiveness:
-
-```dart
-final label = switch (state) {
-  ModelUnloaded()        => 'Idle',
-  ModelLoading(:final progress) => '${(progress * 100).toInt()}%',
-  ModelReady(:final modelId)    => 'Ready ($modelId)',
-  ModelError(:final error)      => 'Error: $error',
-};
-```
-
-Adding a new subclass immediately breaks every switch until handled —
-eliminates "unhandled state" runtime crashes.
-
-### Records
-
-Use records for small, throwaway heterogeneous bundles — return values,
-tuple-like keys, local grouping. Do **not** use records for entities that
-belong in the domain layer (those stay as named classes with validation).
-
-```dart
-(double, double) computeBounds(List<Offset> pts) { … }
-final (lat, lng) = locationRecord;
-```
-
-### Pattern Destructuring
-
-Prefer destructuring over positional/indexed access for JSON, maps, records:
-
-```dart
-if (json case {'id': int id, 'name': String name, 'age': int age}) {
-  return User(id: id, name: name, age: age);
-}
-```
-
-Fails safely to the `else` branch if any key is missing or the wrong type.
-
----
-
-## 14. Platform Channel Patterns (Kotlin ↔ Dart)
-
-Used for wake word service, Health Connect, and native audio.
-
-### MethodChannel (Request-Response)
-```dart
-static const _channel = MethodChannel('channel_name');
-Future<String> doSomething(String input) async {
-  final result = await _channel.invokeMethod<String>('method', {'key': input});
-  return result ?? '';
-}
-```
-
-### EventChannel (Streaming)
-```dart
-static const _streamChannel = EventChannel('channel_name/stream');
-Stream<Map<String, dynamic>> get eventStream =>
-  _streamChannel.receiveBroadcastStream()
-    .map((event) => Map<String, dynamic>.from(event as Map));
-```
-
-### Data Type Mappings
-
-| Dart | Kotlin | Use |
-|:--|:--|:--|
-| `Uint8List` | `ByteArray` | Audio WAV bytes, binary data |
-| `Float32List` | `FloatArray` | Audio samples, tensor data |
-| `String` | `String` | Text tokens, prompts |
-| `Map<String, dynamic>` | `HashMap<String, Any>` | Event payloads |
-
-**Pass file paths (not raw bytes) for large data** to avoid OOM on the channel.
-
----
-
-## 15. Stream Patterns
-
-### Broadcast vs Single-Subscription
-
-- **`StreamController.broadcast()`** — multiple consumers (UI, logging, analytics).
-  Events without listeners are DISCARDED (not buffered).
-- **`StreamController()`** — single consumer, guaranteed delivery.
-  But beware memory buildup from buffering if consumer is slow.
-
-### Completer Pattern (Callback → Future)
-
-```dart
-final completer = Completer<String>();
-_channel.invokeMethod('generate', {'text': text}).then((result) {
-  if (!completer.isCompleted) {  // ALWAYS check — prevents double-complete crash
-    completer.complete(result);
-  }
-});
-return completer.future;
-```
-
----
-
-## 16. Security: Sensitive Data & Transit
-
-Standard `SharedPreferences` is **plain-text XML/JSON** on disk and must
-never hold PII, auth tokens, biometric markers, health data, or API keys.
-
-### Local Storage — Hive AES-256 via `flutter_secure_storage`
-
-1. **Generate a 256-bit key** with `Hive.generateSecureKey()` (uses
-   cryptographically secure RNG under the hood). Never hardcode keys.
-2. **Persist the key in the hardware-backed store** via
-   `flutter_secure_storage` — this routes to the Android Keystore and iOS
-   Keychain (Secure Enclave), not the filesystem.
-3. **Open encrypted boxes** with the retrieved key:
-   ```dart
-   final encryptionKey = await _loadOrCreateKey();
-   final box = await Hive.openBox<Entry>(
-     'secure_entries',
-     encryptionCipher: HiveAesCipher(encryptionKey),
-   );
-   ```
-4. **Encrypt/decrypt large payloads inside `compute()`** — AES is CPU-bound
-   and will drop frames if run on the main isolate.
-
-For health data specifically, stay within the Health Connect APIs when
-possible; never cache raw biometric records in plain `SharedPreferences`.
-
-### Network Transit
-
-- Enforce **TLS 1.2+** at the HTTP client layer. Disable 1.0/1.1 explicitly.
-- **Certificate pinning** for any endpoint carrying auth or user data —
-  embed the SPKI hash of the server cert and reject mismatches during
-  handshake. Rotate pins alongside server cert rotation; ship at least one
-  backup pin.
-- Never log full request bodies or `Authorization` headers in release builds.
-
-### Runtime Hardening
-
-- **Release builds must use** `flutter build --obfuscate --split-debug-info=…`.
-  Save the debug-info directory per release so crashes can be de-obfuscated.
-- **Android**: keep `proguard-rules.pro` strict; shrink + obfuscate the
-  Kotlin/Java layer too.
-- **Jailbreak / root detection**: integrate `flutter_jailbreak_detection` (or
-  equivalent) on release builds, and fail-closed for features that handle
-  financial or health data.
-- **Background snapshot cloaking**: for screens showing sensitive data, apply
-  `secure_application` (or a manual blur overlay on `AppLifecycleState.paused`)
-  so the OS task-switcher snapshot doesn't leak content.
-- **Principle of least privilege**: every permission declared in
-  `AndroidManifest.xml` / `Info.plist` must map to a feature actually in use.
-  Audit on every release cut.
-
----
-
-## 17. Testing Pyramid
-
-Target roughly:
-
-| Tier | Share | Scope |
-|:--|:--|:--|
-| Unit | ~70% | Domain entities, use-cases, services, pure Dart logic. Zero Flutter imports in the code under test. |
-| Widget | ~20% | Presentation widgets rendering against fake services/state. Headless (`flutter test`), no emulator. |
-| Integration | ~10% | End-to-end flows on a real device/emulator: auth, payments, on-device AI round-trip, Health Connect sync. |
-
-Rules:
-- A bug fix **must** land with a failing-then-passing unit or widget test.
-- Do not mock what you own at the unit layer when a real instance is cheap —
-  mock only I/O boundaries (network, platform channels, Isar, filesystem).
-- Keep tests deterministic: no wall-clock `DateTime.now()`, no real random —
-  inject a clock / `Random.seeded`.
-
----
-
-## 18. Key Dependencies (Exact Versions)
-
-| Package | Version | Purpose |
-|:--|:--|:--|
-| `isar_community` | 4.0.0-dev.14 | Structured database |
-| `sherpa_onnx` | ^1.10.43 | Piper TTS + KWS |
-| `just_audio` | ^0.9.43 | Audio playback |
-| `record` | ^5.2.1 | Audio recording |
-| `health` | ^12.2.0 | Health Connect API |
-| `speech_to_text` | ^7.0.0 | Platform STT |
-| `flutter_tts` | ^4.2.0 | System TTS |
-| `firebase_ai` | latest | Firebase AI Logic (Gemini Live) |
-| `google_generative_ai` | latest | Google AI SDK (Gemini Chat) |
-
-### Android Native Dependencies
-
-| Dependency | Version | Purpose |
-|:--|:--|:--|
-| `com.google.ai.edge.litert:litert` | 1.4.1 | TFLite wake word |
-
-Build config: `compileSdk=35`, `minSdk=26`, `targetSdk=35`, `NDK=27.0.12077973`.
-
----
-
-## 19. Code Generation
-
-After any Isar schema change:
-```bash
-dart run build_runner build --delete-conflicting-outputs
-```
-Generated files: `lib/models/*.g.dart` (14 files) — never edit manually.
-Commit generated files alongside the schema change in the same commit.
+- A bug fix lands with a failing-then-passing test.
+- Use `ProviderScope(overrides: …)` with a seeded profile rather than driving
+  the real onboarding flow.
+- Keep tests deterministic: inject dates, never use `DateTime.now()` in an
+  assertion path.
+- Widget tests must not depend on real fonts or a device.
