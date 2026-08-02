@@ -1,121 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Margadarshak typography system.
 ///
 /// Display, title, and label roles use Space Grotesk; body copy stays on Inter.
+///
+/// Both families are **bundled as assets** (see `pubspec.yaml`) rather than
+/// fetched at runtime. Release builds have no `INTERNET` permission, so a
+/// runtime fetch would silently fall back to Roboto and none of the type
+/// below would ever reach a student.
+///
+/// Bundled weights: Inter 400/700/900, Space Grotesk 400/500/700. Flutter
+/// resolves any other requested weight to the nearest bundled one.
 abstract final class AppTypography {
+  /// Display / heading family — geometric, used for titles and labels.
+  static const String displayFamily = 'Space Grotesk';
+
+  /// Body family — optimised for reading at small sizes.
+  static const String bodyFamily = 'Inter';
+
   static TextTheme textTheme(ColorScheme colorScheme) {
-    final display = GoogleFonts.spaceGroteskTextTheme();
-    final body = GoogleFonts.interTextTheme();
     final onSurface = colorScheme.onSurface;
 
-    return body.copyWith(
-      displayLarge: display.displayLarge?.copyWith(
-        fontSize: 40,
-        height: 44 / 40,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      displayMedium: display.displayMedium?.copyWith(
-        fontSize: 32,
-        height: 36 / 32,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      displaySmall: display.displaySmall?.copyWith(
-        fontSize: 28,
-        height: 32 / 28,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      headlineLarge: display.headlineLarge?.copyWith(
-        fontSize: 28,
-        height: 32 / 28,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      headlineMedium: display.headlineMedium?.copyWith(
-        fontSize: 24,
-        height: 28 / 24,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      headlineSmall: display.headlineSmall?.copyWith(
-        fontSize: 20,
-        height: 24 / 20,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      titleLarge: display.titleLarge?.copyWith(
-        fontSize: 20,
-        height: 24 / 20,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      titleMedium: display.titleMedium?.copyWith(
-        fontSize: 18,
-        height: 22 / 18,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      titleSmall: display.titleSmall?.copyWith(
-        fontSize: 15,
-        height: 20 / 15,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      bodyLarge: body.bodyLarge?.copyWith(
-        fontSize: 16,
-        height: 24 / 16,
-        fontWeight: FontWeight.w400,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      bodyMedium: body.bodyMedium?.copyWith(
-        fontSize: 14,
-        height: 20 / 14,
-        fontWeight: FontWeight.w400,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      bodySmall: body.bodySmall?.copyWith(
-        fontSize: 12,
-        height: 18 / 12,
-        fontWeight: FontWeight.w400,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      labelLarge: display.labelLarge?.copyWith(
-        fontSize: 14,
-        height: 20 / 14,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      labelMedium: display.labelMedium?.copyWith(
-        fontSize: 12,
-        height: 16 / 12,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
-      labelSmall: display.labelSmall?.copyWith(
-        fontSize: 11,
-        height: 14 / 11,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        color: onSurface,
-      ),
+    TextStyle display({
+      required double size,
+      required double lineHeight,
+      FontWeight weight = FontWeight.w700,
+    }) => TextStyle(
+      fontFamily: displayFamily,
+      fontSize: size,
+      height: lineHeight / size,
+      fontWeight: weight,
+      letterSpacing: 0,
+      color: onSurface,
+    );
+
+    TextStyle body({
+      required double size,
+      required double lineHeight,
+      FontWeight weight = FontWeight.w400,
+    }) => TextStyle(
+      fontFamily: bodyFamily,
+      fontSize: size,
+      height: lineHeight / size,
+      fontWeight: weight,
+      letterSpacing: 0,
+      color: onSurface,
+    );
+
+    return TextTheme(
+      displayLarge: display(size: 40, lineHeight: 44),
+      displayMedium: display(size: 32, lineHeight: 36),
+      displaySmall: display(size: 28, lineHeight: 32),
+      headlineLarge: display(size: 28, lineHeight: 32),
+      headlineMedium: display(size: 24, lineHeight: 28),
+      headlineSmall: display(size: 20, lineHeight: 24),
+      titleLarge: display(size: 20, lineHeight: 24),
+      titleMedium: display(size: 18, lineHeight: 22),
+      titleSmall: display(size: 15, lineHeight: 20),
+      bodyLarge: body(size: 16, lineHeight: 24),
+      bodyMedium: body(size: 14, lineHeight: 20),
+      bodySmall: body(size: 12, lineHeight: 18),
+      labelLarge: display(size: 14, lineHeight: 20),
+      labelMedium: display(size: 12, lineHeight: 16),
+      labelSmall: display(size: 11, lineHeight: 14),
     );
   }
 }
