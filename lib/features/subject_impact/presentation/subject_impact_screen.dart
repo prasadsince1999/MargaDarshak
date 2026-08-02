@@ -56,6 +56,19 @@ class SubjectImpactScreen extends ConsumerWidget {
       body: Column(
         children: [
           _TabBar(currentTab: tab),
+          // Cut-offs below are category-dependent. Ask for it here, where it
+          // is actually used, rather than during onboarding.
+          const Padding(
+            padding: EdgeInsets.fromLTRB(
+              AppSpacing.space16,
+              AppSpacing.space12,
+              AppSpacing.space16,
+              0,
+            ),
+            child: EligibilityDetailsPrompt(
+              reason: 'because entry cut-offs differ by category',
+            ),
+          ),
           Expanded(
             child: switch (tab) {
               0 => _SubjectDropTab(user: user),
@@ -145,6 +158,10 @@ class _TabChip extends StatelessWidget {
           decoration: BoxDecoration(
             color: isActive ? AppColors.primary : AppColors.surfaceVariant,
             borderRadius: AppShape.borderRadiusSm,
+            border: Border.all(
+              color: AppColors.primary,
+              width: AppShape.borderDefault,
+            ),
           ),
           alignment: Alignment.center,
           child: Text(
@@ -179,7 +196,7 @@ class _SubjectDropTab extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'WHAT IF YOU\nDROP A SUBJECT?',
+            'WHAT IF YOU DROP A SUBJECT?',
             style: Theme.of(context).textTheme.displaySmall?.copyWith(
               height: 0.9,
               fontWeight: FontWeight.w900,
@@ -193,39 +210,49 @@ class _SubjectDropTab extends ConsumerWidget {
             ).textTheme.bodyLarge?.copyWith(color: AppColors.textSecondary),
           ),
           const SizedBox(height: AppSpacing.space16),
-          Wrap(
-            spacing: AppSpacing.space8,
-            runSpacing: AppSpacing.space8,
-            children: subjects.map((code) {
-              final isActive = selected == code;
-              return GestureDetector(
-                onTap: () => ref
-                    .read(_selectedSubjectProvider.notifier)
-                    .set(isActive ? null : code),
-                child: AnimatedContainer(
-                  duration: AppMotion.durationFast,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.space16,
-                    vertical: AppSpacing.space8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: isActive
-                        ? AppColors.error
-                        : AppColors.surfaceVariant,
-                    borderRadius: AppShape.borderRadiusSm,
-                  ),
-                  child: Text(
-                    SubjectCatalog.label(code),
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+          SizedBox(
+            width: double.infinity,
+            child: Wrap(
+              alignment: WrapAlignment.start,
+              spacing: AppSpacing.space8,
+              runSpacing: AppSpacing.space8,
+              children: subjects.map((code) {
+                final isActive = selected == code;
+                return GestureDetector(
+                  onTap: () => ref
+                      .read(_selectedSubjectProvider.notifier)
+                      .set(isActive ? null : code),
+                  child: AnimatedContainer(
+                    duration: AppMotion.durationFast,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.space16,
+                      vertical: AppSpacing.space8,
+                    ),
+                    decoration: BoxDecoration(
                       color: isActive
-                          ? AppColors.onPrimary
-                          : AppColors.textPrimary,
-                      fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
+                          ? AppColors.error
+                          : AppColors.surfaceVariant,
+                      borderRadius: AppShape.borderRadiusSm,
+                      border: Border.all(
+                        color: isActive ? AppColors.error : AppColors.primary,
+                        width: AppShape.borderDefault,
+                      ),
+                    ),
+                    child: Text(
+                      SubjectCatalog.label(code),
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: isActive
+                            ? AppColors.onPrimary
+                            : AppColors.textPrimary,
+                        fontWeight: isActive
+                            ? FontWeight.w700
+                            : FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           ),
           if (selected != null) ...[
             const SizedBox(height: AppSpacing.space20),
@@ -265,7 +292,7 @@ class _SubjectDropResult extends ConsumerWidget {
       stream: stream,
       currentSubjectCodes: subjects,
       droppedSubjectCode: dropped,
-      category: user?.socialCategory ?? SocialCategory.general,
+      category: user?.socialCategory ?? SocialCategory.unspecified,
       domicileState: user?.domicileState,
     );
     final result = ref.watch(subjectDropImpactProvider(input));
@@ -344,7 +371,7 @@ class _PercentageTab extends ConsumerWidget {
       stream: stream,
       currentSubjectCodes: subjects,
       hypotheticalPercentage: pct,
-      category: user?.socialCategory ?? SocialCategory.general,
+      category: user?.socialCategory ?? SocialCategory.unspecified,
       domicileState: user?.domicileState,
     );
     final result = ref.watch(percentageImpactProvider(input));
@@ -355,7 +382,7 @@ class _PercentageTab extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'WHAT IF YOUR\n% CHANGES?',
+            'WHAT IF YOUR % CHANGES?',
             style: Theme.of(context).textTheme.displaySmall?.copyWith(
               height: 0.9,
               fontWeight: FontWeight.w900,
@@ -483,7 +510,7 @@ class _StreamSwitchTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'STREAM\nCOMPARISON',
+            'STREAM COMPARISON',
             style: Theme.of(context).textTheme.displaySmall?.copyWith(
               height: 0.9,
               fontWeight: FontWeight.w900,

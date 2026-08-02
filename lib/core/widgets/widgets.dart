@@ -20,6 +20,7 @@ export 'brutal/app_brutal_states.dart';
 export 'brutal/app_brutal_status.dart';
 export 'brutal/app_brutal_tabs.dart';
 export 'eligibility_chip.dart';
+export 'eligibility_details_prompt.dart';
 export 'mentor_card.dart';
 export 'roadmap_tile.dart';
 export 'status_card.dart';

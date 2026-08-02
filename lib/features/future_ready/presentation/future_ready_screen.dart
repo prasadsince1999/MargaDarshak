@@ -122,7 +122,7 @@ class _HeroCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.space20),
           Text(
-            'FUTURE\nREADY CHECK',
+            'FUTURE READY CHECK',
             style: theme.textTheme.displaySmall?.copyWith(
               color: AppColors.onPrimary,
               height: 0.9,
@@ -158,8 +158,8 @@ class _HeroCard extends StatelessWidget {
                   tone: score >= 70
                       ? AppBrutalTone.green
                       : score >= 40
-                          ? AppBrutalTone.yellow
-                          : AppBrutalTone.red,
+                      ? AppBrutalTone.yellow
+                      : AppBrutalTone.red,
                   borderRadius: AppShape.borderRadiusXs,
                   borderWidth: AppShape.borderDefault,
                 ),
@@ -212,6 +212,15 @@ class _DocumentReadinessSection extends ConsumerWidget {
         ),
         const SizedBox(height: AppSpacing.space12),
 
+        // Which documents a student needs depends on category and disability
+        // status — so this is the screen that earns the right to ask.
+        const EligibilityDetailsPrompt(
+          reason:
+              'because caste, income and disability certificates are only '
+              'needed for some categories',
+        ),
+        const SizedBox(height: AppSpacing.space12),
+
         for (final doc in relevantDocs) ...[
           _DocumentCard(
             doc: doc,
@@ -247,7 +256,8 @@ class _DocumentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isReady = currentStatus == DocumentStatus.ready;
-    final showAlert = currentStatus != DocumentStatus.ready &&
+    final showAlert =
+        currentStatus != DocumentStatus.ready &&
         currentStatus != DocumentStatus.notApplicable;
 
     return AppBrutalCard(
@@ -455,8 +465,6 @@ class _StatusChip extends StatelessWidget {
   }
 }
 
-// ─── Consistency Check Section ───────────────────────────────────────────
-
 class _ConsistencyCheckSection extends ConsumerWidget {
   const _ConsistencyCheckSection({required this.user});
   final UserProfile user;
@@ -470,6 +478,26 @@ class _ConsistencyCheckSection extends ConsumerWidget {
     }
 
     final theme = Theme.of(context);
+
+    // Build field data with profile values.
+    final fields = seedConsistencyFields.map((field) {
+      return (
+        field: field,
+        profileValue: _profileValue(field.id, user),
+        status: checkMap[field.id]?.status ?? ConsistencyStatus.unchecked,
+      );
+    }).toList();
+
+    // Count statuses.
+    final matched = fields
+        .where((f) => f.status == ConsistencyStatus.consistent)
+        .length;
+    final mismatched = fields
+        .where((f) => f.status == ConsistencyStatus.mismatchFound)
+        .length;
+    final unchecked = fields
+        .where((f) => f.status == ConsistencyStatus.unchecked)
+        .length;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -486,44 +514,81 @@ class _ConsistencyCheckSection extends ConsumerWidget {
             color: AppColors.textSecondary,
           ),
         ),
+        const SizedBox(height: AppSpacing.space8),
+
+        // ── Summary chips ──
+        Wrap(
+          spacing: AppSpacing.space8,
+          runSpacing: AppSpacing.space4,
+          children: [
+            if (matched > 0)
+              AppBrutalChip(
+                label: '$matched matched',
+                tone: AppBrutalTone.green,
+                icon: Icons.check_circle_rounded,
+              ),
+            if (mismatched > 0)
+              AppBrutalChip(
+                label: '$mismatched mismatch',
+                tone: AppBrutalTone.red,
+                icon: Icons.error_rounded,
+              ),
+            if (unchecked > 0)
+              AppBrutalChip(
+                label: '$unchecked unchecked',
+                tone: AppBrutalTone.low,
+                icon: Icons.circle_outlined,
+              ),
+          ],
+        ),
         const SizedBox(height: AppSpacing.space12),
 
-        for (final field in seedConsistencyFields) ...[
-          _ConsistencyCard(
-            field: field,
-            profileValue: _profileValue(field.id, user),
-            currentStatus:
-                checkMap[field.id]?.status ?? ConsistencyStatus.unchecked,
-            onStatusChanged: (status) {
-              ref
-                  .read(consistencyCheckListProvider.notifier)
-                  .setStatus(field.id, status);
-            },
+        // ── Consolidated fields table ──
+        AppBrutalPanel(
+          tone: AppBrutalTone.raised,
+          child: Column(
+            children: [
+              for (var i = 0; i < fields.length; i++) ...[
+                _ConsistencyRow(
+                  field: fields[i].field,
+                  profileValue: fields[i].profileValue,
+                  currentStatus: fields[i].status,
+                  onStatusChanged: (status) {
+                    ref
+                        .read(consistencyCheckListProvider.notifier)
+                        .setStatus(fields[i].field.id, status);
+                  },
+                ),
+                if (i < fields.length - 1)
+                  const Divider(height: 1, thickness: 1),
+              ],
+            ],
           ),
-          const SizedBox(height: AppSpacing.space12),
-        ],
+        ),
       ],
     );
   }
 
   String? _profileValue(String fieldId, UserProfile user) => switch (fieldId) {
     'name' => user.name.isNotEmpty ? user.name : null,
-    'dob' => user.dateOfBirth != null
-        ? '${user.dateOfBirth!.day}/${user.dateOfBirth!.month}/${user.dateOfBirth!.year}'
-        : null,
-    'parent_name' => null, // Not stored in profile currently
-    'category' => user.socialCategory != SocialCategory.unspecified
-        ? user.socialCategory.label
-        : null,
+    'dob' =>
+      user.dateOfBirth != null
+          ? '${user.dateOfBirth!.day}/${user.dateOfBirth!.month}/${user.dateOfBirth!.year}'
+          : null,
+    'parent_name' => null,
+    'category' =>
+      user.socialCategory != SocialCategory.unspecified
+          ? user.socialCategory.label
+          : null,
     'board' => user.board.isNotEmpty ? user.board : null,
     _ => null,
   };
 }
 
-// ─── Consistency Card ────────────────────────────────────────────────────
+// ─── Compact Consistency Row ─────────────────────────────────────────────
 
-class _ConsistencyCard extends StatelessWidget {
-  const _ConsistencyCard({
+class _ConsistencyRow extends StatelessWidget {
+  const _ConsistencyRow({
     required this.field,
     required this.profileValue,
     required this.currentStatus,
@@ -538,104 +603,129 @@ class _ConsistencyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isChecked = currentStatus != ConsistencyStatus.unchecked;
 
-    return AppBrutalPanel(
-      tone: isChecked ? AppBrutalTone.raised : AppBrutalTone.low,
-      selected: isChecked,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.space12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Field header ──
+          // ── Row 1: Field label + impact + profile value ──
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                _checkIcon(currentStatus),
-                size: 20,
-                color: _checkColor(currentStatus),
-              ),
-              const SizedBox(width: AppSpacing.space8),
-              Expanded(
-                child: Text(
-                  field.label.toUpperCase(),
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w900,
+              // Status icon (tappable — cycles through states)
+              GestureDetector(
+                onTap: _cycleStatus,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Icon(
+                    _checkIcon(currentStatus),
+                    size: 18,
+                    color: _checkColor(currentStatus),
                   ),
                 ),
               ),
-              AppBrutalChip(
-                label: 'Impact: ${field.impactLevel}',
-                tone: field.impactLevel == 'HIGH'
-                    ? AppBrutalTone.red
-                    : field.impactLevel == 'MEDIUM'
-                        ? AppBrutalTone.yellow
-                        : AppBrutalTone.low,
+              const SizedBox(width: AppSpacing.space8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Field name + value inline
+                    RichText(
+                      text: TextSpan(
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w900,
+                        ),
+                        children: [
+                          TextSpan(text: field.label.toUpperCase()),
+                          if (profileValue != null)
+                            TextSpan(
+                              text: '  "$profileValue"',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.space4),
+                    // Documents to cross-check
+                    Text(
+                      field.documentsToCheck.join(' · '),
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Impact badge
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.space8,
+                  vertical: AppSpacing.space4,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: _impactColor(field.impactLevel),
+                    width: AppShape.borderWidthThin,
+                  ),
+                  borderRadius: AppShape.borderRadiusXs,
+                ),
+                child: Text(
+                  field.impactLevel,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 9,
+                    color: _impactColor(field.impactLevel),
+                  ),
+                ),
               ),
             ],
           ),
 
-          // ── Profile value ──
-          if (profileValue != null) ...[
-            const SizedBox(height: AppSpacing.space8),
-            Text(
-              'Your profile: "$profileValue"',
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ],
-
-          // ── Documents to check ──
+          // ── Row 2: Status toggles ──
           const SizedBox(height: AppSpacing.space8),
-          Text(
-            'Check: ${field.documentsToCheck.join(', ')}',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: AppColors.textSecondary,
+          Padding(
+            padding: const EdgeInsets.only(left: 26),
+            child: Row(
+              children: [
+                _MiniToggle(
+                  label: '✓ Match',
+                  isActive: currentStatus == ConsistencyStatus.consistent,
+                  activeColor: AppColors.success,
+                  onTap: () => onStatusChanged(ConsistencyStatus.consistent),
+                ),
+                const SizedBox(width: AppSpacing.space8),
+                _MiniToggle(
+                  label: '✗ Mismatch',
+                  isActive: currentStatus == ConsistencyStatus.mismatchFound,
+                  activeColor: AppColors.error,
+                  onTap: () => onStatusChanged(ConsistencyStatus.mismatchFound),
+                ),
+                const SizedBox(width: AppSpacing.space8),
+                _MiniToggle(
+                  label: '– Skip',
+                  isActive: currentStatus == ConsistencyStatus.unchecked,
+                  activeColor: AppColors.textSecondary,
+                  onTap: () => onStatusChanged(ConsistencyStatus.unchecked),
+                ),
+              ],
             ),
-          ),
-
-          // ── Effort ──
-          Text(
-            'Est. effort: ${field.effortMinutes} minutes',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: AppColors.textSecondary,
-            ),
-          ),
-
-          const SizedBox(height: AppSpacing.space12),
-
-          // ── Status selection ──
-          Wrap(
-            spacing: AppSpacing.space8,
-            runSpacing: AppSpacing.space8,
-            children: [
-              _StatusChip(
-                label: 'Matches everywhere',
-                isSelected: currentStatus == ConsistencyStatus.consistent,
-                onTap: () =>
-                    onStatusChanged(ConsistencyStatus.consistent),
-                color: AppColors.success,
-              ),
-              _StatusChip(
-                label: 'Not checked',
-                isSelected: currentStatus == ConsistencyStatus.unchecked,
-                onTap: () =>
-                    onStatusChanged(ConsistencyStatus.unchecked),
-                color: AppColors.textSecondary,
-              ),
-              _StatusChip(
-                label: 'Mismatch found',
-                isSelected:
-                    currentStatus == ConsistencyStatus.mismatchFound,
-                onTap: () =>
-                    onStatusChanged(ConsistencyStatus.mismatchFound),
-                color: AppColors.error,
-              ),
-            ],
           ),
         ],
       ),
     );
+  }
+
+  void _cycleStatus() {
+    final next = switch (currentStatus) {
+      ConsistencyStatus.unchecked => ConsistencyStatus.consistent,
+      ConsistencyStatus.consistent => ConsistencyStatus.mismatchFound,
+      ConsistencyStatus.mismatchFound => ConsistencyStatus.unchecked,
+    };
+    onStatusChanged(next);
   }
 
   IconData _checkIcon(ConsistencyStatus status) => switch (status) {
@@ -649,4 +739,56 @@ class _ConsistencyCard extends StatelessWidget {
     ConsistencyStatus.consistent => AppColors.success,
     ConsistencyStatus.mismatchFound => AppColors.error,
   };
+
+  Color _impactColor(String level) => switch (level) {
+    'HIGH' => AppColors.error,
+    'MEDIUM' => AppColors.warning,
+    _ => AppColors.textSecondary,
+  };
+}
+
+// ─── Mini Toggle Button ──────────────────────────────────────────────────
+
+class _MiniToggle extends StatelessWidget {
+  const _MiniToggle({
+    required this.label,
+    required this.isActive,
+    required this.activeColor,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool isActive;
+  final Color activeColor;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: AppMotion.durationFast,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.space8,
+          vertical: AppSpacing.space4,
+        ),
+        decoration: BoxDecoration(
+          color: isActive ? activeColor.withAlpha(25) : Colors.transparent,
+          borderRadius: AppShape.borderRadiusXs,
+          border: Border.all(
+            color: isActive ? activeColor : AppColors.outline,
+            width: isActive ? AppShape.borderDefault : AppShape.borderWidthThin,
+          ),
+        ),
+        child: Text(
+          label,
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            fontWeight: isActive ? FontWeight.w900 : FontWeight.w500,
+            color: isActive ? activeColor : AppColors.textSecondary,
+            fontSize: 10,
+          ),
+        ),
+      ),
+    );
+  }
 }

@@ -9,17 +9,28 @@ import 'profile_codec.dart';
 
 /// SharedPreferences wrapper for local persistence.
 ///
-/// **What it stores** (non-sensitive only):
-/// - User profile draft
-/// - Onboarding completed flag
+/// **SharedPreferences is plaintext XML on disk.** Anything written here is
+/// readable by anyone with access to the device or a backup of it. Treat that
+/// as the security model, not as an implementation detail.
+///
+/// **What it stores**, some of which is personal data about a minor:
+/// - User profile — name, date of birth, phone, district, and (once the user
+///   supplies them at the point of use) social category and disability status
+/// - Onboarding completed flag and the in-progress onboarding draft
 /// - My Plan / saved roadmap IDs
+/// - Document readiness and consistency-check state
 /// - Last saved timestamp
 ///
-/// **What it does NOT store** (use flutter_secure_storage later):
-/// - Auth tokens
-/// - Private assessment data
+/// **What it must never store:**
+/// - Auth tokens or credentials
 /// - Child verification proof
 /// - Uploaded documents
+///
+/// If any of the above is ever needed, add `flutter_secure_storage` and route
+/// it through the platform keystore — do not extend this class to cover it.
+///
+/// Every key added here must also be removed in [clearAll], which backs the
+/// DPDP right to erasure exposed in Settings.
 class LocalPersistence {
   LocalPersistence._(this._prefs);
 
@@ -87,6 +98,22 @@ class LocalPersistence {
     await _prefs.setBool(LocalStorageKeys.onboardingCompleted, value);
   }
 
+  // ─── Onboarding Draft ─────────────────────────────────────────────────
+
+  /// Raw JSON of the in-progress onboarding answers, or null.
+  String? get onboardingDraft =>
+      _prefs.getString(LocalStorageKeys.onboardingDraft);
+
+  /// Persist partial onboarding answers. Called after every step so the
+  /// student never loses work to a background kill.
+  Future<void> saveOnboardingDraft(String json) async {
+    await _prefs.setString(LocalStorageKeys.onboardingDraft, json);
+  }
+
+  Future<void> clearOnboardingDraft() async {
+    await _prefs.remove(LocalStorageKeys.onboardingDraft);
+  }
+
   // ─── My Plan ──────────────────────────────────────────────────────────
 
   /// Load saved plan state.
@@ -125,6 +152,7 @@ class LocalPersistence {
     await _prefs.remove(LocalStorageKeys.lastSavedAt);
     await _prefs.remove(LocalStorageKeys.documentReadiness);
     await _prefs.remove(LocalStorageKeys.consistencyChecks);
+    await _prefs.remove(LocalStorageKeys.onboardingDraft);
   }
 
   // ─── Raw Key-Value Access ──────────────────────────────────────────────

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -100,6 +102,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   int _currentPage = 0;
 
+  /// True once the student has picked a stage / state / board themselves.
+  /// Until then the values below are only defaults, and the UI says so — we
+  /// never let an untouched default be presented downstream as a fact about
+  /// the student.
+  bool _stageChosen = false;
+  bool _stateChosen = false;
+  bool _boardChosen = false;
+
   // Core.
   UserRole _role = UserRole.student;
   EducationStage _stage = EducationStage.class10;
@@ -126,10 +136,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   int _attemptNumber = 1;
   int? _targetYear;
 
-  // Eligibility (merged into location page).
-  SocialCategory _category = SocialCategory.unspecified;
-  PwdStatus _pwd = PwdStatus.unspecified;
-  HouseholdType _household = HouseholdType.unspecified;
+  // Social category, disability status and household type are deliberately
+  // not collected here — see _locationPage(). They are sensitive data about a
+  // minor and are asked for at the point of use instead.
 
   // Aspirations.
   CoachingStatus _coaching = CoachingStatus.unknown;
@@ -144,11 +153,166 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   String? _parentGoalId;
   final Set<String> _goalTargetExamIds = {};
 
-  // Language.
-  String _languageCode = 'en';
+  // Language. Not asked during onboarding: the app has no translations yet
+  // (no flutter_localizations, no delegates), so asking a student to choose a
+  // language and then ignoring the answer costs trust for nothing. Restore
+  // the step when Hindi/Odia actually exist.
+  final String _languageCode = 'en';
 
   // Parent extension.
   final Set<String> _parentConcerns = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _restoreDraft();
+  }
+
+  // ─── Draft persistence ──────────────────────────────────────────────────
+  // Onboarding used to write to disk only at the very end, so a background
+  // kill at step 6 lost everything. The draft is now saved after every step.
+
+  static const _draftVersion = 1;
+
+  void _saveDraft() {
+    final draft = <String, dynamic>{
+      'v': _draftVersion,
+      'page': _currentPage,
+      'stageChosen': _stageChosen,
+      'stateChosen': _stateChosen,
+      'boardChosen': _boardChosen,
+      'role': _role.name,
+      'stage': _stage.name,
+      'dob': _dob?.toIso8601String(),
+      'gender': _gender.name,
+      'stateCode': _stateCode,
+      'boardCode': _boardCode,
+      'subStage': _subStage.name,
+      'stream': _stream.name,
+      'yearOrSemester': _yearOrSemester,
+      'disciplineCode': _disciplineCode,
+      'tradeCode': _tradeCode,
+      'lastCompletedStage': _lastCompletedStage?.name,
+      'lastCompletedStream': _lastCompletedStream?.name,
+      'attemptContext': _attemptContext.name,
+      'attemptNumber': _attemptNumber,
+      'targetYear': _targetYear,
+      'coaching': _coaching.name,
+      'backup': _backup.name,
+      'risk': _risk.name,
+      'interests': _interests.toList(),
+      'targetExams': _targetExams.toList(),
+      'goalStatus': _goalStatus.name,
+      'studentGoalId': _studentGoalId,
+      'parentGoalId': _parentGoalId,
+      'goalTargetExamIds': _goalTargetExamIds.toList(),
+      'parentConcerns': _parentConcerns.toList(),
+      'name': _nameController.text,
+      'targetCareer': _targetCareerController.text,
+      'phone': _phoneController.text,
+      'district': _districtController.text,
+      'parentOccupation': _parentOccupationController.text,
+      'parentEducation': _parentEducationController.text,
+      'overallPercent': _overallPercentController.text,
+      'lastPercent': _lastPercentController.text,
+    };
+    ref.read(localPersistenceProvider).saveOnboardingDraft(jsonEncode(draft));
+  }
+
+  void _restoreDraft() {
+    final raw = ref.read(localPersistenceProvider).onboardingDraft;
+    if (raw == null || raw.isEmpty) return;
+
+    final Map<String, dynamic> d;
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is! Map<String, dynamic>) return;
+      if (decoded['v'] != _draftVersion) return;
+      d = decoded;
+    } on FormatException {
+      return; // Corrupt draft — start clean rather than crash.
+    }
+
+    T? byName<T extends Enum>(List<T> values, Object? name) {
+      if (name is! String) return null;
+      for (final v in values) {
+        if (v.name == name) return v;
+      }
+      return null;
+    }
+
+    setState(() {
+      _currentPage = (d['page'] as int?) ?? 0;
+      _stageChosen = (d['stageChosen'] as bool?) ?? false;
+      _stateChosen = (d['stateChosen'] as bool?) ?? false;
+      _boardChosen = (d['boardChosen'] as bool?) ?? false;
+      _role = byName(UserRole.values, d['role']) ?? _role;
+      _stage = byName(EducationStage.values, d['stage']) ?? _stage;
+      _dob = d['dob'] is String ? DateTime.tryParse(d['dob'] as String) : null;
+      _gender = byName(Gender.values, d['gender']) ?? _gender;
+      _stateCode = (d['stateCode'] as String?) ?? _stateCode;
+      _boardCode = (d['boardCode'] as String?) ?? _boardCode;
+      _subStage = byName(EducationSubStage.values, d['subStage']) ?? _subStage;
+      _stream = byName(AcademicStream.values, d['stream']) ?? _stream;
+      _yearOrSemester = (d['yearOrSemester'] as int?) ?? _yearOrSemester;
+      _disciplineCode = (d['disciplineCode'] as String?) ?? _disciplineCode;
+      _tradeCode = (d['tradeCode'] as String?) ?? _tradeCode;
+      _lastCompletedStage = byName(
+        EducationStage.values,
+        d['lastCompletedStage'],
+      );
+      _lastCompletedStream = byName(
+        AcademicStream.values,
+        d['lastCompletedStream'],
+      );
+      _attemptContext =
+          byName(AttemptContext.values, d['attemptContext']) ?? _attemptContext;
+      _attemptNumber = (d['attemptNumber'] as int?) ?? _attemptNumber;
+      _targetYear = d['targetYear'] as int?;
+      _coaching = byName(CoachingStatus.values, d['coaching']) ?? _coaching;
+      _backup = byName(BackupPreference.values, d['backup']) ?? _backup;
+      _risk = byName(RiskTolerance.values, d['risk']) ?? _risk;
+      _goalStatus = byName(GoalStatus.values, d['goalStatus']) ?? _goalStatus;
+      _studentGoalId = d['studentGoalId'] as String?;
+      _parentGoalId = d['parentGoalId'] as String?;
+
+      _interests
+        ..clear()
+        ..addAll((d['interests'] as List?)?.whereType<String>() ?? const []);
+      _targetExams
+        ..clear()
+        ..addAll((d['targetExams'] as List?)?.whereType<String>() ?? const []);
+      _goalTargetExamIds
+        ..clear()
+        ..addAll(
+          (d['goalTargetExamIds'] as List?)?.whereType<String>() ?? const [],
+        );
+      _parentConcerns
+        ..clear()
+        ..addAll(
+          (d['parentConcerns'] as List?)?.whereType<String>() ?? const [],
+        );
+
+      _nameController.text = (d['name'] as String?) ?? '';
+      _targetCareerController.text = (d['targetCareer'] as String?) ?? '';
+      _phoneController.text = (d['phone'] as String?) ?? '';
+      _districtController.text = (d['district'] as String?) ?? '';
+      _parentOccupationController.text =
+          (d['parentOccupation'] as String?) ?? '';
+      _parentEducationController.text = (d['parentEducation'] as String?) ?? '';
+      _overallPercentController.text = (d['overallPercent'] as String?) ?? '';
+      _lastPercentController.text = (d['lastPercent'] as String?) ?? '';
+    });
+
+    // Clamp to a valid page and jump the PageView there once it is laid out.
+    final target = _currentPage.clamp(0, _totalPages - 1);
+    _currentPage = target;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && _pageController.hasClients) {
+        _pageController.jumpToPage(target);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -183,7 +347,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       _PageKind.location,
       _PageKind.aspirations,
       _PageKind.goalSelection,
-      _PageKind.language,
       if (_role == UserRole.parent) _PageKind.parentExtension,
     ];
   }
@@ -198,6 +361,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         curve: AppMotion.curveStandard,
       );
       setState(() => _currentPage++);
+      _saveDraft();
       return;
     }
     _finish();
@@ -210,10 +374,30 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       curve: AppMotion.curveStandard,
     );
     setState(() => _currentPage--);
+    _saveDraft();
   }
 
   bool _validatePage(_PageKind kind) {
     switch (kind) {
+      // Stage, state and board drive every eligibility answer the app gives.
+      // An unconfirmed default here becomes an asserted fact downstream, so
+      // each must be chosen explicitly.
+      case _PageKind.stage:
+        if (!_stageChosen) {
+          _snack('Please pick the stage that matches.');
+          return false;
+        }
+        return true;
+      case _PageKind.location:
+        if (!_stateChosen) {
+          _snack('Please choose your state — it decides your eligibility.');
+          return false;
+        }
+        if (!_stage.isSchoolStage && !_boardChosen) {
+          _snack('Please choose your board.');
+          return false;
+        }
+        return true;
       case _PageKind.identity:
         if (_nameController.text.trim().isEmpty) {
           _snack('Please enter a name to continue.');
@@ -349,11 +533,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             gender: _gender,
             dateOfBirth: _dob,
             district: districtValue.isEmpty ? null : districtValue,
-            socialCategory: _category,
+            // Left unspecified on purpose — collected at the point of use.
+            socialCategory: SocialCategory.unspecified,
             incomeBracket: IncomeBracket.unspecified,
-            pwdStatus: _pwd,
+            pwdStatus: PwdStatus.unspecified,
             religion: null,
-            householdType: _household,
+            householdType: HouseholdType.unspecified,
             lastCompletedStage: _lastCompletedStage,
             lastCompletedStream: _lastCompletedStream,
             lastCompletedPercentage: lastPct,
@@ -392,9 +577,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       ..setPreferredLanguage(_languageCode)
       ..setGender(_gender)
       ..setDistrict(districtValue.isEmpty ? null : districtValue)
-      ..setSocialCategory(_category)
-      ..setPwdStatus(_pwd)
-      ..setHouseholdType(_household)
       ..setPhone(
         _phoneController.text.trim().isEmpty
             ? null
@@ -440,6 +622,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     // Mark onboarding complete and flush profile immediately.
     final persistence = ref.read(localPersistenceProvider);
     persistence.setOnboardingCompleted(true);
+    persistence.clearOnboardingDraft();
     if (ref.read(userProvider) case final profile?) {
       persistence.saveUserProfileNow(profile);
     }
@@ -452,88 +635,98 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final theme = Theme.of(context);
     final progress = (_currentPage + 1) / _totalPages;
 
-    return Scaffold(
-      backgroundColor: AppColors.paper,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.space20,
-                AppSpacing.space8,
-                AppSpacing.space20,
-                AppSpacing.space8,
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'STEP ${_currentPage + 1} OF $_totalPages',
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  AppBrutalProgressBar(
-                    value: progress,
-                    height: 14,
-                    semanticLabel: 'Onboarding progress',
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _totalPages,
-                itemBuilder: (context, index) => _buildPage(_pages[index]),
-              ),
-            ),
-            if (_currentPage > 0)
-              Container(
+    // System back steps back one page instead of popping the whole route.
+    // Popping used to bounce off the router's onboarding guard and dump the
+    // user back on step 1, which read as being trapped.
+    return PopScope(
+      canPop: _currentPage == 0,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _goPrev();
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.paper,
+        body: SafeArea(
+          child: Column(
+            children: [
+              Padding(
                 padding: const EdgeInsets.fromLTRB(
                   AppSpacing.space20,
-                  AppSpacing.space12,
+                  AppSpacing.space8,
                   AppSpacing.space20,
-                  AppSpacing.space20,
+                  AppSpacing.space8,
                 ),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: AppColors.borderPrimary,
-                      width: AppShape.borderStrong,
-                    ),
-                  ),
-                ),
-                child: Row(
+                child: Column(
                   children: [
-                    AppBrutalButton(
-                      label: 'Back',
-                      icon: Icons.arrow_back_rounded,
-                      fullWidth: false,
-                      variant: AppBrutalButtonVariant.outline,
-                      onPressed: _goPrev,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            key: const Key('onboarding_step_indicator'),
+                            'STEP ${_currentPage + 1} OF $_totalPages',
+                            style: theme.textTheme.labelMedium?.copyWith(
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const Spacer(),
-                    AppBrutalButton(
-                      label: _currentPage == _totalPages - 1
-                          ? 'Get started'
-                          : 'Next',
-                      icon: _currentPage == _totalPages - 1
-                          ? Icons.check_rounded
-                          : Icons.arrow_forward_rounded,
-                      fullWidth: false,
-                      onPressed: _goNext,
+                    AppBrutalProgressBar(
+                      value: progress,
+                      height: 14,
+                      semanticLabel: 'Onboarding progress',
                     ),
                   ],
                 ),
               ),
-          ],
+              Expanded(
+                child: PageView.builder(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: _totalPages,
+                  itemBuilder: (context, index) => _buildPage(_pages[index]),
+                ),
+              ),
+              if (_currentPage > 0)
+                Container(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.space20,
+                    AppSpacing.space12,
+                    AppSpacing.space20,
+                    AppSpacing.space20,
+                  ),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: AppColors.borderPrimary,
+                        width: AppShape.borderStrong,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      AppBrutalButton(
+                        label: 'Back',
+                        icon: Icons.arrow_back_rounded,
+                        fullWidth: false,
+                        variant: AppBrutalButtonVariant.outline,
+                        onPressed: _goPrev,
+                      ),
+                      const Spacer(),
+                      AppBrutalButton(
+                        label: _currentPage == _totalPages - 1
+                            ? 'Get started'
+                            : 'Next',
+                        icon: _currentPage == _totalPages - 1
+                            ? Icons.check_rounded
+                            : Icons.arrow_forward_rounded,
+                        fullWidth: false,
+                        onPressed: _goNext,
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -555,8 +748,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         return _aspirationsPage();
       case _PageKind.goalSelection:
         return _goalSelectionPage();
-      case _PageKind.language:
-        return _languagePage();
       case _PageKind.parentExtension:
         return _parentExtensionPage();
     }
@@ -590,6 +781,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
           const SizedBox(height: AppSpacing.space32),
           _RoleChoice(
+            key: const Key('role_card_student'),
             title: 'STUDENT',
             body: 'I am exploring career options and colleges.',
             icon: Icons.school_rounded,
@@ -601,6 +793,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
           const SizedBox(height: AppSpacing.space20),
           _RoleChoice(
+            key: const Key('role_card_parent'),
             title: 'PARENT',
             body: "I am guiding my child's educational journey.",
             icon: Icons.family_restroom_rounded,
@@ -821,21 +1014,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           _StageChoice(
             title: item.$2,
             body: item.$3,
-            selected: _stage == item.$1,
+            // Nothing reads as "selected" until the user actually picks —
+            // an untouched default must never look like their answer.
+            selected: _stageChosen && _stage == item.$1,
             enabled: item.$1.isAvailable,
             onTap: () {
               if (!item.$1.isAvailable) {
                 ScaffoldMessenger.of(context)
                   ..clearSnackBars()
                   ..showSnackBar(
-                    const SnackBar(
-                      content: Text('This is not released yet'),
-                    ),
+                    const SnackBar(content: Text('This is not released yet')),
                   );
                 return;
               }
               setState(() {
                 _stage = item.$1;
+                _stageChosen = true;
                 _subStage = EducationSubStage.none; // Reset sub-stage.
                 if (item.$1 == EducationStage.class9) {
                   _stream = AcademicStream.none;
@@ -1136,18 +1330,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   Widget _locationPage() {
     return _OnboardingPage(
-      title: 'LOCATION &\nELIGIBILITY',
+      title: 'WHERE DO\nYOU STUDY?',
       intro:
-          'State and board drive eligibility for admissions, scholarships, and local entrance tests.',
+          'State and board decide which admissions, scholarships and entrance '
+          'tests apply to you.',
       children: [
         _PickerField(
           label: 'STATE / UT',
-          value: stateLabel(_stateCode),
+          value: _stateChosen ? stateLabel(_stateCode) : 'Tap to choose',
           onTap: () => _pickFromOptions(
             title: 'Select state',
             options: indianStatesAndUts,
             onSelected: (code) => setState(() {
               _stateCode = code;
+              _stateChosen = true;
               // Auto-resolve state board if one is currently selected.
               if (_isStateBoardSelected) {
                 _boardCode = resolveBoardCode(code, _stage);
@@ -1168,41 +1364,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         if (!_stage.isSchoolStage) ...[
           const _Label('BOARD / LAST BOARD'),
           _boardSelector(),
-          const SizedBox(height: AppSpacing.space20),
         ],
-        const _Label('HOUSEHOLD TYPE'),
-        _EnumChoiceWrap<HouseholdType>(
-          values: const [
-            HouseholdType.urban,
-            HouseholdType.semiUrban,
-            HouseholdType.rural,
-          ],
-          selected: _household,
-          labelOf: (h) => h.label,
-          onSelected: (h) => setState(() => _household = h),
-        ),
-        const SizedBox(height: AppSpacing.space20),
-        const _Label('SOCIAL CATEGORY (OPTIONAL)'),
-        _EnumChoiceWrap<SocialCategory>(
-          values: const [
-            SocialCategory.general,
-            SocialCategory.obcNcl,
-            SocialCategory.sc,
-            SocialCategory.st,
-            SocialCategory.ews,
-          ],
-          selected: _category,
-          labelOf: (c) => c.label,
-          onSelected: (c) => setState(() => _category = c),
-        ),
-        const SizedBox(height: AppSpacing.space20),
-        const _Label('DISABILITY STATUS (OPTIONAL)'),
-        _EnumChoiceWrap<PwdStatus>(
-          values: const [PwdStatus.none, PwdStatus.pwd],
-          selected: _pwd,
-          labelOf: (p) => p.label,
-          onSelected: (p) => setState(() => _pwd = p),
-        ),
+        // Social category, disability status and household type used to be
+        // collected here. They are sensitive personal data about a minor and
+        // nothing on this screen needs them, so they are now asked for at the
+        // point of use (eligibility, scholarships, document checklists) with
+        // a stated purpose — see EligibilityDetailsPrompt.
       ],
     );
   }
@@ -1230,8 +1397,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         _ChoiceWrap(
           values: nationalBoards.map((b) => b.code).toList(),
           labels: {for (final b in nationalBoards) b.code: b.label},
-          selected: selectedChip,
+          selected: _boardChosen ? selectedChip : '',
           onSelected: (code) => setState(() {
+            _boardChosen = true;
             if (code == 'STATE') {
               // Resolve the state-specific board code from domicile state.
               _boardCode = resolveBoardCode(_stateCode, _stage);
@@ -1502,28 +1670,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     );
   }
 
-  Widget _languagePage() {
-    return _OnboardingPage(
-      title: 'WHICH\nLANGUAGE',
-      intro:
-          'Choose the language you want us to use most often while guiding you through the app.',
-      children: [
-        for (final lang in guidanceLanguages) ...[
-          _BigChoice(
-            title: lang.label,
-            body: lang.code == 'en'
-                ? 'Default guidance language.'
-                : 'Use this language for simpler guidance copy.',
-            icon: Icons.translate_rounded,
-            selected: _languageCode == lang.code,
-            onTap: () => setState(() => _languageCode = lang.code),
-          ),
-          const SizedBox(height: AppSpacing.space12),
-        ],
-      ],
-    );
-  }
-
   Widget _parentExtensionPage() {
     return _OnboardingPage(
       title: 'YOUR\nCONTEXT',
@@ -1712,7 +1858,6 @@ enum _PageKind {
   location,
   aspirations,
   goalSelection,
-  language,
   parentExtension,
 }
 
@@ -1767,6 +1912,7 @@ class _OnboardingPage extends StatelessWidget {
 
 class _RoleChoice extends StatelessWidget {
   const _RoleChoice({
+    super.key,
     required this.title,
     required this.body,
     required this.icon,
@@ -1866,8 +2012,8 @@ class _StageChoice extends StatelessWidget {
         color: !enabled
             ? AppColors.surfaceVariant
             : selected
-                ? AppColors.primaryContainer
-                : AppColors.surface,
+            ? AppColors.primaryContainer
+            : AppColors.surface,
         shadowOffset: enabled ? (selected ? 6 : 3) : 2,
         onTap: onTap,
         child: Row(
@@ -1908,8 +2054,8 @@ class _StageChoice extends StatelessWidget {
             Icon(
               enabled
                   ? (selected
-                      ? Icons.radio_button_checked
-                      : Icons.radio_button_off)
+                        ? Icons.radio_button_checked
+                        : Icons.radio_button_off)
                   : Icons.lock_rounded,
               color: enabled ? AppColors.textPrimary : AppColors.outline,
               size: enabled ? 24 : 20,
@@ -2086,9 +2232,13 @@ class _ChipButton extends StatelessWidget {
     return BauhausPressable(
       onTap: onTap,
       child: Container(
+        // 48dp minimum touch target — these chips carry interests, target
+        // exams, board and stream selection through the whole flow.
         constraints: BoxConstraints(
+          minHeight: 48,
           maxWidth: MediaQuery.of(context).size.width - AppSpacing.space32,
         ),
+        alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.space12,
           vertical: AppSpacing.space12,
@@ -2104,60 +2254,6 @@ class _ChipButton extends StatelessWidget {
             color: AppColors.textPrimary,
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _BigChoice extends StatelessWidget {
-  const _BigChoice({
-    required this.title,
-    required this.body,
-    required this.icon,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String title;
-  final String body;
-  final IconData icon;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return BauhausPanel(
-      color: selected ? AppColors.primaryContainer : AppColors.surface,
-      shadowColor: selected ? AppColors.outline : AppColors.surfaceVariant,
-      onTap: onTap,
-      child: Row(
-        children: [
-          Icon(icon, size: 34, color: AppColors.textPrimary),
-          const SizedBox(width: AppSpacing.space12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title.toUpperCase(),
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w900,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.space4),
-                Text(
-                  body,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (selected)
-            const Icon(Icons.check_box_rounded, color: AppColors.textPrimary),
-        ],
       ),
     );
   }
