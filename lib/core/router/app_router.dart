@@ -8,6 +8,7 @@ import '../../features/ai/presentation/ai_screen.dart';
 import '../../features/career_detail/presentation/career_detail_screen.dart';
 import '../../features/debug/flow_doctor/flow_doctor_screen.dart';
 import '../../features/future_ready/presentation/future_ready_screen.dart';
+import '../../features/goals/presentation/goal_selection_screen.dart';
 import '../../features/debug/flow_map/flow_map_screen.dart';
 import '../../features/exam_hub/presentation/exam_detail_screen.dart';
 import '../../features/exam_hub/presentation/exam_hub_screen.dart';
@@ -247,6 +248,13 @@ GoRouter createAppRouter(WidgetRef ref) {
         builder: (context, state) => const FutureReadyScreen(),
       ),
 
+      // ─── Goal Selection ──────────────────────────────────
+      GoRoute(
+        path: '/goals',
+        name: 'goalSelection',
+        builder: (context, state) => const GoalSelectionScreen(),
+      ),
+
       // ─── Settings / Account Controls ────────────────────
       GoRoute(
         path: '/settings',
@@ -254,34 +262,43 @@ GoRouter createAppRouter(WidgetRef ref) {
         builder: (context, state) => const SettingsScreen(),
       ),
 
-      // ─── Admin: Dashboard ─────────────────────────────────
-      GoRoute(
-        path: '/admin',
-        name: 'adminDashboard',
-        builder: (context, state) => const AdminDashboardScreen(),
-      ),
-
-      // ─── Admin: Moderation Queue ──────────────────────────
-      GoRoute(
-        path: '/admin/moderation',
-        name: 'moderationQueue',
-        builder: (context, state) => const ModerationQueueScreen(),
-      ),
-
-      // ─── Admin: Moderation Detail ─────────────────────────
-      GoRoute(
-        path: '/admin/moderation/:id',
-        name: 'moderationDetail',
-        builder: (context, state) {
-          final response = state.extra as SurveyResponse?;
-          if (response == null) {
-            return const Scaffold(
-              body: Center(child: Text('Response not found')),
-            );
-          }
-          return ModerationDetailScreen(response: response);
-        },
-      ),
+      // ─── Admin (compile-time gated) ───────────────────────
+      // The moderation queue lists student survey responses. Until there is
+      // a real auth system these routes must not exist in a shipped build —
+      // a compile-time flag means they are tree-shaken out entirely, not
+      // merely hidden. Build with:
+      //   flutter run --dart-define=ENABLE_ADMIN=true
+      ..._adminRoutes,
     ],
   );
+}
+
+/// Admin routes, present only when built with `--dart-define=ENABLE_ADMIN=true`.
+List<GoRoute> get _adminRoutes {
+  if (!const bool.fromEnvironment('ENABLE_ADMIN')) return const [];
+  return [
+    GoRoute(
+      path: '/admin',
+      name: 'adminDashboard',
+      builder: (context, state) => const AdminDashboardScreen(),
+    ),
+    GoRoute(
+      path: '/admin/moderation',
+      name: 'moderationQueue',
+      builder: (context, state) => const ModerationQueueScreen(),
+    ),
+    GoRoute(
+      path: '/admin/moderation/:id',
+      name: 'moderationDetail',
+      builder: (context, state) {
+        final response = state.extra as SurveyResponse?;
+        if (response == null) {
+          return const Scaffold(
+            body: Center(child: Text('Response not found')),
+          );
+        }
+        return ModerationDetailScreen(response: response);
+      },
+    ),
+  ];
 }

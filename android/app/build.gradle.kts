@@ -14,6 +14,12 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
+/// True when the invoked Gradle tasks include a release variant. Used so the
+/// missing-keystore check fails release builds only, never `flutter run`.
+val isBuildingRelease = gradle.startParameter.taskNames.any {
+    it.contains("Release", ignoreCase = true)
+}
+
 android {
     namespace = "com.margadarshak.margadarshak"
     compileSdk = flutter.compileSdkVersion
@@ -31,7 +37,8 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.margadarshak.margadarshak"
+        // Permanent once published to Play. Owned by KSM x Tech.
+        applicationId = "com.ksmxtech.margadarshak"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -51,10 +58,32 @@ android {
 
     buildTypes {
         release {
+            // Never fall back to the debug key. A debug-signed "release" is
+            // rejected by Play, and if one ever slipped through the key could
+            // not be rotated. Checked only when a release task is actually
+            // requested, so `flutter run` still works without a keystore.
+            if (isBuildingRelease && !keystorePropertiesFile.exists()) {
+                throw GradleException(
+                    "android/key.properties is missing — cannot build a release. " +
+                    "Create it with keyAlias, keyPassword, storeFile and storePassword."
+                )
+            }
             signingConfig = if (keystorePropertiesFile.exists()) {
                 signingConfigs.getByName("release")
             } else {
-                signingConfigs.getByName("debug")
+                null
+            }
+
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
+            // Full native symbols so Play can symbolicate crashes.
+            ndk {
+                debugSymbolLevel = "FULL"
             }
         }
     }
