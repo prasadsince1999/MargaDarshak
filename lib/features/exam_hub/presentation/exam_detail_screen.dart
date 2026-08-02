@@ -21,19 +21,63 @@ class ExamDetailScreen extends ConsumerWidget {
     final examsAsync = ref.watch(examsProvider);
 
     return examsAsync.when(
-      loading: () =>
-          const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (e, _) => Scaffold(body: Center(child: Text('Error: $e'))),
+      loading: () => const _ExamDetailStatus(
+        child: AppBrutalProgressBar(value: 0.35, label: 'Loading exam'),
+      ),
+      // The raw exception never reaches the student — it would mean nothing
+      // to them and reads as a crash.
+      error: (_, _) => _ExamDetailStatus(
+        child: Builder(
+          builder: (context) => AppBrutalErrorState(
+            title: 'Could not load this exam',
+            message: 'Something went wrong on our side. Go back and try again.',
+            actionLabel: 'Go back',
+            onAction: () => Navigator.of(context).maybePop(),
+          ),
+        ),
+      ),
       data: (exams) {
         final exam = exams.cast<Exam?>().firstWhere(
           (e) => e!.id == examId,
           orElse: () => null,
         );
         if (exam == null) {
-          return const Scaffold(body: Center(child: Text('Exam not found')));
+          return _ExamDetailStatus(
+            child: Builder(
+              builder: (context) => AppBrutalEmptyState(
+                title: 'Exam not found',
+                message:
+                    'We could not find this exam. It may have been renamed '
+                    'or removed.',
+                actionLabel: 'Back to exams',
+                onAction: () => Navigator.of(context).maybePop(),
+              ),
+            ),
+          );
         }
         return _ExamDetailBody(exam: exam);
       },
+    );
+  }
+}
+
+/// Inset, themed shell for the loading / error / not-found states so they
+/// sit below the status bar and match the rest of the app.
+class _ExamDetailStatus extends StatelessWidget {
+  const _ExamDetailStatus({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.paper,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.space16),
+          child: Center(child: child),
+        ),
+      ),
     );
   }
 }
@@ -480,7 +524,9 @@ class _RequiredDocumentsWithReadiness extends ConsumerWidget {
       return seedDocumentTypes.where((d) => d.id == 'doc_photos').firstOrNull;
     }
     if (lower.contains('signature')) {
-      return seedDocumentTypes.where((d) => d.id == 'doc_signature').firstOrNull;
+      return seedDocumentTypes
+          .where((d) => d.id == 'doc_signature')
+          .firstOrNull;
     }
     return null;
   }

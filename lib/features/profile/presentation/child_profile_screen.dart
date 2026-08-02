@@ -15,14 +15,12 @@ class ChildProfileScreen extends ConsumerWidget {
     final user = ref.watch(userProvider);
     final child = _childFromUser(user);
     final stage = child.educationStage;
-    final interests = child.interests.isEmpty
-        ? const ['Engineering', 'Research', 'Defense']
-        : child.interests.take(4).toList();
+    final interests = child.interests.take(4).toList();
 
     return BauhausScaffold(
       role: BauhausRole.parent,
       activeItem: BauhausNavItem.home,
-      title: 'CHILD_CORE',
+      title: 'CHILD PROFILE',
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.space16,
@@ -35,53 +33,43 @@ class ChildProfileScreen extends ConsumerWidget {
           children: [
             _ChildHero(child: child),
             const SizedBox(height: AppSpacing.space24),
-            const BauhausSectionTitle(
-              label: 'Readiness summary',
-              icon: Icons.monitor_heart_rounded,
-            ),
-            const SizedBox(height: AppSpacing.space12),
-            const Row(
-              children: [
-                Expanded(
-                  child: BauhausMetricTile(
-                    label: 'Suitability',
-                    value: '78%',
-                    color: AppColors.primaryContainer,
-                  ),
-                ),
-                SizedBox(width: AppSpacing.space12),
-                Expanded(
-                  child: BauhausMetricTile(
-                    label: 'Support need',
-                    value: 'MED',
-                    color: AppColors.surface,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.space16),
+            // A readiness / suitability score used to live here. There is no
+            // engine that produces one, so it has been removed rather than
+            // guessed — a parent reads a number on this screen as a fact.
             BauhausPanel(
               color: AppColors.surfaceVariant,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'VERIFIED PROFILE FACTS',
+                    'PROFILE DETAILS',
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
                   const SizedBox(height: AppSpacing.space12),
                   _InfoLine(label: 'Stage', value: stage.label),
                   _InfoLine(label: 'Stream', value: child.academicStream.label),
-                  _InfoLine(label: 'Board', value: child.board),
+                  _InfoLine(
+                    label: 'Board',
+                    value: child.board.isEmpty ? 'Not set' : child.board,
+                  ),
                   _InfoLine(
                     label: 'State',
-                    value: _stateLabel(child.domicileState),
+                    value: child.domicileState.isEmpty
+                        ? 'Not set'
+                        : _stateLabel(child.domicileState),
                   ),
                   _InfoLine(
                     label: 'Subjects',
                     value: child.subjects.isEmpty
                         ? 'Not selected'
                         : child.subjects.join(', '),
+                  ),
+                  const SizedBox(height: AppSpacing.space12),
+                  Text(
+                    'You entered these. Edit them any time in Settings.',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.secondaryText(context),
+                    ),
                   ),
                 ],
               ),
@@ -92,22 +80,31 @@ class ChildProfileScreen extends ConsumerWidget {
               icon: Icons.ads_click_rounded,
             ),
             const SizedBox(height: AppSpacing.space12),
-            Wrap(
-              spacing: AppSpacing.space8,
-              runSpacing: AppSpacing.space8,
-              children: [
-                for (final interest in interests)
-                  BauhausChip(
-                    label: interest,
-                    color: interest == interests.first
-                        ? AppColors.tertiary
-                        : AppColors.surface,
-                    foregroundColor: interest == interests.first
-                        ? AppColors.onTertiary
-                        : AppColors.textPrimary,
-                  ),
-              ],
-            ),
+            if (interests.isEmpty)
+              BauhausPanel(
+                color: AppColors.surfaceVariant,
+                child: Text(
+                  'No interests recorded yet.',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              )
+            else
+              Wrap(
+                spacing: AppSpacing.space8,
+                runSpacing: AppSpacing.space8,
+                children: [
+                  for (final interest in interests)
+                    BauhausChip(
+                      label: interest,
+                      color: interest == interests.first
+                          ? AppColors.tertiary
+                          : AppColors.surface,
+                      foregroundColor: interest == interests.first
+                          ? AppColors.onTertiary
+                          : AppColors.textPrimary,
+                    ),
+                ],
+              ),
             const SizedBox(height: AppSpacing.space24),
             BauhausPanel(
               color: AppColors.primaryContainer,
@@ -150,8 +147,8 @@ class _ChildHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firstName = child.name.trim().isEmpty
-        ? 'RAHUL'
-        : child.name.trim().split(RegExp(r'\s+')).first.toUpperCase();
+        ? 'Your child'
+        : child.name.trim().split(RegExp(r'\s+')).first;
 
     return BauhausPanel(
       color: AppColors.primary,
@@ -263,17 +260,21 @@ class _InfoLine extends StatelessWidget {
   }
 }
 
+/// The child's real snapshot, falling back to the user's own entered values.
+///
+/// Every field here comes from something the user typed. Unknown values stay
+/// empty so the UI can say "Not set" — we never invent a child.
 ChildProfileSnapshot _childFromUser(UserProfile? user) {
   final snapshot = user?.childProfile;
   if (snapshot != null) return snapshot;
   return ChildProfileSnapshot(
-    name: user?.name ?? 'Rahul',
-    currentClass: user?.currentClass ?? 12,
-    board: user?.board ?? 'CBSE',
-    domicileState: user?.domicileState ?? 'OD',
-    educationStage: user?.educationStage ?? EducationStage.class12,
+    name: user?.name ?? '',
+    currentClass: user?.currentClass ?? 0,
+    board: user?.board ?? '',
+    domicileState: user?.domicileState ?? '',
+    educationStage: user?.educationStage ?? EducationStage.other,
     pathwayType: user?.pathwayType ?? PathwayType.school,
-    academicStream: user?.academicStream ?? AcademicStream.science,
+    academicStream: user?.academicStream ?? AcademicStream.none,
     yearOrSemester: user?.yearOrSemester,
     targetCareer: user?.targetCareer,
     targetExams: user?.targetExams ?? const [],
@@ -282,8 +283,8 @@ ChildProfileSnapshot _childFromUser(UserProfile? user) {
     locationConstraint: user?.locationConstraint ?? LocationConstraint.unknown,
     riskTolerance: user?.riskTolerance ?? RiskTolerance.unknown,
     budgetRange: user?.budgetRange ?? BudgetRange.unknown,
-    subjects: user?.subjects ?? const ['Science'],
-    interests: user?.interests ?? const ['Engineering'],
+    subjects: user?.subjects ?? const [],
+    interests: user?.interests ?? const [],
     preferredLanguage: user?.preferredLanguage,
   );
 }

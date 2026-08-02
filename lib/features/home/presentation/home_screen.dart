@@ -22,7 +22,7 @@ class HomeScreen extends ConsumerWidget {
     final plan = ref.watch(myPlanProvider);
     final primaryAsync = ref.watch(myPlanRoadmapProvider);
 
-    final firstName = _firstName(profile?.name ?? 'Rahul');
+    final firstName = _firstName(profile?.name ?? '');
     final stage = profile?.educationStage ?? EducationStage.class10;
     final isParent = profile?.role == UserRole.parent;
     final guidance = isParent
@@ -48,7 +48,8 @@ class HomeScreen extends ConsumerWidget {
             // ─── Greeting ─────────────────────────────────
             AppBrutalSectionHeader(
               key: const Key('student_home_heading'),
-              title: 'Hello, $firstName',
+              title: firstName.isEmpty ? 'Hello' : 'Hello, $firstName',
+              preserveTitleCase: true,
               subtitle: 'Your current stage, plan, and next action.',
             ),
             const SizedBox(height: AppSpacing.space12),
@@ -99,6 +100,8 @@ class HomeScreen extends ConsumerWidget {
                   child: AppBrutalCard(
                     tone: AppBrutalTone.blue,
                     shadowOffset: AppShape.shadowOffsetSm,
+                    semanticLabel: 'Next step action',
+                    onTap: () => context.go('/roadmap'),
                     child: _MetricContent(
                       label: 'Next step',
                       value: stagePrimaryAction(stage),
@@ -274,8 +277,6 @@ class HomeScreen extends ConsumerWidget {
                 ],
               ),
             ],
-
-
           ],
         ),
       ),
@@ -348,10 +349,13 @@ class _FutureReadyActionPanel extends ConsumerWidget {
   }
 }
 
+/// First name in its natural case. All-caps is for labels, not for a person.
+/// Returns an empty string when there is no name — the caller drops the
+/// comma rather than greeting a stranger by an invented name.
 String _firstName(String value) {
   final trimmed = value.trim();
-  if (trimmed.isEmpty) return 'RAHUL';
-  return trimmed.split(RegExp(r'\s+')).first.toUpperCase();
+  if (trimmed.isEmpty) return '';
+  return trimmed.split(RegExp(r'\s+')).first;
 }
 
 class _MetricContent extends StatelessWidget {
@@ -527,7 +531,7 @@ class _GoalStatusSection extends ConsumerWidget {
           AppBrutalPanel(
             tone: AppBrutalTone.low,
             semanticLabel: 'Set a goal',
-            onTap: () => context.push('/profile'),
+            onTap: () => context.push('/goals'),
             child: Row(
               children: [
                 const Icon(Icons.flag_outlined, size: 24),

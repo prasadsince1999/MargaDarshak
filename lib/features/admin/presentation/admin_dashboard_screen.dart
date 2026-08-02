@@ -9,8 +9,9 @@ import '../providers/moderation_provider.dart';
 
 /// Admin Dashboard screen — overview of moderation stats, queue, and alerts.
 ///
-/// Route: `/admin`
-/// Access: Gated by admin role check in the router.
+/// Route: `/admin` — registered only when the app is built with
+/// `--dart-define=ENABLE_ADMIN=true`. There is no runtime auth check yet,
+/// so the route is absent from release builds entirely.
 class AdminDashboardScreen extends ConsumerWidget {
   const AdminDashboardScreen({super.key});
 
@@ -20,7 +21,7 @@ class AdminDashboardScreen extends ConsumerWidget {
     final alerts = ref.watch(fakeReviewAlertsProvider);
 
     return BauhausDetailScaffold(
-      title: 'Admin HUD',
+      title: 'Admin',
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.space16),
         child: Column(
@@ -42,7 +43,7 @@ class AdminDashboardScreen extends ConsumerWidget {
                       ),
                       const SizedBox(width: AppSpacing.space8),
                       Text(
-                        'MODERATION HUD',
+                        'MODERATION',
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               color: AppColors.onPrimary,

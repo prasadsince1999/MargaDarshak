@@ -21,7 +21,7 @@ class ParentProfileScreen extends ConsumerWidget {
       role: BauhausRole.parent,
       activeItem: BauhausNavItem.home,
       showBottomNav: false,
-      title: 'PARENT_CORE',
+      title: 'PARENT PROFILE',
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.space16,
@@ -40,7 +40,7 @@ class ParentProfileScreen extends ConsumerWidget {
                   const Icon(Icons.family_restroom_rounded, size: 42),
                   const SizedBox(height: AppSpacing.space20),
                   Text(
-                    'PARENT\nCONTROL CENTER',
+                    'PARENT CONTROL CENTER',
                     style: Theme.of(context).textTheme.displaySmall?.copyWith(
                       height: 0.9,
                       fontWeight: FontWeight.w900,
@@ -196,17 +196,21 @@ class _SettingPanel extends StatelessWidget {
   }
 }
 
+/// The child's real snapshot, falling back to the user's own entered values.
+///
+/// Unknown values stay empty so the UI can say "Not set" — we never invent
+/// a child.
 ChildProfileSnapshot _childFromUser(UserProfile? user) {
   final snapshot = user?.childProfile;
   if (snapshot != null) return snapshot;
   return ChildProfileSnapshot(
-    name: user?.name ?? 'Rahul',
-    currentClass: user?.currentClass ?? 12,
-    board: user?.board ?? 'CBSE',
-    domicileState: user?.domicileState ?? 'OD',
-    educationStage: user?.educationStage ?? EducationStage.class12,
+    name: user?.name ?? '',
+    currentClass: user?.currentClass ?? 0,
+    board: user?.board ?? '',
+    domicileState: user?.domicileState ?? '',
+    educationStage: user?.educationStage ?? EducationStage.other,
     pathwayType: user?.pathwayType ?? PathwayType.school,
-    academicStream: user?.academicStream ?? AcademicStream.science,
+    academicStream: user?.academicStream ?? AcademicStream.none,
     yearOrSemester: user?.yearOrSemester,
     targetCareer: user?.targetCareer,
     targetExams: user?.targetExams ?? const [],
@@ -215,8 +219,8 @@ ChildProfileSnapshot _childFromUser(UserProfile? user) {
     locationConstraint: user?.locationConstraint ?? LocationConstraint.unknown,
     riskTolerance: user?.riskTolerance ?? RiskTolerance.unknown,
     budgetRange: user?.budgetRange ?? BudgetRange.unknown,
-    subjects: user?.subjects ?? const ['Science'],
-    interests: user?.interests ?? const ['Engineering'],
+    subjects: user?.subjects ?? const [],
+    interests: user?.interests ?? const [],
     preferredLanguage: user?.preferredLanguage,
   );
 }

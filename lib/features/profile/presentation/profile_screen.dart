@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/domain/models/models.dart';
 import '../../../core/providers/data_providers.dart';
+import '../../../core/providers/my_plan_provider.dart';
 import '../../../core/providers/pair_code_provider.dart';
 import '../../../core/providers/user_provider.dart';
 import '../../../core/theme/theme.dart';
@@ -16,18 +17,21 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
-    final name = (user?.name.trim().isNotEmpty ?? false) ? user!.name : 'Rahul';
-    final stage = user?.educationStage ?? EducationStage.class12;
-    final stageLabel = stage.label;
-    final streamLabel = user?.academicStream.label ?? AcademicStream.none.label;
-    final board = (user?.board.trim().isNotEmpty ?? false)
-        ? user!.board
-        : 'CBSE';
-    final state = _stateLabel(user?.domicileState ?? 'OD');
+    final plan = ref.watch(myPlanProvider);
+
+    // Everything below is what the student actually entered. Where a field
+    // is empty we say so — we never fill it with a plausible placeholder.
+    final name = (user?.name.trim().isNotEmpty ?? false) ? user!.name : '';
+    final stage = user?.educationStage;
+    final stageLabel = stage?.label ?? 'Stage not set';
+    final streamLabel = user?.academicStream.label;
+    final board = (user?.board.trim().isNotEmpty ?? false) ? user!.board : null;
+    final state = (user?.domicileState.trim().isNotEmpty ?? false)
+        ? _stateLabel(user!.domicileState)
+        : null;
     final language = user?.preferredLanguage ?? 'English';
-    final interests = (user?.interests.isNotEmpty ?? false)
-        ? user!.interests.take(4).toList()
-        : const ['Engineering', 'Research', 'Defense'];
+    final interests = user?.interests.take(4).toList() ?? const <String>[];
+    final targetExamCount = user?.goalProfile.targetExamIds.length ?? 0;
 
     return PopScope(
       canPop: false,
@@ -37,7 +41,7 @@ class ProfileScreen extends ConsumerWidget {
       child: BauhausScaffold(
         role: BauhausRole.student,
         activeItem: BauhausNavItem.profile,
-        title: 'STUDENT_CORE',
+        title: 'YOUR PROFILE',
         body: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(
             AppSpacing.space16,
@@ -45,195 +49,198 @@ class ProfileScreen extends ConsumerWidget {
             AppSpacing.space16,
             AppSpacing.space32,
           ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: const Icon(Icons.settings_rounded),
-                tooltip: 'Settings',
-                onPressed: () => context.push('/settings'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: const Icon(Icons.settings_rounded),
+                  tooltip: 'Settings',
+                  onPressed: () => context.push('/settings'),
+                ),
               ),
-            ),
-            _ProfileHero(name: name, classLabel: stageLabel, board: board),
-            const SizedBox(height: AppSpacing.space24),
-            const Row(
-              children: [
-                Expanded(
-                  child: BauhausMetricTile(
-                    label: 'Roadmap',
-                    value: '45%',
-                    color: AppColors.primaryContainer,
-                  ),
-                ),
-                SizedBox(width: AppSpacing.space12),
-                Expanded(
-                  child: BauhausMetricTile(
-                    label: 'Goals',
-                    value: '3',
-                    color: AppColors.surface,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.space24),
-            BauhausPanel(
-              child: Stack(
+              _ProfileHero(
+                name: name,
+                classLabel: stageLabel,
+                board: board ?? '',
+              ),
+              const SizedBox(height: AppSpacing.space24),
+              Row(
                 children: [
-                  const Positioned(
-                    right: -22,
-                    top: -22,
-                    child: SizedBox(
-                      width: 108,
-                      height: 108,
-                      child: ColoredBox(color: AppColors.secondaryContainer),
+                  Expanded(
+                    child: BauhausMetricTile(
+                      label: 'My plan',
+                      value: plan.hasPlan ? 'Pinned' : 'None yet',
+                      color: AppColors.primaryContainer,
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const BauhausSectionTitle(
-                        icon: Icons.school_rounded,
-                        label: 'Academic stage',
-                      ),
-                      const SizedBox(height: AppSpacing.space20),
-                      Text(
-                        stageLabel.toUpperCase(),
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                      const SizedBox(height: AppSpacing.space12),
-                      Wrap(
-                        spacing: AppSpacing.space8,
-                        runSpacing: AppSpacing.space8,
-                        children: [
-                          BauhausChip(label: board, color: AppColors.surface),
-                          BauhausChip(label: state, color: AppColors.surface),
-                          BauhausChip(
-                            label: streamLabel,
-                            color: AppColors.surface,
-                          ),
-                          const BauhausChip(
-                            label: 'Verified fact',
-                            color: AppColors.primary,
-                            foregroundColor: AppColors.onPrimary,
-                          ),
-                        ],
-                      ),
-                    ],
+                  const SizedBox(width: AppSpacing.space12),
+                  Expanded(
+                    child: BauhausMetricTile(
+                      label: 'Target exams',
+                      value: '$targetExamCount',
+                      color: AppColors.surface,
+                    ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: AppSpacing.space24),
+              const SizedBox(height: AppSpacing.space24),
+              BauhausPanel(
+                child: Stack(
+                  children: [
+                    const Positioned(
+                      right: -22,
+                      top: -22,
+                      child: SizedBox(
+                        width: 108,
+                        height: 108,
+                        child: ColoredBox(color: AppColors.secondaryContainer),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const BauhausSectionTitle(
+                          icon: Icons.school_rounded,
+                          label: 'Academic stage',
+                        ),
+                        const SizedBox(height: AppSpacing.space20),
+                        Text(
+                          stageLabel.toUpperCase(),
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        const SizedBox(height: AppSpacing.space12),
+                        Wrap(
+                          spacing: AppSpacing.space8,
+                          runSpacing: AppSpacing.space8,
+                          children: [
+                            if (board != null)
+                              BauhausChip(
+                                label: board,
+                                color: AppColors.surface,
+                              ),
+                            if (state != null)
+                              BauhausChip(
+                                label: state,
+                                color: AppColors.surface,
+                              ),
+                            if (streamLabel != null)
+                              BauhausChip(
+                                label: streamLabel,
+                                color: AppColors.surface,
+                              ),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.space12),
+                        Text(
+                          'You entered these. Edit them any time in Settings.',
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(
+                                color: AppColors.secondaryText(context),
+                              ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.space24),
 
-            // ─── Pair Code (Family Bridge) ──────────────────
-            const _PairCodeSection(),
-            const SizedBox(height: AppSpacing.space24),
+              // ─── Pair Code (Family Bridge) ──────────────────
+              const _PairCodeSection(),
+              const SizedBox(height: AppSpacing.space24),
 
-            const BauhausSectionTitle(
-              icon: Icons.ads_click_rounded,
-              label: 'Interests and goals',
-            ),
-            const SizedBox(height: AppSpacing.space12),
-            Wrap(
-              spacing: AppSpacing.space8,
-              runSpacing: AppSpacing.space8,
-              children: [
-                for (final interest in interests)
-                  BauhausChip(
-                    label: interest,
-                    color: interest == interests.first
-                        ? AppColors.tertiary
-                        : AppColors.surface,
-                    foregroundColor: interest == interests.first
-                        ? AppColors.onTertiary
-                        : AppColors.textPrimary,
-                  ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.space24),
-
-            // ─── Goal Profile (Sprint 4) ─────────────────────
-            _GoalProfileSection(goalProfile: user?.goalProfile),
-            const SizedBox(height: AppSpacing.space24),
-
-            BauhausPanel(
-              onTap: () => context.push('/roadmap/roadmap_pcm'),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+              const BauhausSectionTitle(
+                icon: Icons.ads_click_rounded,
+                label: 'Interests and goals',
+              ),
+              const SizedBox(height: AppSpacing.space12),
+              if (interests.isEmpty)
+                BauhausPanel(
+                  color: AppColors.surfaceVariant,
+                  onTap: () => context.push('/settings'),
+                  child: Row(
                     children: [
-                      const Expanded(
-                        child: BauhausSectionTitle(
-                          icon: Icons.route_rounded,
-                          label: 'Saved roadmap',
+                      const Icon(Icons.add_circle_outline_rounded, size: 24),
+                      const SizedBox(width: AppSpacing.space12),
+                      Expanded(
+                        child: Text(
+                          'No interests added yet. Add a few and we can point '
+                          'you at paths that fit them.',
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
-                      const Icon(Icons.north_east_rounded),
+                      const Icon(Icons.chevron_right_rounded),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.space16),
-                  Text(
-                    stageHomeTitle(stage),
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w900,
-                      height: 0.95,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.space8),
-                  Text(
-                    'Next milestone: ${stagePrimaryAction(stage)}.',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: AppSpacing.space16),
-                  const BauhausProgressBar(value: 0.45),
-                ],
-              ),
-            ),
-            const SizedBox(height: AppSpacing.space24),
-            _PreferencePanel(
-              label: 'Preferred language',
-              value: language,
-              icon: Icons.edit_rounded,
-              onTap: () {
-                ScaffoldMessenger.of(context)
-                  ..clearSnackBars()
-                  ..showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Language preference editing — coming soon',
+                )
+              else
+                Wrap(
+                  spacing: AppSpacing.space8,
+                  runSpacing: AppSpacing.space8,
+                  children: [
+                    for (final interest in interests)
+                      BauhausChip(
+                        label: interest,
+                        color: interest == interests.first
+                            ? AppColors.tertiary
+                            : AppColors.surface,
+                        foregroundColor: interest == interests.first
+                            ? AppColors.onTertiary
+                            : AppColors.textPrimary,
                       ),
-                    ),
-                  );
-              },
-            ),
-            const SizedBox(height: AppSpacing.space12),
-            _PreferencePanel(
-              label: 'Guidance mode',
-              value: 'Detailed guidance',
-              icon: Icons.tune_rounded,
-              onTap: () {
-                ScaffoldMessenger.of(context)
-                  ..clearSnackBars()
-                  ..showSnackBar(
-                    const SnackBar(
-                      content: Text('Guidance mode editing — coming soon'),
-                    ),
-                  );
-              },
-            ),
-            const SizedBox(height: AppSpacing.space24),
-            BauhausButton(
-              label: 'Explore new paths',
-              icon: Icons.add_rounded,
-              color: AppColors.primary,
-              foregroundColor: AppColors.onPrimary,
-              onTap: () => context.go('/roadmap'),
-            ),
-          ],
-        ),
+                  ],
+                ),
+              const SizedBox(height: AppSpacing.space24),
+
+              // ─── Goal Profile (Sprint 4) ─────────────────────
+              _GoalProfileSection(goalProfile: user?.goalProfile),
+              const SizedBox(height: AppSpacing.space24),
+
+              const _SavedRoadmapPanel(),
+              const SizedBox(height: AppSpacing.space24),
+              _PreferencePanel(
+                label: 'Preferred language',
+                value: language,
+                icon: Icons.edit_rounded,
+                onTap: () {
+                  ScaffoldMessenger.of(context)
+                    ..clearSnackBars()
+                    ..showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Language preference editing — coming soon',
+                        ),
+                      ),
+                    );
+                },
+              ),
+              const SizedBox(height: AppSpacing.space12),
+              _PreferencePanel(
+                label: 'Guidance mode',
+                value: 'Detailed guidance',
+                icon: Icons.tune_rounded,
+                onTap: () {
+                  ScaffoldMessenger.of(context)
+                    ..clearSnackBars()
+                    ..showSnackBar(
+                      const SnackBar(
+                        content: Text('Guidance mode editing — coming soon'),
+                      ),
+                    );
+                },
+              ),
+              const SizedBox(height: AppSpacing.space24),
+              BauhausButton(
+                label: 'Explore new paths',
+                icon: Icons.add_rounded,
+                color: AppColors.primary,
+                foregroundColor: AppColors.onPrimary,
+                onTap: () => context.go('/roadmap'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -377,6 +384,95 @@ class _PairCodeSection extends ConsumerWidget {
   }
 }
 
+/// The roadmap the student actually pinned — never a hardcoded example,
+/// and no progress bar until there is real progress to report.
+class _SavedRoadmapPanel extends ConsumerWidget {
+  const _SavedRoadmapPanel();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plan = ref.watch(myPlanProvider);
+
+    if (!plan.hasPlan) {
+      return BauhausPanel(
+        color: AppColors.surfaceVariant,
+        onTap: () => context.go('/roadmap'),
+        child: Row(
+          children: [
+            const Icon(Icons.route_rounded, size: 24),
+            const SizedBox(width: AppSpacing.space12),
+            Expanded(
+              child: Text(
+                'No roadmap saved yet. Explore paths and pin the one you '
+                'want to follow.',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+            const Icon(Icons.chevron_right_rounded),
+          ],
+        ),
+      );
+    }
+
+    return ref
+        .watch(myPlanRoadmapProvider)
+        .when(
+          loading: () => const BauhausPanel(
+            child: AppBrutalProgressBar(value: 0.35, label: 'Loading roadmap'),
+          ),
+          error: (_, _) => BauhausPanel(
+            child: Text(
+              'Could not load your saved roadmap.',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
+          data: (roadmap) {
+            if (roadmap == null) {
+              return BauhausPanel(
+                child: Text(
+                  'Your saved roadmap is no longer available.',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              );
+            }
+            return BauhausPanel(
+              onTap: () => context.push('/roadmap/${roadmap.id}'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Expanded(
+                        child: BauhausSectionTitle(
+                          icon: Icons.route_rounded,
+                          label: 'Saved roadmap',
+                        ),
+                      ),
+                      const Icon(Icons.north_east_rounded),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.space16),
+                  Text(
+                    roadmap.title.toUpperCase(),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w900,
+                      height: 0.95,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.space8),
+                  Text(
+                    '${roadmap.stages.length} steps'
+                    '${plan.backupRoadmapIds.isEmpty ? '' : ' · ${plan.backupRoadmapIds.length} backup route(s)'}',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+  }
+}
+
 class _ProfileHero extends StatelessWidget {
   const _ProfileHero({
     required this.name,
@@ -390,7 +486,12 @@ class _ProfileHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final firstName = name.trim().split(RegExp(r'\s+')).first.toUpperCase();
+    // Names are rendered in their natural case — all-caps is for labels,
+    // not for a person.
+    final trimmed = name.trim();
+    final firstName = trimmed.isEmpty
+        ? 'Your profile'
+        : trimmed.split(RegExp(r'\s+')).first;
 
     return BauhausPanel(
       color: AppColors.primary,
@@ -454,7 +555,8 @@ class _ProfileHero extends StatelessWidget {
                     label: classLabel,
                     color: AppColors.primaryContainer,
                   ),
-                  BauhausChip(label: board, color: AppColors.surface),
+                  if (board.isNotEmpty)
+                    BauhausChip(label: board, color: AppColors.surface),
                 ],
               ),
             ],

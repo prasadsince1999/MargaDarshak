@@ -12,12 +12,17 @@ class AppBrutalSectionHeader extends StatelessWidget {
     this.eyebrow,
     this.subtitle,
     this.action,
+    this.preserveTitleCase = false,
   });
 
   final String title;
   final String? eyebrow;
   final String? subtitle;
   final Widget? action;
+
+  /// Set when the title contains a person's name. All-caps is right for
+  /// labels and wrong for people — "HELLO, PRIYADARSHINI" reads as shouting.
+  final bool preserveTitleCase;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +45,7 @@ class AppBrutalSectionHeader extends StatelessWidget {
                 const SizedBox(height: AppSpacing.space4),
               ],
               Text(
-                title.toUpperCase(),
+                preserveTitleCase ? title : title.toUpperCase(),
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w900,
                   height: 0.95,
@@ -168,9 +173,9 @@ class _StateContent extends StatelessWidget {
         const SizedBox(height: AppSpacing.space8),
         Text(
           message,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: secondary,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: secondary),
         ),
         if (actionLabel != null && onAction != null) ...[
           const SizedBox(height: AppSpacing.space16),
