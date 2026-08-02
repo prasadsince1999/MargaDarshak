@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/domain/districts.dart';
 import '../../../core/domain/models/models.dart';
 import '../../../core/domain/taxonomies.dart';
 import '../../../core/providers/data_providers.dart';
@@ -95,6 +96,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _targetCareerController = TextEditingController();
   final _phoneController = TextEditingController();
   final _districtController = TextEditingController();
+
+  /// True when the student chose "My district is not listed" and is
+  /// typing it instead of picking from the LGD list.
+  bool _districtManualEntry = false;
   final _parentOccupationController = TextEditingController();
   final _parentEducationController = TextEditingController();
   final _overallPercentController = TextEditingController();
@@ -211,6 +216,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       'targetCareer': _targetCareerController.text,
       'phone': _phoneController.text,
       'district': _districtController.text,
+      'districtManualEntry': _districtManualEntry,
       'parentOccupation': _parentOccupationController.text,
       'parentEducation': _parentEducationController.text,
       'overallPercent': _overallPercentController.text,
@@ -297,6 +303,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       _targetCareerController.text = (d['targetCareer'] as String?) ?? '';
       _phoneController.text = (d['phone'] as String?) ?? '';
       _districtController.text = (d['district'] as String?) ?? '';
+      _districtManualEntry = (d['districtManualEntry'] as bool?) ?? false;
       _parentOccupationController.text =
           (d['parentOccupation'] as String?) ?? '';
       _parentEducationController.text = (d['parentEducation'] as String?) ?? '';
@@ -1342,8 +1349,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             title: 'Select state',
             options: indianStatesAndUts,
             onSelected: (code) => setState(() {
+              final changed = code != _stateCode;
               _stateCode = code;
               _stateChosen = true;
+              // A district belongs to one state, so a state change invalidates
+              // it. Clearing beats leaving a Puri under Bihar.
+              if (changed) {
+                _districtController.clear();
+                _districtManualEntry = false;
+              }
               // Auto-resolve state board if one is currently selected.
               if (_isStateBoardSelected) {
                 _boardCode = resolveBoardCode(code, _stage);
@@ -1352,14 +1366,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
         ),
         const SizedBox(height: AppSpacing.space16),
-        TextField(
-          controller: _districtController,
-          textCapitalization: TextCapitalization.words,
-          decoration: const InputDecoration(
-            labelText: 'DISTRICT / CITY',
-            hintText: 'Optional',
-          ),
-        ),
+        _districtField(),
         const SizedBox(height: AppSpacing.space20),
         if (!_stage.isSchoolStage) ...[
           const _Label('BOARD / LAST BOARD'),
@@ -1371,6 +1378,87 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         // point of use (eligibility, scholarships, document checklists) with
         // a stated purpose — see EligibilityDetailsPrompt.
       ],
+    );
+  }
+
+  /// District selection: tap the state, then tap the district from the full
+  /// list for that state. Nobody has to spell "Jagatsinghapur" to get past
+  /// this field.
+  ///
+  /// The list is the official LGD register, but districts get created and
+  /// renamed faster than any bundled snapshot can track, so "My district is
+  /// not listed" keeps the old free-text entry available rather than dead-
+  /// ending a student whose district is newer than our data.
+  Widget _districtField() {
+    if (_districtManualEntry) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            controller: _districtController,
+            textCapitalization: TextCapitalization.words,
+            autofocus: true,
+            decoration: const InputDecoration(
+              labelText: 'DISTRICT / CITY',
+              hintText: 'Type your district',
+            ),
+          ),
+          const SizedBox(height: AppSpacing.space8),
+          TextButton(
+            onPressed: () => setState(() {
+              _districtManualEntry = false;
+              _districtController.clear();
+            }),
+            child: const Text('Pick from the list instead'),
+          ),
+        ],
+      );
+    }
+
+    if (!_stateChosen) {
+      return const _PickerField(
+        label: 'DISTRICT / CITY',
+        value: 'Choose your state first',
+        onTap: null,
+      );
+    }
+
+    final districts = districtsForState(_stateCode);
+    final selected = _districtController.text.trim();
+
+    return _PickerField(
+      label: 'DISTRICT / CITY (OPTIONAL)',
+      value: selected.isEmpty ? 'Tap to choose' : selected,
+      onTap: districts.isEmpty
+          ? () => setState(() => _districtManualEntry = true)
+          : () => _pickFromOptions(
+              title: 'Select district',
+              options: [
+                // Labelled with the everyday name so a student in Cuttack is
+                // not hunting for "Kataka", with the official spelling kept
+                // alongside it. Sorted by the label, not the official name,
+                // or Cuttack would sit under K where nobody looks for it.
+                ...districts
+                    .map((d) => Option(d, districtPickerLabel(d)))
+                    .toList()
+                  ..sort(
+                    (a, b) =>
+                        a.label.toLowerCase().compareTo(b.label.toLowerCase()),
+                  ),
+                const Option(
+                  _districtNotListedCode,
+                  'My district is not listed',
+                ),
+              ],
+              onSelected: (code) => setState(() {
+                if (code == _districtNotListedCode) {
+                  _districtManualEntry = true;
+                  _districtController.clear();
+                } else {
+                  _districtController.text = districtDisplayName(code);
+                }
+              }),
+            ),
     );
   }
 
@@ -1850,6 +1938,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 }
 
+/// Sentinel option code for "My district is not listed", which switches the
+/// district field back to free text.
+const String _districtNotListedCode = '__district_not_listed__';
+
 enum _PageKind {
   role,
   identity,
@@ -2076,40 +2168,48 @@ class _PickerField extends StatelessWidget {
 
   final String label;
   final String value;
-  final VoidCallback onTap;
+
+  /// Null renders the field as inert — used while a prerequisite choice
+  /// (such as state, before district) has not been made.
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return BauhausPanel(
-      shadowOffset: 3,
-      onTap: onTap,
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: AppColors.textSecondary,
+    final enabled = onTap != null;
+    final valueColor = enabled ? AppColors.textPrimary : AppColors.textTertiary;
+
+    return Semantics(
+      button: enabled,
+      enabled: enabled,
+      label: '$label. $value',
+      child: BauhausPanel(
+        shadowOffset: enabled ? 3 : 0,
+        onTap: onTap,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.space4),
-                Text(
-                  value,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge?.copyWith(color: AppColors.textPrimary),
-                ),
-              ],
+                  const SizedBox(height: AppSpacing.space4),
+                  Text(
+                    value,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: valueColor),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Icon(
-            Icons.keyboard_arrow_down_rounded,
-            color: AppColors.textPrimary,
-          ),
-        ],
+            Icon(Icons.keyboard_arrow_down_rounded, color: valueColor),
+          ],
+        ),
       ),
     );
   }
