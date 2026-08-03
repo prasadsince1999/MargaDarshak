@@ -1,3 +1,4 @@
+import '../../../core/domain/interest_taxonomy.dart';
 import '../../../core/domain/models/models.dart';
 
 /// Offline, template-based explanation engine.
@@ -40,24 +41,32 @@ class ExplainEngine {
 
     // 3. Interest alignment.
     if (profile.interests.isNotEmpty) {
-      // Whole-word matching, not substring containment.
+      // Interest alignment matches on the tags an interest *declares*,
+      // nothing else.
       //
-      // The previous check asked whether either string contained the other,
-      // which made short tags match by accident: "CA" matched *health*ca*re*
-      // and *edu*ca*tion*, "IT" matched cybersecur*it*y, hosp*it*ality and
-      // f*it*ness. A student who chose Healthcare was told the Chartered
-      // Accountancy roadmap aligned with their interests. Claiming a false
-      // thing about a student's own stated interests is the same defect as
-      // showing them an invented number.
-      final interestWords = profile.interests.expand(_significantWords).toSet();
+      // Two earlier versions of this were wrong. Substring containment made
+      // "CA" match health-CA-re, so a student who chose Healthcare was told
+      // the Chartered Accountancy path suited them. Whole-word overlap fixed
+      // that but stayed loose — "Hacking & Digital Security" matched
+      // "digital marketing" on the word "digital" — and it broke entirely
+      // once interests became IDs, because "INT-COMP-01" shares no word with
+      // "engineering".
+      //
+      // The mapping is now explicit in the taxonomy. An interest with no
+      // declared tags simply does not match, which is the honest outcome
+      // when no roadmap covers it.
+      final labels = interestLabels(profile.interests, ep.stage);
+      final declared = roadmapTagsFor(
+        profile.interests,
+      ).map((t) => t.toLowerCase()).toSet();
       final matching = roadmap.tags
-          .where((t) => _significantWords(t).any(interestWords.contains))
+          .where((t) => declared.contains(t.toLowerCase()))
           .toList();
       if (matching.isNotEmpty) {
         buf.writeln('• It aligns with your interests: ${matching.join(', ')}.');
       } else {
         buf.writeln(
-          '• Your stated interests (${profile.interests.take(3).join(', ')}) '
+          '• Your stated interests (${labels.take(3).join(', ')}) '
           'may also connect to this path.',
         );
       }
@@ -198,13 +207,3 @@ String _branchLabel(AfterTenthBranch branch) => switch (branch) {
   AfterTenthBranch.vocational => 'Vocational',
   AfterTenthBranch.earlyWork => 'Early Work',
 };
-
-/// Lower-cased words of [value], with separators stripped.
-///
-/// Matching happens on whole words so "CA" only ever matches the token "ca",
-/// never the middle of "healthcare".
-Set<String> _significantWords(String value) => value
-    .toLowerCase()
-    .split(RegExp(r'[^a-z0-9]+'))
-    .where((w) => w.isNotEmpty)
-    .toSet();

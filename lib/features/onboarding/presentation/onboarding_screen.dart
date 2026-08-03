@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/domain/districts.dart';
+import '../../../core/domain/interest_taxonomy.dart';
 import '../../../core/domain/models/models.dart';
 import '../../../core/domain/taxonomies.dart';
 import '../../../core/providers/data_providers.dart';
@@ -123,15 +124,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Gender _gender = Gender.unspecified;
 
   // Location.
-  String _stateCode = 'OD';
-  String _boardCode = 'CBSE';
+  String _stateCode = '';
+  String _boardCode = '';
 
   // Stage-specific.
   EducationSubStage _subStage = EducationSubStage.none;
   AcademicStream _stream = AcademicStream.none;
   int _yearOrSemester = 1;
-  String _disciplineCode = 'ENG_CS';
-  String _tradeCode = 'ITI_ELECTRICIAN';
+  String _disciplineCode = '';
+  String _tradeCode = '';
 
   // Dropper context.
   EducationStage? _lastCompletedStage;
@@ -139,6 +140,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   AttemptContext _attemptContext = AttemptContext.unspecified;
   int _attemptNumber = 1;
   int? _targetYear;
+
+  // "Not Sure" diagnostic (Phase 2.6).
+  _NotSureBackground _notSureBackground = _NotSureBackground.undecided;
+  _NotSureLeaning _notSureLeaning = _NotSureLeaning.dontKnow;
 
   // Social category, disability status and household type are deliberately
   // not collected here — see _locationPage(). They are sensitive data about a
@@ -148,7 +153,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   CoachingStatus _coaching = CoachingStatus.unknown;
   BackupPreference _backup = BackupPreference.unknown;
   RiskTolerance _risk = RiskTolerance.unknown;
+
+  /// Chosen interest IDs (INT-*), capped at [maxInterests].
   final Set<String> _interests = {};
+
+  /// Chosen family IDs (FAM-*), capped at [maxInterestFamilies]. Families are
+  /// picked first; only their interests are then shown.
+  final Set<String> _interestFamilies = {};
   final Set<String> _targetExams = {};
 
   // Goal (Sprint 3).
@@ -201,10 +212,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       'attemptContext': _attemptContext.name,
       'attemptNumber': _attemptNumber,
       'targetYear': _targetYear,
+      'notSureBackground': _notSureBackground.name,
+      'notSureLeaning': _notSureLeaning.name,
       'coaching': _coaching.name,
       'backup': _backup.name,
       'risk': _risk.name,
       'interests': _interests.toList(),
+      'interestFamilies': _interestFamilies.toList(),
       'targetExams': _targetExams.toList(),
       'goalStatus': _goalStatus.name,
       'studentGoalId': _studentGoalId,
@@ -274,6 +288,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           byName(AttemptContext.values, d['attemptContext']) ?? _attemptContext;
       _attemptNumber = (d['attemptNumber'] as int?) ?? _attemptNumber;
       _targetYear = d['targetYear'] as int?;
+      _notSureBackground =
+          byName(_NotSureBackground.values, d['notSureBackground']) ??
+          _notSureBackground;
+      _notSureLeaning =
+          byName(_NotSureLeaning.values, d['notSureLeaning']) ??
+          _notSureLeaning;
       _coaching = byName(CoachingStatus.values, d['coaching']) ?? _coaching;
       _backup = byName(BackupPreference.values, d['backup']) ?? _backup;
       _risk = byName(RiskTolerance.values, d['risk']) ?? _risk;
@@ -283,7 +303,24 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
       _interests
         ..clear()
-        ..addAll((d['interests'] as List?)?.whereType<String>() ?? const []);
+        ..addAll(
+          migrateInterests(
+            (d['interests'] as List?)?.whereType<String>().toList() ?? const [],
+          ),
+        );
+      _interestFamilies
+        ..clear()
+        ..addAll(
+          (d['interestFamilies'] as List?)?.whereType<String>() ?? const [],
+        );
+      // A draft written before the taxonomy existed has interests but no
+      // families; derive them so the funnel opens on the right step.
+      if (_interestFamilies.isEmpty && _interests.isNotEmpty) {
+        for (final id in _interests) {
+          final fam = interestById(id)?.familyId;
+          if (fam != null) _interestFamilies.add(fam);
+        }
+      }
       _targetExams
         ..clear()
         ..addAll((d['targetExams'] as List?)?.whereType<String>() ?? const []);
@@ -336,22 +373,25 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   // ─── Page plan ──────────────────────────────────────────────────────────
   // 0. Role
-  // 1. Identity (name, DOB, gender, phone)
-  // 2. Stage
-  // 3. Stage details (branches — incl. dropper)
-  // 4. Location & Eligibility (state, district, board, household, category, PwD)
-  // 5. Aspirations (interests, target exams, dream, backup, risk)
-  // 6. Goal selection (exploring, decided, exam focused, backup)
-  // 7. Language
-  // 8. (parent only) Parent extension — occupation, education, concerns
+  // 1. Value proposition (sample paths — proves value before asking for data)
+  // 2. Identity (name, DOB, gender, phone)
+  // 3. Stage
+  // 4. Stage details (branches — incl. dropper)
+  // 5. Location (state, district, board)
+  // 6. Interests (families, sub-interests, dream/goal)
+  // 7. Strategy (target exams, backup style, risk tolerance)
+  // 8. Goal selection (exploring, decided, exam focused, backup)
+  // 9. (parent only) Parent extension — occupation, education, concerns
   List<_PageKind> get _pages {
     return [
       _PageKind.role,
+      _PageKind.valueProposition,
       _PageKind.identity,
       _PageKind.stage,
       _PageKind.stageDetails,
       _PageKind.location,
       _PageKind.aspirations,
+      _PageKind.strategy,
       _PageKind.goalSelection,
       if (_role == UserRole.parent) _PageKind.parentExtension,
     ];
@@ -414,7 +454,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           return false;
         }
         final age = _ageFromDob(_dob!);
-        if (!_ageFitsStage(age, _stage)) {
+        // Only check age fit once the student has actually picked a stage;
+        // otherwise _stage is still the default and the warning is nonsense.
+        if (_stageChosen && !_ageFitsStage(age, _stage)) {
           // Non-blocking — warn but allow.
           _snack(
             'Age ($age) looks unusual for ${_stage.label}. Continue if intentional.',
@@ -742,6 +784,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     switch (kind) {
       case _PageKind.role:
         return _rolePage();
+      case _PageKind.valueProposition:
+        return _valuePropositionPage();
       case _PageKind.identity:
         return _identityPage();
       case _PageKind.stage:
@@ -752,6 +796,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         return _locationPage();
       case _PageKind.aspirations:
         return _aspirationsPage();
+      case _PageKind.strategy:
+        return _strategyPage();
       case _PageKind.goalSelection:
         return _goalSelectionPage();
       case _PageKind.parentExtension:
@@ -830,11 +876,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     children: [
                       const Icon(Icons.bug_report_rounded, size: 20),
                       const SizedBox(width: AppSpacing.space8),
-                      Text(
-                        '🐛 DEBUG DASHBOARD',
-                        style: theme.textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w900,
-                          color: AppColors.textPrimary,
+                      Flexible(
+                        child: Text(
+                          '🐛 DEBUG DASHBOARD',
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.textPrimary,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -860,6 +909,65 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ],
         ],
       ),
+    );
+  }
+
+  /// Value proposition screen — shows sample roadmap previews so the student
+  /// sees what the app builds for them before handing over any personal data.
+  /// Audit §7.3.1: "the single highest-impact addition and needs no new data."
+  Widget _valuePropositionPage() {
+    final isParent = _role == UserRole.parent;
+    return _OnboardingPage(
+      title: isParent ? 'WHAT YOUR\nCHILD GETS' : 'WHAT YOU\nGET',
+      intro: isParent
+          ? 'We build a step-by-step path for your child. '
+                'Here are three examples — yours will be personalised.'
+          : 'We build a step-by-step path just for you. '
+                'Here are three examples — yours will be personalised.',
+      children: [
+        _SamplePath(
+          icon: Icons.school_outlined,
+          title: 'Class 10 → Engineering',
+          stages: const [
+            'Pick a stream (PCM)',
+            'Prepare for JEE / State CET',
+            'Apply to colleges',
+            'Keep a backup (Diploma lateral entry)',
+          ],
+        ),
+        const SizedBox(height: AppSpacing.space12),
+        _SamplePath(
+          icon: Icons.build_outlined,
+          title: 'After 10th → ITI → Job',
+          stages: const [
+            'Choose a trade',
+            'Complete 1–2 year ITI',
+            'Register on NATS apprenticeship portal',
+            'Apply for government technician posts',
+          ],
+        ),
+        const SizedBox(height: AppSpacing.space12),
+        _SamplePath(
+          icon: Icons.medical_services_outlined,
+          title: 'Class 12 → Medical',
+          stages: const [
+            'Take PCB in 11th',
+            'Prepare for NEET-UG',
+            'State counselling (85% quota)',
+            'Backup: B.Sc Nursing / BDS / Allied Health',
+          ],
+        ),
+        const SizedBox(height: AppSpacing.space20),
+        Text(
+          isParent
+              ? 'Answer a few questions and we\'ll build your child\'s path.'
+              : 'Answer a few questions and we\'ll build yours.',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: AppColors.textSecondary,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ],
     );
   }
 
@@ -983,11 +1091,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 return;
               }
               setState(() {
+                final prev = _stage;
                 _stage = item.$1;
                 _stageChosen = true;
                 _subStage = EducationSubStage.none; // Reset sub-stage.
                 if (item.$1 == EducationStage.class9) {
                   _stream = AcademicStream.none;
+                }
+                // Clear "Not Sure" diagnostic when leaving that stage.
+                if (prev == EducationStage.other &&
+                    item.$1 != EducationStage.other) {
+                  _notSureBackground = _NotSureBackground.undecided;
+                  _notSureLeaning = _NotSureLeaning.dontKnow;
+                  // Don't carry over the pre-seeded family.
+                  _interestFamilies.clear();
+                  _interests.clear();
+                  _lastCompletedStage = null;
                 }
               });
             },
@@ -1013,9 +1132,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         _stage == EducationStage.postgraduate;
 
     return _OnboardingPage(
-      title: heading,
-      intro:
-          '${_stage.label} needs specific context. Answer only what applies.',
+      title: _stage == EducationStage.other
+          ? (isParent ? "LET'S\nFIND OUT" : "LET'S\nFIND OUT")
+          : heading,
+      intro: _stage == EducationStage.other
+          ? "It's okay not to know yet. A couple of quick questions will help us show you the right options."
+          : '${_stage.label} needs specific context. Answer only what applies.',
       children: [
         if (isSchool) ...[
           const _Label('BOARD'),
@@ -1094,42 +1216,59 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             onSelected: (v) => setState(() => _coaching = v),
           ),
         ],
-        // ── Sub-stage focus (all stages) ──
-        ..._subStageSelector(),
+        // ── "Not Sure" diagnostic (Phase 2.6) ──
+        if (_stage == EducationStage.other) ...[
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.space16),
+            child: Text(
+              'There is no wrong answer. This just helps us show you '
+              'relevant options first.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.textSecondary,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ),
+          const _Label('LAST THING YOU COMPLETED'),
+          _EnumChoiceWrap<_NotSureBackground>(
+            values: _NotSureBackground.values,
+            selected: _notSureBackground,
+            labelOf: _notSureBackgroundLabel,
+            onSelected: (v) => setState(() {
+              _notSureBackground = v;
+              // Map to _lastCompletedStage so the profile carries it.
+              _lastCompletedStage = switch (v) {
+                _NotSureBackground.class10OrLess => EducationStage.class10,
+                _NotSureBackground.class12 => EducationStage.class12,
+                _NotSureBackground.diplomaOrIti => EducationStage.diploma,
+                _NotSureBackground.degree => EducationStage.graduate,
+                _NotSureBackground.undecided => null,
+              };
+            }),
+          ),
+          const SizedBox(height: AppSpacing.space20),
+          const _Label('WHAT FEELS CLOSER TO YOU?'),
+          _EnumChoiceWrap<_NotSureLeaning>(
+            values: _NotSureLeaning.values,
+            selected: _notSureLeaning,
+            labelOf: _notSureLeaningLabel,
+            onSelected: (v) => setState(() {
+              _notSureLeaning = v;
+              // Pre-seed a family so the interest funnel isn't blank.
+              _interestFamilies.clear();
+              final seed = switch (v) {
+                _NotSureLeaning.handsOn => 'FAM-ENGG',
+                _NotSureLeaning.peopleIdeas => 'FAM-BUSI',
+                _NotSureLeaning.dontKnow => null,
+              };
+              if (seed != null) _interestFamilies.add(seed);
+            }),
+          ),
+        ],
+        // Sub-stage focus removed — no downstream consumer reads it yet.
+        // Removed _subStageSelector(); recoverable from git history.
       ],
     );
-  }
-
-  /// Builds the sub-stage focus selector — only sub-stages valid for
-  /// the current [_stage] are shown. Returns empty list if no valid
-  /// sub-stages exist (e.g. for EducationStage.other).
-  List<Widget> _subStageSelector() {
-    // Exclude 'none', parent-mode sub-stages, and after-10th route
-    // sub-stages (those duplicate the main stage selection).
-    const excluded = {
-      EducationSubStage.none,
-      EducationSubStage.parentOfSchoolStudent,
-      EducationSubStage.parentOfSeniorSecondaryStudent,
-      EducationSubStage.parentOfCollegeStudent,
-      EducationSubStage.after10AcademicRoute,
-      EducationSubStage.after10TechnicalRoute,
-      EducationSubStage.after10VocationalRoute,
-    };
-    final validSubs = EducationSubStage.values
-        .where((s) => !excluded.contains(s) && s.isValidFor(_stage))
-        .toList();
-    if (validSubs.isEmpty) return const [];
-
-    return [
-      const SizedBox(height: AppSpacing.space20),
-      const _Label('WHAT BEST DESCRIBES YOU RIGHT NOW?'),
-      _EnumChoiceWrap<EducationSubStage>(
-        values: validSubs,
-        selected: _subStage,
-        labelOf: (s) => s.label,
-        onSelected: (s) => setState(() => _subStage = s),
-      ),
-    ];
   }
 
   List<Widget> _dropperBlock() {
@@ -1413,6 +1552,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   /// Whether the current [_boardCode] is a national-level board
   /// (CBSE, ICSE, NIOS, IB, IGCSE) vs a state board code.
   bool get _isStateBoardSelected {
+    if (_boardCode.isEmpty) return false;
     const nationalCodes = {'CBSE', 'ICSE', 'NIOS', 'IB', 'IGCSE'};
     return !nationalCodes.contains(_boardCode);
   }
@@ -1478,7 +1618,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget _aspirationsPage() {
     final isParent = _role == UserRole.parent;
     final askDream = _stage != EducationStage.class9;
-    final askExams = _stage != EducationStage.other;
 
     return _OnboardingPage(
       title: isParent ? "CHILD'S\nDIRECTION" : 'INTERESTS\nAND DREAM',
@@ -1486,25 +1625,80 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ? 'For Class 9, interests matter more than locking one career too early.'
           : 'Dreams are useful when we translate them into stream, exam, backup, and effort.',
       children: [
-        const _Label('INTEREST AREAS'),
-        Wrap(
-          spacing: AppSpacing.space8,
-          runSpacing: AppSpacing.space8,
+        const _Label('PICK UP TO 2 AREAS'),
+        // ── Step 1: Family grid ──
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          mainAxisSpacing: AppSpacing.space12,
+          crossAxisSpacing: AppSpacing.space12,
+          childAspectRatio: 1.35,
           children: [
-            for (final interest in interestDomains)
-              _ChipButton(
-                label: interest,
-                selected: _interests.contains(interest),
+            for (final family in interestFamilies)
+              _FamilyCard(
+                family: family,
+                selected: _interestFamilies.contains(family.id),
                 onTap: () => setState(() {
-                  if (_interests.contains(interest)) {
-                    _interests.remove(interest);
+                  if (_interestFamilies.contains(family.id)) {
+                    _interestFamilies.remove(family.id);
+                    _interests.removeWhere(
+                      (id) => interestById(id)?.familyId == family.id,
+                    );
+                  } else if (_interestFamilies.length < maxInterestFamilies) {
+                    _interestFamilies.add(family.id);
                   } else {
-                    _interests.add(interest);
+                    _snack(
+                      'Maximum $maxInterestFamilies areas. '
+                      'Deselect one to change.',
+                    );
                   }
                 }),
               ),
           ],
         ),
+        // ── Step 2: Sub-interests for selected families ──
+        if (_interestFamilies.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.space20),
+          const _Label('NARROW DOWN (UP TO 4)'),
+          for (final famId in _interestFamilies) ...[
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.space8),
+              child: Text(
+                interestFamilyById(famId)?.label.toUpperCase() ?? '',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.textSecondary,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ),
+            Wrap(
+              spacing: AppSpacing.space8,
+              runSpacing: AppSpacing.space8,
+              children: [
+                for (final interest in interestsInFamily(famId))
+                  _ChipButton(
+                    label: interest.labelFor(_stage),
+                    selected: _interests.contains(interest.id),
+                    onTap: () => setState(() {
+                      if (_interests.contains(interest.id)) {
+                        _interests.remove(interest.id);
+                      } else if (_interests.length < maxInterests) {
+                        _interests.add(interest.id);
+                      } else {
+                        _snack(
+                          'Maximum $maxInterests interests. '
+                          'Deselect one to change.',
+                        );
+                      }
+                    }),
+                  ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.space12),
+          ],
+        ],
         if (askDream) ...[
           const SizedBox(height: AppSpacing.space20),
           TextField(
@@ -1516,8 +1710,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ),
           ),
         ],
+      ],
+    );
+  }
+
+  Widget _strategyPage() {
+    final isParent = _role == UserRole.parent;
+    final askExams = _stage != EducationStage.other;
+
+    return _OnboardingPage(
+      title: isParent ? 'EXAM &\nSTRATEGY' : 'YOUR\nSTRATEGY',
+      intro:
+          'Which exams are you targeting, and how do you want to handle backup plans?',
+      children: [
         if (askExams) ...[
-          const SizedBox(height: AppSpacing.space20),
           const _Label('TARGET EXAMS'),
           Wrap(
             spacing: AppSpacing.space8,
@@ -1892,14 +2098,42 @@ const String _districtNotListedCode = '__district_not_listed__';
 
 enum _PageKind {
   role,
+  valueProposition,
   identity,
   stage,
   stageDetails,
   location,
   aspirations,
+  strategy,
   goalSelection,
   parentExtension,
 }
+
+/// Background for "Not Sure" students — maps to [_lastCompletedStage].
+enum _NotSureBackground {
+  class10OrLess,
+  class12,
+  diplomaOrIti,
+  degree,
+  undecided,
+}
+
+String _notSureBackgroundLabel(_NotSureBackground v) => switch (v) {
+  _NotSureBackground.class10OrLess => 'Class 10 or less',
+  _NotSureBackground.class12 => 'Class 12 / +2',
+  _NotSureBackground.diplomaOrIti => 'Diploma or ITI',
+  _NotSureBackground.degree => 'A degree',
+  _NotSureBackground.undecided => 'Haven\'t decided yet',
+};
+
+/// Leaning for "Not Sure" students — pre-seeds a family.
+enum _NotSureLeaning { handsOn, peopleIdeas, dontKnow }
+
+String _notSureLeaningLabel(_NotSureLeaning v) => switch (v) {
+  _NotSureLeaning.handsOn => 'Working with hands / making things',
+  _NotSureLeaning.peopleIdeas => 'Working with people / ideas',
+  _NotSureLeaning.dontKnow => 'I genuinely don\'t know',
+};
 
 // ─── Shared widgets ───────────────────────────────────────────────────────
 
@@ -2307,6 +2541,90 @@ class _ChipButton extends StatelessWidget {
   }
 }
 
+/// Resolves the string icon names stored in [InterestFamily.icon] to
+/// Material [IconData]. Falls back to [Icons.interests_rounded] for
+/// any unrecognised name so the grid never breaks.
+const Map<String, IconData> _familyIcons = {
+  'medical_services': Icons.medical_services_rounded,
+  'memory': Icons.memory_rounded,
+  'construction': Icons.construction_rounded,
+  'trending_up': Icons.trending_up_rounded,
+  'palette': Icons.palette_rounded,
+  'gavel': Icons.gavel_rounded,
+  'agriculture': Icons.agriculture_rounded,
+  'restaurant': Icons.restaurant_rounded,
+};
+
+/// A tappable card for one [InterestFamily], used in the two-step
+/// interest funnel. Shows icon, label, and blurb in a compact 2-column
+/// grid layout.
+class _FamilyCard extends StatelessWidget {
+  const _FamilyCard({
+    required this.family,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final InterestFamily family;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final icon = _familyIcons[family.icon] ?? Icons.interests_rounded;
+    return BauhausPressable(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(AppSpacing.space12),
+        decoration: bauhausDecoration(
+          color: selected ? AppColors.primaryContainer : AppColors.surface,
+          shadowOffset: selected ? 5 : 2,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, size: 22, color: AppColors.textPrimary),
+                const SizedBox(width: AppSpacing.space8),
+                if (selected)
+                  const Icon(
+                    Icons.check_circle_rounded,
+                    size: 18,
+                    color: AppColors.textPrimary,
+                  ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.space8),
+            Text(
+              family.label.toUpperCase(),
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                fontWeight: FontWeight.w900,
+                color: AppColors.textPrimary,
+                height: 1.2,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: AppSpacing.space4),
+            Expanded(
+              child: Text(
+                family.blurb,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
+                  height: 1.3,
+                ),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _PercentField extends StatelessWidget {
   const _PercentField({required this.controller, required this.label});
 
@@ -2322,6 +2640,124 @@ class _PercentField extends StatelessWidget {
         labelText: label,
         hintText: '0 - 100',
         suffixText: '%',
+      ),
+    );
+  }
+}
+// ─── Sample path card (value proposition screen) ──────────────────────────
+
+class _SamplePath extends StatelessWidget {
+  const _SamplePath({
+    required this.icon,
+    required this.title,
+    required this.stages,
+  });
+
+  final IconData icon;
+  final String title;
+  final List<String> stages;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.space16),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.outline, width: 0.5),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 20, color: AppColors.secondary),
+              const SizedBox(width: AppSpacing.space8),
+              Expanded(
+                child: Text(
+                  title,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.space12),
+          for (var i = 0; i < stages.length; i++)
+            _SamplePathStep(
+              label: stages[i],
+              number: i + 1,
+              isLast: i == stages.length - 1,
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SamplePathStep extends StatelessWidget {
+  const _SamplePathStep({
+    required this.label,
+    required this.number,
+    required this.isLast,
+  });
+
+  final String label;
+  final int number;
+  final bool isLast;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 24,
+            child: Column(
+              children: [
+                Container(
+                  width: 20,
+                  height: 20,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.secondary.withValues(alpha: 0.15),
+                  ),
+                  child: Text(
+                    '$number',
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.secondary,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+                if (!isLast)
+                  Expanded(
+                    child: Container(width: 1.5, color: AppColors.outline),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.space8),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: isLast ? 0 : AppSpacing.space8),
+              child: Text(
+                label,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
+                  height: 1.3,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

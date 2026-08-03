@@ -91,6 +91,29 @@ class Eligibility {
       }
     }
 
+    // 5. Domicile / state gate — state-level exams restrict state-quota
+    // seats to domiciled candidates. Non-domiciled students can still
+    // appear via management quota in most states, so this is informational
+    // rather than a hard block. The "studied in one state, living in
+    // another" case is extremely common and must be surfaced early.
+    if (!exam.isNational && exam.stateCode != null) {
+      if (user.domicileState.isEmpty) {
+        reasons.add(
+          'State-level exam for ${exam.stateCode} — your domicile state is not set.',
+        );
+      } else if (user.domicileState != exam.stateCode) {
+        reasons.add(
+          'State quota seats require ${exam.stateCode} domicile; '
+          'your domicile is ${user.domicileState}. '
+          'Management quota may still apply.',
+        );
+      } else {
+        reasons.add(
+          'Domicile matches ${exam.stateCode} — state quota eligible.',
+        );
+      }
+    }
+
     // Determine status
     final status = blocked
         ? EligibilityStatus.blocked

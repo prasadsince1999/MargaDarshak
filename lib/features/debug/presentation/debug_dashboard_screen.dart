@@ -38,11 +38,6 @@ class DebugDashboardScreen extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    tooltip: 'Flow Doctor',
-                    onPressed: () => context.push('/debug/flow-doctor'),
-                    icon: const Icon(Icons.local_hospital_rounded),
-                  ),
-                  IconButton(
                     tooltip: 'Reset profile (re-onboard)',
                     onPressed: () {
                       ref
@@ -335,10 +330,9 @@ class DebugDashboardScreen extends ConsumerWidget {
                         ),
                         _DataRow(
                           'interests (top 3)',
-                          (user.interests.isNotEmpty
-                                  ? user.interests.take(3)
-                                  : ['Engineering', 'Research', 'Defense'])
-                              .join(', '),
+                          user.interests.isEmpty
+                              ? '(none)'
+                              : user.interests.take(3).join(', '),
                         ),
                         const SizedBox(height: AppSpacing.space8),
 
@@ -483,7 +477,7 @@ class DebugDashboardScreen extends ConsumerWidget {
 
   String _firstName(String value) {
     final trimmed = value.trim();
-    if (trimmed.isEmpty) return 'RAHUL';
+    if (trimmed.isEmpty) return '(no name)';
     return trimmed.split(RegExp(r'\s+')).first.toUpperCase();
   }
 

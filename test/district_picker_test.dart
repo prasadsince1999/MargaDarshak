@@ -18,8 +18,8 @@ import 'support/test_harness.dart';
 /// restore.
 void main() {
   /// Page index of the location step in the student flow:
-  /// role, identity, stage, stageDetails, location, aspirations, goalSelection
-  const locationStep = 4;
+  /// role, valueProposition, identity, stage, stageDetails, location, ...
+  const locationStep = 5;
 
   Future<void> pumpAtLocationStep(
     WidgetTester tester, {

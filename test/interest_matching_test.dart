@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:margadarshak/core/domain/models/models.dart';
+import 'package:margadarshak/core/domain/interest_taxonomy.dart';
 import 'package:margadarshak/core/domain/taxonomies.dart';
 import 'package:margadarshak/data/seed/roadmap_seeds.dart';
 import 'package:margadarshak/features/guidance/domain/explain_engine.dart';
@@ -43,13 +46,13 @@ void main() {
       );
     });
 
-    test('Cybersecurity does not match the IT tag by accident', () {
+    test('Cybersecurity matches IT on purpose, not by accident', () {
+      // This used to be a false positive from cybersecur-IT-y. It is now a
+      // real match because INT-COMP-03 declares the "IT" roadmap tag. The
+      // outcome looks the same; the reason is the difference.
       final text = explain(['Cybersecurity'], 'IT');
-      expect(
-        text.contains('aligns with your interests'),
-        isFalse,
-        reason: text,
-      );
+      expect(text, contains('aligns with your interests'));
+      expect(roadmapTagsFor(['Cybersecurity']), contains('IT'));
     });
 
     test('Hospitality does not match the IT tag by accident', () {
@@ -93,28 +96,57 @@ void main() {
     });
   });
 
-  test('no interest in the taxonomy spuriously matches a short tag', () {
-    // Sweeps the whole cross product the way the audit did.
-    final shortTags = <String>{
-      for (final r in seedRoadmaps)
-        for (final t in r.tags)
-          if (t.length <= 3) t,
-    };
-    final offenders = <String>[];
-    for (final interest in interestDomains) {
-      for (final tag in shortTags) {
-        final matchedByAccident =
-            interest.toLowerCase().contains(tag.toLowerCase()) &&
-            !RegExp(
-              r'\b' + RegExp.escape(tag.toLowerCase()) + r'\b',
-            ).hasMatch(interest.toLowerCase());
-        if (!matchedByAccident) continue;
-        final text = explain([interest], tag);
-        if (text.contains('aligns with your interests')) {
-          offenders.add('$interest ~ $tag');
+  test('every reported match is a tag the interest declares', () {
+    // Matching is now explicit, so a named tag must always be declared.
+    // Nothing is matched on incidental word overlap any more.
+    for (final legacy in interestDomains) {
+      final declared = roadmapTagsFor([
+        legacy,
+      ]).map((t) => t.toLowerCase()).toSet();
+
+      for (final roadmap in seedRoadmaps) {
+        final text = ExplainEngine.explainRoadmap(
+          profile: profileWith([legacy]),
+          roadmap: roadmap,
+        );
+        const marker = 'aligns with your interests: ';
+        final at = text.indexOf(marker);
+        if (at == -1) continue;
+
+        var listed = const LineSplitter()
+            .convert(text.substring(at + marker.length))
+            .first
+            .trim();
+        if (listed.endsWith('.')) {
+          listed = listed.substring(0, listed.length - 1);
+        }
+
+        for (final tag in listed.split(', ').map((t) => t.trim())) {
+          expect(
+            declared,
+            contains(tag.toLowerCase()),
+            reason:
+                '"$legacy" was told it aligns with "$tag" on ${roadmap.id}, '
+                'but does not declare that tag.',
+          );
         }
       }
     }
-    expect(offenders, isEmpty, reason: offenders.join('\n'));
+  });
+
+  test('an interest with no declared tags never claims a match', () {
+    // No defence roadmap exists yet, so INT-GOVT-01 declares nothing.
+    expect(roadmapTagsFor(['Defence & Security']), isEmpty);
+    for (final roadmap in seedRoadmaps) {
+      final text = ExplainEngine.explainRoadmap(
+        profile: profileWith(['Defence & Security']),
+        roadmap: roadmap,
+      );
+      expect(
+        text.contains('aligns with your interests'),
+        isFalse,
+        reason: roadmap.id,
+      );
+    }
   });
 }

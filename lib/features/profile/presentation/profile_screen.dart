@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/domain/models/models.dart';
+import '../../../core/domain/interest_taxonomy.dart';
 import '../../../core/providers/data_providers.dart';
 import '../../../core/providers/my_plan_provider.dart';
 import '../../../core/providers/pair_code_provider.dart';
@@ -30,7 +31,11 @@ class ProfileScreen extends ConsumerWidget {
         ? _stateLabel(user!.domicileState)
         : null;
     final language = user?.preferredLanguage ?? 'English';
-    final interests = user?.interests.take(4).toList() ?? const <String>[];
+    // Stored as IDs; resolve to the label for this student's stage.
+    final interests = interestLabels(
+      user?.interests.take(4).toList() ?? const <String>[],
+      stage ?? EducationStage.class10,
+    );
     final targetExamCount = user?.goalProfile.targetExamIds.length ?? 0;
 
     return PopScope(
@@ -266,13 +271,16 @@ class _PairCodeSection extends ConsumerWidget {
             children: [
               const Icon(Icons.family_restroom_rounded, size: 20),
               const SizedBox(width: AppSpacing.space8),
-              Text(
-                'FAMILY BRIDGE',
-                style: Theme.of(
-                  context,
-                ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w900),
+              Flexible(
+                child: Text(
+                  'FAMILY BRIDGE',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w900),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.space8),
               BauhausChip(
                 label: pairState.statusLabel.toUpperCase(),
                 color: switch (pairState.linkStatus) {
@@ -639,17 +647,20 @@ class _GoalProfileSection extends ConsumerWidget {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: BauhausSectionTitle(
                   icon: Icons.flag_rounded,
                   label: 'Goal profile',
                 ),
               ),
-              BauhausChip(
-                label: gp.goalStatus.label.toUpperCase(),
-                color: gp.hasGoal
-                    ? AppColors.primaryContainer
-                    : AppColors.surfaceVariant,
+              const SizedBox(width: AppSpacing.space8),
+              Flexible(
+                child: BauhausChip(
+                  label: gp.goalStatus.label.toUpperCase(),
+                  color: gp.hasGoal
+                      ? AppColors.primaryContainer
+                      : AppColors.surfaceVariant,
+                ),
               ),
             ],
           ),

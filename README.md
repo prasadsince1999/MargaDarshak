@@ -92,7 +92,7 @@ No student's future can be sold to the highest-paying institution.
 
 There are **65 roadmaps** and every stage has content: Class 9-12 have 10-16
 each, Diploma 8, ITI 10, Undergraduate 7, Graduate 11, Postgraduate 5,
-Dropper 8. "Not sure" is genuinely thin at 1 and is the next content gap.
+Dropper 8, and "Not sure" has 1 with 2-3 diagnostic placement questions.
 All eleven stages are selectable in onboarding. The "key tools" column below
 is the intended set — most of those tools are planned, not built.
 
@@ -157,7 +157,7 @@ lib/
 | Screen | Route | Description |
 |--------|-------|-------------|
 | Splash | `/splash` | App entry with branding |
-| Onboarding | `/onboarding` | 7-step role/stage/details flow (8 for parents) |
+| Onboarding | `/onboarding` | 9-step role/stage/details flow (10 for parents) |
 | Home | `/home` | Stage banner, guidance cards, survey prompt |
 | Explore | `/explore` | Roadmap browser with Explore/My Plan/Checks tabs |
 | Roadmap Detail | `/roadmap/:id` | Full path detail with actions |
@@ -180,15 +180,17 @@ lib/
 
 ```
 Step 1: Role Selection (Student / Parent)
-Step 2: Basic Info (Name, Language)
-Step 3: Education Stage (11 stages)
-Step 4: Stage Details (Board, Stream, Discipline — varies by stage)
-Step 5: Location & Household
-Step 6: Eligibility Factors (Category, Income, PwD, Religion)
-Step 7: Interests & Target Exams
-Step 8: Dream Goal & Backup Preference
-Step 9: Language Selection
-Step P: Parent Concerns (parent role only)
+Step 2: Value Proposition (3 sample roadmap previews)
+Step 3: Basic Info (Name, DOB, Gender, Phone)
+Step 4: Education Stage (11 stages)
+Step 5: Stage Details (Board, Stream, Discipline — varies by stage;
+        "Not sure" gets diagnostic placement questions instead)
+Step 6: Location (State, District)
+Step 7: Interests — two-step funnel: 2 families then up to 4 sub-interests
+        with age-appropriate labels, plus dream/goal text
+Step 8: Strategy (Target Exams, Backup Style, Risk Tolerance)
+Step 9: Goal Selection (exploring, decided, exam focused, backup)
+Step P: Parent Concerns (parent role only, appended as Step 10)
 ```
 
 Each step collects only data relevant to the selected stage. The system adapts which fields appear based on the stage selected in Step 3.
@@ -238,19 +240,9 @@ Design documentation: `docs/01-product.md` through `docs/05-roadmap.md`
 
 ## Debug Dashboard
 
-A development-only 6-column diagnostic screen (`/flow-map`) that shows all onboarding inputs and post-onboarding previews simultaneously:
-
-```
-┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
-│ Steps    │ Step 4   │ Steps    │ Step 7   │ Steps    │ Post-    │
-│ 1-3      │ Stage    │ 5+6      │ Interest │ 8+9      │ Onboard  │
-│ Role     │ Details  │ Location │ & Exams  │ Dream    │ Preview  │
-│ Basics   │          │ Eligib.  │          │ Language │          │
-│ Stage    │          │          │          │          │          │
-└──────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
-```
-
-Enables rapid QA across all 11 stage × 2 role combinations without navigating the real app flow.
+A development-only diagnostic shortcut on the onboarding role page that lets
+developers skip onboarding and jump directly to a debug profile. Visible only
+in debug builds.
 
 ---
 
@@ -272,7 +264,8 @@ Compliant with India's **Digital Personal Data Protection Act 2023**.
 
 | Component | Status |
 |-----------|--------|
-| Onboarding (9 steps) | ✅ Complete |
+| Onboarding (9 steps, 10 for parents) | ✅ Complete |
+| Interest taxonomy (8 families, 35 interests, 2-step funnel) | ✅ Complete |
 | Home Screen | ✅ Complete |
 | Roadmap Explorer | ✅ Complete |
 | Roadmap Detail | ✅ Complete |
@@ -284,13 +277,14 @@ Compliant with India's **Digital Personal Data Protection Act 2023**.
 | AI Mentor (UI shell) | ✅ Complete |
 | Family Bridge (local sim) | ✅ Complete |
 | Profile & Settings | ✅ Complete |
-| Debug Dashboard | ✅ Complete |
 | Stage-Conditional Tools | ✅ Complete |
 | **Smart Feature Registry** | ✅ **Complete** |
 | **Checks Tab (registry-driven)** | ✅ **Complete** |
 | **Goal Bridge (model + seeds)** | ✅ **Model ready** |
 | **Exam Stack (model + seeds)** | ✅ **Model ready** |
 | **Shared Career Clusters** | ✅ **Seed data** |
+| Font scale 1.3×/2.0× (all screens) | ✅ **Verified** |
+| Stage × role smoke tests (165 tests) | ✅ **Passing** |
 | Goal Bridge UI | 🔲 Planned |
 | Exam Stack UI | 🔲 Planned |
 | Documents & Deadlines | 🔲 Planned |

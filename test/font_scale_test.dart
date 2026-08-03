@@ -70,12 +70,9 @@ void main() {
     'onboarding': const OnboardingScreen(),
   };
 
-  /// Screens with horizontal RenderFlex overflow at large font scales.
-  /// Measured on a 360x640 phone: onboarding overflows 72px at 1.3x and
-  /// 250px at 2.0x; profile overflows at 1.3x and by 348px at 2.0x.
-  /// Home, Explore and Parent view are clean even at 2.0x.
-  /// Un-skip these as they are fixed — do not delete them.
-  const knownOverflow = <String>{'onboarding', 'profile'};
+  /// All previously-overflowing screens have been fixed. Keep the skip
+  /// mechanism in case regressions appear — just add the name back.
+  const knownOverflow = <String>{};
 
   for (final scale in <double>[1.3, 2.0]) {
     group('at ${scale}x font scale', () {

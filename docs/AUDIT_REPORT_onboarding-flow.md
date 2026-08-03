@@ -376,18 +376,18 @@ why the data prompt below exists.
 
 **Before Play Store**
 
-1. 🔴 §0 — unblock the seven stages, or handle them honestly at the picker
-2. 🔴 §2.3 — remove discontinued and fictional exams
-3. 🔴 §3.1 — fix interest matching (small change, stops a falsehood)
-4. 🔴 §2.1/2.2 — one exam question, IDs that resolve
-5. 🔴 §7.3.1 — value before questions
+1. ~~🔴 §0 — unblock the seven stages~~ ✅ Phase 2 — all 11 stages open
+2. ~~🔴 §2.3 — remove discontinued and fictional exams~~ ✅ Phase 1
+3. ~~🔴 §3.1 — fix interest matching~~ ✅ Phase 3 — taxonomy with 8 families, 35 interests
+4. ~~🔴 §2.1/2.2 — one exam question, IDs that resolve~~ ✅ Phase 4 — single strategy page
+5. ~~🔴 §7.3.1 — value before questions~~ ✅ Value proposition screen with 3 sample paths
 
 **Next**
 
-6. 🟠 §1 / §7.1 — split Aspirations, group the stage picker
-7. 🟠 §3.2 — categorise interests, give them IDs
-8. 🟠 §5.1, §5.2 — validation-order and board-validation bugs
-9. 🟠 §6 — wire sub-stage or drop it
+6. ~~🟠 §1 / §7.1 — split Aspirations, group the stage picker~~ ✅ Phase 4
+7. ~~🟠 §3.2 — categorise interests, give them IDs~~ ✅ Phase 3
+8. ~~🟠 §5.1, §5.2 — validation-order and board-validation bugs~~ ✅ Phase 4
+9. ~~🟠 §6 — wire sub-stage or drop it~~ ✅ Phase 4 — dropped
 
 **After the data work lands** (see `AUDIT_PROMPT_onboarding-data.md`)
 

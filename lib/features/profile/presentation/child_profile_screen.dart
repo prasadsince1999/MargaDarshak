@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/domain/models/models.dart';
+import '../../../core/domain/interest_taxonomy.dart';
 import '../../../core/providers/user_provider.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/widgets/widgets.dart';
@@ -15,7 +16,8 @@ class ChildProfileScreen extends ConsumerWidget {
     final user = ref.watch(userProvider);
     final child = _childFromUser(user);
     final stage = child.educationStage;
-    final interests = child.interests.take(4).toList();
+    // Stored as IDs; resolve to the label for the child's stage.
+    final interests = interestLabels(child.interests.take(4).toList(), stage);
 
     return BauhausScaffold(
       role: BauhausRole.parent,

@@ -45,9 +45,9 @@ void main() {
 
     expect(find.byKey(const Key('role_card_student')), findsOneWidget);
     expect(find.byKey(const Key('role_card_parent')), findsOneWidget);
-    // 7 steps for a student; the parent step is appended only once the
+    // 9 steps for a student; the parent step is appended only once the
     // parent role is chosen.
-    expect(find.text('STEP 1 OF 7'), findsOneWidget);
+    expect(find.text('STEP 1 OF 9'), findsOneWidget);
   });
 
   testWidgets('Choosing the parent role adds the parent context step', (
@@ -60,7 +60,7 @@ void main() {
     await tester.tap(find.byKey(const Key('role_card_parent')));
     await tester.pumpAndSettle();
 
-    expect(find.text('STEP 2 OF 8'), findsOneWidget);
+    expect(find.text('STEP 2 OF 10'), findsOneWidget);
   });
 
   testWidgets('Splash routes an onboarded user to home', (tester) async {
@@ -123,11 +123,17 @@ void main() {
 
     await tester.tap(find.byKey(const Key('role_card_student')));
     await tester.pumpAndSettle();
-    expect(find.text('STEP 2 OF 7'), findsOneWidget);
+    // Now on step 2 (value proposition).
+    expect(find.text('STEP 2 OF 9'), findsOneWidget);
+
+    // Advance past the value screen to identity (step 3).
+    await tester.tap(find.text('NEXT'));
+    await tester.pumpAndSettle();
+    expect(find.text('STEP 3 OF 9'), findsOneWidget);
 
     // Next must not advance while the required fields are empty.
     await tester.tap(find.text('NEXT'));
     await tester.pumpAndSettle();
-    expect(find.text('STEP 2 OF 7'), findsOneWidget);
+    expect(find.text('STEP 3 OF 9'), findsOneWidget);
   });
 }

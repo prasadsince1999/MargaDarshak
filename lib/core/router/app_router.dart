@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +7,7 @@ import '../../features/admin/presentation/moderation_detail_screen.dart';
 import '../../features/admin/presentation/moderation_queue_screen.dart';
 import '../../features/ai/presentation/ai_screen.dart';
 import '../../features/career_detail/presentation/career_detail_screen.dart';
-import '../../features/debug/flow_doctor/flow_doctor_screen.dart';
+import '../../features/debug/presentation/debug_dashboard_screen.dart';
 import '../../features/future_ready/presentation/future_ready_screen.dart';
 import '../../features/goals/presentation/goal_selection_screen.dart';
 import '../../features/debug/flow_map/flow_map_screen.dart';
@@ -190,19 +191,12 @@ GoRouter createAppRouter(WidgetRef ref) {
         },
       ),
 
-      // ─── Debug: Flow Doctor ────────────────────────────────
-      GoRoute(
-        path: '/debug',
-        name: 'debug',
-        builder: (context, state) => const FlowDoctorScreen(),
-      ),
-
-      // ─── Debug: Flow Map ──────────────────────────────────
-      GoRoute(
-        path: '/debug/flow-map',
-        name: 'flowMap',
-        builder: (context, state) => const FlowMapScreen(),
-      ),
+      // ─── Debug (compile-time gated) ───────────────────────────
+      // Diagnostic screens must not ship. They render raw profile internals
+      // and carry placeholder values that would read as real data to a
+      // student. kDebugMode is a const, so these are tree-shaken out of any
+      // release build entirely rather than merely hidden.
+      ..._debugRoutes,
 
       // ─── Student Voice: Survey Form ────────────────────────
       GoRoute(
@@ -271,6 +265,23 @@ GoRouter createAppRouter(WidgetRef ref) {
       ..._adminRoutes,
     ],
   );
+}
+
+/// Diagnostic routes, present in debug builds only.
+List<GoRoute> get _debugRoutes {
+  if (!kDebugMode) return const [];
+  return [
+    GoRoute(
+      path: '/debug',
+      name: 'debug',
+      builder: (context, state) => const DebugDashboardScreen(),
+    ),
+    GoRoute(
+      path: '/debug/flow-map',
+      name: 'flowMap',
+      builder: (context, state) => const FlowMapScreen(),
+    ),
+  ];
 }
 
 /// Admin routes, present only when built with `--dart-define=ENABLE_ADMIN=true`.
