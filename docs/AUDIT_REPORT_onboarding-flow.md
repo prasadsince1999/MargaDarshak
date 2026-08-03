@@ -35,36 +35,35 @@ combination is worse than either alone, and it ships today.
 Also note: `README.md` and the app's own positioning say "Class 9 to
 post-graduation". Four stages work. That claim is currently false.
 
-> 🔴 **Correction (3 Aug).** Two things in this section were wrong when first
-> written.
+> 🔴 **Correction, twice over (3 Aug).**
 >
-> **The block is deliberate, and it is documented.** `isAvailable` carries a
-> comment — *"Phase 1 focuses on Class 9-12 only. Update this when unlocking
-> additional stages in future releases."* The first pass grepped from the
-> declaration line and cut off the three comment lines above it, then reported
-> the flag as unexplained. It is not.
+> **First:** the block was deliberate and documented. `isAvailable` carried a
+> comment — *"Phase 1 focuses on Class 9-12 only."* The original pass grepped
+> from the declaration line and cut off the comment above it.
 >
-> **There are 40 roadmaps, not 61, and they are not spread across all 11
-> stages.** Measured:
+> **Second, and more serious:** this section claimed "61 roadmaps span all 11
+> stages", was then "corrected" to "40 roadmaps, and Undergraduate, Graduate
+> and Postgraduate have none". **Both were wrong.** Counted in Dart, using the
+> model's own rule that an empty `visibleStages` means visible everywhere:
 >
-> | Stage | Roadmaps | Goals |
-> |---|---:|---:|
-> | Class 9 / 10 | 8 each | 2 / 9 |
-> | Class 11 / 12 | 4 each | 8 / 10 |
-> | Dropper | 2 | 8 |
-> | Diploma | 1 | 3 |
-> | ITI | 1 | 1 |
-> | Not sure | 1 | 0 |
-> | **Undergraduate** | **0** | 10 |
-> | **Graduate** | **0** | 9 |
-> | **Postgraduate** | **0** | 5 |
+> | Stage | Roadmaps | | Stage | Roadmaps |
+> |---|---:|---|---|---:|
+> | Class 9 | 14 | | Diploma | 8 |
+> | Class 10 | 12 | | ITI | 10 |
+> | Class 11 | 10 | | Undergraduate | 7 |
+> | Class 12 | 16 | | Graduate | 11 |
+> | Dropper | 8 | | Postgraduate | 5 |
+> | Not sure | 1 | | **Total** | **65** |
 >
-> So the scoping is justified: unblocking those stages today would walk
-> students into empty screens. **The fix is therefore not to unblock them.**
-> It is to decline honestly *on the card, before the tap* — a visible "not
-> ready yet" state with a way forward — instead of a snackbar and a wall a
-> student cannot get past. The dead end is the defect; the gating is not.
-
+> Both wrong numbers came from regexes over the seed file: the first
+> overcounted, the second silently skipped every multi-line `visibleStages`
+> list. `test/stage_content_test.dart` now computes this in Dart so it cannot
+> be guessed from source text again.
+>
+> **The consequence:** every stage has real content, so the gating was costing
+> students access to material that already existed. All eleven stages are now
+> selectable. "Not sure" at 1 roadmap is the one genuinely thin stage and is
+> the next content gap.
 ---
 
 ## 1. Density and scrolling 🔴

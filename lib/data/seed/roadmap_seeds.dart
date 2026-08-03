@@ -24,7 +24,348 @@ final List<Roadmap> seedRoadmaps = [
   ...seedUndergraduateRoadmaps,
   ...seedPostgraduateRoadmaps,
   ...seedDropperRoadmaps,
+  // ─── Phase 2: Diploma and ITI upward routes ───────────────────────
+  // Transcribed from Research Docs/indian-education-stage-guidance.md.
+  // Lateral entry was entirely absent from the app before this; it is the
+  // main route out of a polytechnic and the thing a diploma student most
+  // needs to be told.
+  Roadmap(
+    id: 'roadmap_diploma_lateral_entry',
+    title: 'Diploma → B.Tech by Lateral Entry',
+    description:
+        'Finish your 3-year diploma and enter the SECOND year of a B.Tech, '
+        'skipping first year entirely. Your state runs its own entrance test '
+        'for this, and many private universities admit on diploma marks alone.',
+    targetClass: 10,
+    branch: AfterTenthBranch.polytechnicDiploma,
+    icon: 'north_east',
+    tags: [
+      'diploma',
+      'lateral entry',
+      'LEET',
+      'B.Tech',
+      'engineering',
+      'polytechnic',
+    ],
+    visibleStages: [
+      EducationStage.class10,
+      EducationStage.diploma,
+      EducationStage.iti,
+    ],
+    linkedCareerIds: ['career_mechanical_eng', 'career_civil_eng'],
+    linkedGoalIds: ['goal_engineering'],
+    backupRoadmapIds: ['roadmap_diploma_job_first'],
+    sourceUrl: 'https://www.aicte-india.org',
+    sourceReliability: SourceReliability.statutoryCouncil,
+    lastVerifiedAt: roadmapsLastVerifiedAt,
+    needsVerification: false,
+    stages: [
+      RoadmapStage(
+        id: 'le_s1',
+        title: 'Know that this route exists',
+        description:
+            'A polytechnic diploma is not a dead end. AICTE rules let diploma '
+            'holders join the second year of a 4-year B.Tech as extra seats '
+            'over the normal intake — so you are not competing for the same '
+            'seats as Class 12 students.',
+        order: 1,
+        actionItems: [
+          'You skip year one — the degree takes 3 more years, not 4',
+          'These are supernumerary seats, added on top of the approved intake',
+          'Keep your diploma aggregate high; almost every route uses it',
+        ],
+      ),
+      RoadmapStage(
+        id: 'le_s2',
+        title: 'Find your state\'s lateral entry exam',
+        description:
+            'There is no single national exam. Each state technical board '
+            'runs its own — OJEE LEET in Odisha, JELET in West Bengal, '
+            'AP/TS ECET, DCET in Karnataka, Maharashtra DSE, Gujarat D2D, '
+            'Haryana LEET, Kerala LET, JLEE in Assam, IPU CET or DTU LEET in '
+            'Delhi.',
+        order: 2,
+        actionItems: [
+          'Check the exam for your domicile state and its application window',
+          'Register on your state technical board portal, not a private site',
+          'If your state is not listed in the app, ask your polytechnic — we '
+              'will not guess an exam name',
+        ],
+      ),
+      RoadmapStage(
+        id: 'le_s3',
+        title: 'Also apply where no exam is needed',
+        description:
+            'The most common mistake is assuming the state exam is the only '
+            'way in. Many private AICTE-approved and deemed universities '
+            'admit on diploma marks alone.',
+        order: 3,
+        actionItems: [
+          'Shortlist private and deemed universities that admit on marks',
+          'Check AICTE approval before paying anything',
+          'Apply to both routes — the exam and the direct route',
+        ],
+      ),
+      RoadmapStage(
+        id: 'le_s4',
+        title: 'Consider earning first, if money is tight',
+        description:
+            'Going straight into a B.Tech on a large education loan while the '
+            'family is under financial strain is a real risk. Registering on '
+            'the NATS 2.0 apprenticeship portal gets you paid industry '
+            'experience first, and the degree afterwards.',
+        order: 4,
+        durationMonths: 12,
+        actionItems: [
+          'Create a profile on nats.education.gov.in after your diploma',
+          'A technician apprentice has a government-set minimum stipend',
+          'Employer-sponsored or part-time B.Tech routes exist afterwards',
+        ],
+      ),
+      RoadmapStage(
+        id: 'le_s5',
+        title: 'Join B.Tech second year',
+        description:
+            'Three years of degree study, finishing with the same B.Tech as '
+            'anyone who entered through Class 12.',
+        order: 5,
+        durationMonths: 36,
+        isLast: true,
+        actionItems: [
+          'Your degree is identical — it does not say "lateral entry" on it',
+          'GATE opens up from third year onward for M.Tech and PSU jobs',
+          'Your workshop experience is an advantage in practical subjects',
+        ],
+      ),
+    ],
+  ),
+  Roadmap(
+    id: 'roadmap_diploma_job_first',
+    title: 'Diploma → Job or Apprenticeship',
+    description:
+        'Start earning within a year of finishing your diploma, through the '
+        'government apprenticeship scheme or direct technical employment.',
+    targetClass: 10,
+    branch: AfterTenthBranch.polytechnicDiploma,
+    icon: 'work',
+    tags: ['diploma', 'apprenticeship', 'NATS', 'job', 'technical'],
+    visibleStages: [EducationStage.diploma, EducationStage.iti],
+    linkedCareerIds: ['career_mechanical_eng'],
+    linkedGoalIds: const [],
+    backupRoadmapIds: ['roadmap_diploma_lateral_entry'],
+    sourceUrl: 'https://nats.education.gov.in',
+    sourceReliability: SourceReliability.officialGov,
+    lastVerifiedAt: roadmapsLastVerifiedAt,
+    needsVerification: false,
+    stages: [
+      RoadmapStage(
+        id: 'djf_s1',
+        title: 'Register on NATS 2.0 before you finish',
+        description:
+            'The National Apprenticeship Training Scheme places diploma '
+            'holders with employers on a government-set stipend. Missing this '
+            'window is the second most common mistake diploma students make.',
+        order: 1,
+        actionItems: [
+          'Create your profile on nats.education.gov.in',
+          'Apply in your final semester, not after results',
+          'Apprenticeship counts as real industry experience on a CV',
+        ],
+      ),
+      RoadmapStage(
+        id: 'djf_s2',
+        title: 'Work as a technician apprentice',
+        description:
+            'On-the-job training with a stipend. Employers receive a subsidy '
+            'for taking apprentices, which is why these places exist.',
+        order: 2,
+        durationMonths: 12,
+        actionItems: [
+          'Treat it as paid learning, not a placeholder job',
+          'Ask to rotate across departments if you can',
+          'Keep every certificate — they matter for PSU applications',
+        ],
+      ),
+      RoadmapStage(
+        id: 'djf_s3',
+        title: 'Then choose: stay, specialise, or study',
+        description:
+            'After a year of paid experience the lateral entry route is still '
+            'open, and now you can part-fund it yourself.',
+        order: 3,
+        isLast: true,
+        actionItems: [
+          'Convert to a permanent technical role with the same employer',
+          'Or take lateral entry into B.Tech second year',
+          'Or specialise further with a short technical certification',
+        ],
+      ),
+    ],
+  ),
+  Roadmap(
+    id: 'roadmap_iti_to_degree',
+    title: 'ITI → Diploma → Engineering Degree',
+    description:
+        'An ITI trade certificate is not the end of the road. A two-year '
+        'trade can bridge into a polytechnic diploma, and from there into a '
+        'B.Tech — a debt-light route to an engineering degree.',
+    targetClass: 10,
+    branch: AfterTenthBranch.itiTraining,
+    icon: 'stairs',
+    tags: ['ITI', 'diploma', 'lateral entry', 'B.Tech', 'trade', 'NCVT'],
+    visibleStages: [
+      EducationStage.class9,
+      EducationStage.class10,
+      EducationStage.iti,
+    ],
+    linkedCareerIds: ['career_mechanical_eng'],
+    linkedGoalIds: const [],
+    backupRoadmapIds: ['roadmap_iti_work_first'],
+    sourceUrl: 'https://dgt.gov.in',
+    sourceReliability: SourceReliability.officialGov,
+    lastVerifiedAt: roadmapsLastVerifiedAt,
+    needsVerification: false,
+    stages: [
+      RoadmapStage(
+        id: 'itd_s1',
+        title: 'Choose NCVT, not just any institute',
+        description:
+            'This is the single most important choice, and the easiest one to '
+            'get wrong. NCVT certification is valid across India and is '
+            'required for Central Government, Railway and PSU technical '
+            'posts. SCVT certification is mostly limited to your own state.',
+        order: 1,
+        actionItems: [
+          'Verify the institute\'s NCVT affiliation before paying any fee',
+          'Check it on the Skill India Digital Hub portal, not a brochure',
+          'If you want Railway or PSU work later, SCVT will not be enough',
+        ],
+      ),
+      RoadmapStage(
+        id: 'itd_s2',
+        title: 'Pick a trade with real demand',
+        description:
+            'The register lists over 130 trades, but employment is '
+            'concentrated in a few. Electrician, Fitter, Welder, Electronics '
+            'Mechanic, Motor Vehicle Mechanic and Machinist carry across '
+            'manufacturing, construction and automotive work anywhere in the '
+            'country. On the non-engineering side, COPA and Stenography have '
+            'steady demand.',
+        order: 2,
+        durationMonths: 24,
+        actionItems: [
+          'Prefer a core trade over a niche one with no local industry',
+          'Choose a two-year trade if you want the diploma bridge later',
+          'Finish with the AITT to get your National Trade Certificate',
+        ],
+      ),
+      RoadmapStage(
+        id: 'itd_s3',
+        title: 'Bridge into a polytechnic diploma',
+        description:
+            'A completed two-year trade after Class 10 generally qualifies '
+            'you for direct lateral entry into the second year of a '
+            'polytechnic diploma.',
+        order: 3,
+        durationMonths: 24,
+        actionItems: [
+          'Ask your state technical board about ITI-to-diploma lateral entry',
+          'Your trade certificate and Class 10 marksheet are the documents',
+          'You skip diploma first year, so this costs two years, not three',
+        ],
+      ),
+      RoadmapStage(
+        id: 'itd_s4',
+        title: 'Then lateral entry into B.Tech',
+        description:
+            'From the diploma, your state LEET exam takes you into the second '
+            'year of an engineering degree — the same destination as a Class '
+            '12 student, reached through work rather than coaching.',
+        order: 4,
+        durationMonths: 36,
+        isLast: true,
+        actionItems: [
+          'See the "Diploma to B.Tech by Lateral Entry" path for the details',
+          'You will have earned money and experience along the way',
+          'Instructor route: CITS certification lets you teach in ITIs',
+        ],
+      ),
+    ],
+  ),
+  Roadmap(
+    id: 'roadmap_iti_work_first',
+    title: 'ITI → Apprenticeship → Skilled Work',
+    description:
+        'The fastest honest route from Class 10 to a pay cheque. A one or '
+        'two-year trade, a subsidised apprenticeship, then skilled technical '
+        'work.',
+    targetClass: 10,
+    branch: AfterTenthBranch.itiTraining,
+    icon: 'engineering',
+    tags: ['ITI', 'NAPS', 'apprenticeship', 'trade', 'job'],
+    visibleStages: [
+      EducationStage.class9,
+      EducationStage.class10,
+      EducationStage.iti,
+    ],
+    linkedCareerIds: const [],
+    linkedGoalIds: const [],
+    backupRoadmapIds: ['roadmap_iti_to_degree'],
+    sourceUrl: 'https://apprenticeshipindia.gov.in',
+    sourceReliability: SourceReliability.officialGov,
+    lastVerifiedAt: roadmapsLastVerifiedAt,
+    needsVerification: false,
+    stages: [
+      RoadmapStage(
+        id: 'itw_s1',
+        title: 'Finish the trade and the AITT',
+        description:
+            'The All India Trade Test is the concluding exam of the '
+            'Craftsmen Training Scheme. Passing it gives you the National '
+            'Trade Certificate.',
+        order: 1,
+        durationMonths: 12,
+        actionItems: [
+          'Attendance in practical hours matters more than theory marks here',
+          'Keep your workshop logbook — employers ask to see it',
+        ],
+      ),
+      RoadmapStage(
+        id: 'itw_s2',
+        title: 'Take a NAPS apprenticeship',
+        description:
+            'Under the National Apprenticeship Promotion Scheme, employers '
+            'get a government subsidy on your stipend, which is why thousands '
+            'of enterprises take ITI apprentices every year.',
+        order: 2,
+        durationMonths: 12,
+        actionItems: [
+          'Register on apprenticeshipindia.gov.in',
+          'Apply to enterprises registered under the scheme',
+          'An apprenticeship often converts into a permanent role',
+        ],
+      ),
+      RoadmapStage(
+        id: 'itw_s3',
+        title: 'Skilled technical employment',
+        description:
+            'Factory floors, power plants, railways, automotive workshops, '
+            'construction and maintenance contracts.',
+        order: 3,
+        isLast: true,
+        actionItems: [
+          'With NCVT certification, Railway and PSU technical posts open up',
+          'The diploma bridge stays available later if you want it',
+          'Trade skills travel — they are not tied to one employer or city',
+        ],
+      ),
+    ],
+  ),
 ];
+
+/// Date the seeded roadmaps added in Phase 2 were checked against their
+/// cited source. Bump only when the check is actually redone.
+final DateTime roadmapsLastVerifiedAt = DateTime(2026, 8, 3);
 
 /// Original after-10th roadmaps (Class 9, 10 stage visibility).
 final List<Roadmap> _afterTenthRoadmaps = [

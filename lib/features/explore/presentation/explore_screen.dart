@@ -130,7 +130,7 @@ class _ExploreTab extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Stage context intro Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+              // ─── Stage context intro ───
               AppBrutalPanel(
                 tone: AppBrutalTone.low,
                 child: Text(
@@ -140,7 +140,7 @@ class _ExploreTab extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.space20),
 
-              // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Goal Route (when user has active goal) Ã¢â€â‚¬Ã¢â€â‚¬
+              // ─── Goal Route (when user has active goal) ───
               if (result.hasGoalRoute) ...[
                 const AppBrutalSectionHeader(
                   title: 'Your goal route',
@@ -160,7 +160,7 @@ class _ExploreTab extends ConsumerWidget {
                 const SizedBox(height: AppSpacing.space20),
               ],
 
-              // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Recommended for your stage Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+              // ─── Recommended for your stage ───
               if (result.recommended.isNotEmpty) ...[
                 AppBrutalSectionHeader(
                   title: result.hasGoalRoute
@@ -172,17 +172,23 @@ class _ExploreTab extends ConsumerWidget {
                 ..._buildBranchGroups(context, result.recommended),
                 const SizedBox(height: AppSpacing.space20),
               ] else if (!result.hasGoalRoute) ...[
-                // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Empty state (only when no goal route either) Ã¢â€â‚¬Ã¢â€â‚¬
+                // ─── Empty state (only when no goal route either) ───
                 AppBrutalEmptyState(
                   icon: Icons.map_outlined,
                   title: 'No roadmaps yet for ${stage.shortLabel}',
+                  // Naming what does work matters more than an apology.
+                  // This fires when a student's filters leave nothing, not
+                  // because the stage itself is empty — every stage has
+                  // seeded roadmaps.
                   message:
-                      'We are adding verified ${stage.label.toLowerCase()} roadmaps. Check back soon or explore related paths below.',
+                      'Nothing matches your current filters for '
+                      '${stage.label.toLowerCase()}. Related paths are below, '
+                      'and your exam list and eligibility checks still work.',
                 ),
                 const SizedBox(height: AppSpacing.space20),
               ],
 
-              // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Related paths (stage family only) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+              // ─── Related paths (stage family only) ───
               if (result.otherBranches.isNotEmpty) ...[
                 const AppBrutalSectionHeader(
                   title: 'Related paths',
@@ -267,7 +273,7 @@ class _ExploreTab extends ConsumerWidget {
   }
 }
 
-// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ My Plan Tab Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+// ─── My Plan Tab ───
 
 class _MyPlanTab extends ConsumerWidget {
   const _MyPlanTab();
@@ -404,7 +410,7 @@ class _MyPlanTab extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.space24),
 
-          // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Foundation Repair Suggestions Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+          // ─── Foundation Repair Suggestions ───
           _FoundationRepairSection(),
           const SizedBox(height: AppSpacing.space24),
 
@@ -496,14 +502,14 @@ class _ChecksTab extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬ Stage header Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬Ã¢â€ â‚¬
+          // ─── ─── ─── ─── Stage header ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ─── ───
           AppBrutalSectionHeader(
             title: 'Checks · ${stage.shortLabel}',
             eyebrow: 'Readiness',
           ),
           const SizedBox(height: AppSpacing.space12),
 
-          // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Goal card (always visible) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+          // ─── Goal card (always visible) ───
           if (!gp.hasGoal)
             AppBrutalEmptyState(
               icon: Icons.checklist_rounded,
@@ -517,7 +523,7 @@ class _ChecksTab extends ConsumerWidget {
 
           const SizedBox(height: AppSpacing.space16),
 
-          // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Grouped feature cards Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+          // ─── Grouped feature cards ───
           for (final entry in grouped.entries) ...[
             AppBrutalSectionHeader(
               title: entry.key.label,
@@ -953,7 +959,7 @@ String _stageRoadmapIntro(EducationStage stage) => switch (stage) {
     'Diagnostic mode: browse branches broadly before locking a path.',
 };
 
-// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Foundation Repair Suggestions Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+// ─── Foundation Repair Suggestions ───
 
 class _FoundationRepairSection extends ConsumerWidget {
   @override

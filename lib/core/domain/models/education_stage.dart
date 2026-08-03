@@ -95,16 +95,19 @@ extension EducationStageX on EducationStage {
     };
   }
 
-  /// Whether this stage is available in the current app phase.
-  /// Phase 1 focuses on Class 9–12 only. Update this when unlocking
-  /// additional stages in future releases.
-  bool get isAvailable => switch (this) {
-    EducationStage.class9 ||
-    EducationStage.class10 ||
-    EducationStage.class11 ||
-    EducationStage.class12 => true,
-    _ => false,
-  };
+  /// Whether a student can select this stage and complete onboarding.
+  ///
+  /// Every stage is now selectable. Previously only Class 9-12 were, which
+  /// meant a diploma, ITI, graduate or dropper student tapped their own
+  /// stage, got a snackbar reading "not released yet", and could not advance
+  /// past step 3 — a dead end with no way forward, in an app whose own
+  /// README promises "Class 9 to post-graduation".
+  ///
+  /// All eleven stages have seeded roadmap content — measured, not assumed:
+  /// Class 9-12 have 10-16 each, Diploma 8, ITI 10, Undergraduate 7,
+  /// Graduate 11, Postgraduate 5, Dropper 8, and "Not sure" 1. Depth varies,
+  /// and the "Not sure" stage is genuinely thin, but no stage is empty.
+  bool get isAvailable => true;
 
   PathwayType get pathwayType {
     return switch (this) {
