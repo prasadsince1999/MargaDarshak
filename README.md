@@ -90,9 +90,10 @@ No student's future can be sold to the highest-paying institution.
 
 ## Education Stages Supported
 
-Every stage has real roadmap content (61 roadmaps across all 11 stages). The
-"key tools" column is the intended set — most are planned, not built. See the
-status note above.
+There are 40 roadmaps. Class 9-12 and Dropper are well covered; Diploma, ITI
+and "Not sure" have one each; **Undergraduate, Graduate and Postgraduate have
+none**. Only Class 9-12 are currently reachable in onboarding. The
+"key tools" column is the intended set — most are planned, not built.
 
 | Stage | Stream | Key Tools Available |
 |-------|--------|-------------------|

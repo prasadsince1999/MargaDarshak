@@ -35,11 +35,35 @@ combination is worse than either alone, and it ships today.
 Also note: `README.md` and the app's own positioning say "Class 9 to
 post-graduation". Four stages work. That claim is currently false.
 
-> 🔴 **Fix before anything else on this list.** Either open the seven stages
-> (they have real roadmap content — 61 roadmaps span all 11 stages), or, if
-> they are genuinely not ready, say so honestly on the stage card *before* the
-> tap and offer a "notify me / explore anyway" route instead of a snackbar and
-> a wall.
+> 🔴 **Correction (3 Aug).** Two things in this section were wrong when first
+> written.
+>
+> **The block is deliberate, and it is documented.** `isAvailable` carries a
+> comment — *"Phase 1 focuses on Class 9-12 only. Update this when unlocking
+> additional stages in future releases."* The first pass grepped from the
+> declaration line and cut off the three comment lines above it, then reported
+> the flag as unexplained. It is not.
+>
+> **There are 40 roadmaps, not 61, and they are not spread across all 11
+> stages.** Measured:
+>
+> | Stage | Roadmaps | Goals |
+> |---|---:|---:|
+> | Class 9 / 10 | 8 each | 2 / 9 |
+> | Class 11 / 12 | 4 each | 8 / 10 |
+> | Dropper | 2 | 8 |
+> | Diploma | 1 | 3 |
+> | ITI | 1 | 1 |
+> | Not sure | 1 | 0 |
+> | **Undergraduate** | **0** | 10 |
+> | **Graduate** | **0** | 9 |
+> | **Postgraduate** | **0** | 5 |
+>
+> So the scoping is justified: unblocking those stages today would walk
+> students into empty screens. **The fix is therefore not to unblock them.**
+> It is to decline honestly *on the card, before the tap* — a visible "not
+> ready yet" state with a way forward — instead of a snackbar and a wall a
+> student cannot get past. The dead end is the defect; the gating is not.
 
 ---
 
@@ -374,9 +398,9 @@ why the data prompt below exists.
 
 ## 10. What I could not verify
 
-- Whether the seven blocked stages are blocked deliberately (pending content)
-  or by oversight. `isAvailable` has no comment explaining it. **This is the
-  one thing I need you to answer before I touch it.**
+- ~~Whether the seven blocked stages are blocked deliberately or by
+  oversight.~~ **Resolved** — deliberate, and documented in the code. See the
+  correction in §0. No decision needed.
 - Exam facts beyond the clear-cut cases in §2.3. I flagged only what I am
   confident about; the full register needs sourcing.
 - Real-device behaviour. All measurements are widget-test geometry at 360×640,
