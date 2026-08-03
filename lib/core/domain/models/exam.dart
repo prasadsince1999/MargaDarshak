@@ -114,6 +114,18 @@ class Exam {
   final SourceReliability sourceReliability;
   final DateTime? lastVerifiedAt;
   final bool needsVerification;
+
+  /// Whether this record has been checked against its conducting body.
+  ///
+  /// A record is only trustworthy if it carries both a source and a date on
+  /// which someone actually looked at that source. Unverified records are
+  /// still shown — removing NEET-UG from an app for Indian students would
+  /// hurt far more than it protects — but the UI must label them and must
+  /// not present their fees, dates or cut-offs as established fact.
+  bool get isVerified =>
+      !needsVerification &&
+      lastVerifiedAt != null &&
+      (sourceUrl?.isNotEmpty ?? false);
 }
 
 /// An application/registration window.
@@ -182,6 +194,11 @@ enum ExamType {
 
   /// State-level polytechnic entrance
   statePolytechnic,
+
+  /// Government-backed talent search / science olympiad (HBCSE, IAPT).
+  /// Deliberately distinct from private for-profit "olympiads", which have
+  /// no academic standing and must never be seeded here.
+  olympiad,
 
   /// Board exams
   board,

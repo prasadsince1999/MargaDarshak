@@ -324,30 +324,27 @@ const List<String> interestDomains = [
 /// Stage-filtered target exams — only shows exams the student can
 /// realistically appear for or should be aware of at their current stage.
 /// Replaces the old flat [commonTargetExams] list.
+/// Stage-filtered target exams.
+///
+/// Kept deliberately short. Entries were removed in the Phase 1 truth pass
+/// because they are discontinued (NTSE), fabricated coaching products
+/// ("JEE/NEET Foundation"), schemes rather than exams (ITI Apprenticeship,
+/// PM YASASVI's YET), or offered at a stage where entry has already closed
+/// (RIMC is Class VIII only; AISSEE admits into Class VI and IX).
+///
+/// Grounds for every removal: Research Docs/indian-entrance-exam-database.md.
+/// An empty-looking list is the honest state — the research is blunt that
+/// "legitimate talent searches for Class 9 are virtually nonexistent".
+/// Do not repopulate these from memory.
 const Map<EducationStage, List<String>> targetExamsByStage = {
   EducationStage.class9: [
-    'NTSE',
-    'Olympiad (SOF/HBCSE)',
-    'IOQJS (HBCSE Junior Science)',
-    'State Polytechnic CET',
+    'NSEJS (HBCSE Junior Science Olympiad)',
     'ITI Entrance',
-    'JEE Foundation',
-    'NEET Foundation',
-    'Sainik School',
-    'RIMC',
-    'PM YASASVI (if eligible)',
   ],
   EducationStage.class10: [
-    'NTSE',
-    'Olympiad (SOF/HBCSE)',
-    'IOQJS (HBCSE Junior Science)',
+    'NSEJS (HBCSE Junior Science Olympiad)',
     'State Polytechnic CET',
     'ITI Entrance',
-    'JEE Foundation',
-    'NEET Foundation',
-    'Sainik School',
-    'RIMC',
-    'PM YASASVI (if eligible)',
   ],
   EducationStage.class11: [
     'JEE Main',
@@ -364,7 +361,6 @@ const Map<EducationStage, List<String>> targetExamsByStage = {
     'CA Foundation',
     'State CET',
     'SSC CHSL',
-    'PM YASASVI (if eligible)',
   ],
   EducationStage.class12: [
     'JEE Main',
@@ -386,7 +382,7 @@ const Map<EducationStage, List<String>> targetExamsByStage = {
     'State CET',
   ],
   EducationStage.diploma: ['GATE', 'SSC CHSL', 'RRB NTPC', 'State CET'],
-  EducationStage.iti: ['RRB Group D', 'ITI Apprenticeship'],
+  EducationStage.iti: ['RRB Group D'],
   EducationStage.undergraduate: [
     'GATE',
     'CAT',

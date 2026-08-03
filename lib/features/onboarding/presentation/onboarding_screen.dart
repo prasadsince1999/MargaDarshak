@@ -18,10 +18,9 @@ import '../../../core/widgets/widgets.dart';
 /// Replaces the old hardcoded 8-exam list so each stage sees only
 /// exams they can realistically appear for.
 const Map<EducationStage, List<(String, String)>> goalExamsByStage = {
-  EducationStage.class9: [('exam_ntse', 'NTSE'), ('exam_olympiad', 'Olympiad')],
+  EducationStage.class9: [('exam_olympiad', 'NSEJS Junior Science Olympiad')],
   EducationStage.class10: [
-    ('exam_ntse', 'NTSE'),
-    ('exam_olympiad', 'Olympiad'),
+    ('exam_olympiad', 'NSEJS Junior Science Olympiad'),
     ('exam_polytechnic', 'Polytechnic CET'),
   ],
   EducationStage.class11: [
@@ -848,57 +847,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.space12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: BauhausButton(
-                          label: 'Student',
-                          icon: Icons.school_rounded,
-                          fullWidth: true,
-                          color: AppColors.primaryContainer,
-                          onTap: () {
-                            ref
-                                .read(userProvider.notifier)
-                                .createProfile(
-                                  name: 'Debug Student',
-                                  role: UserRole.student,
-                                  educationStage: EducationStage.class10,
-                                );
-                            context.go('/debug');
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.space12),
-                      Expanded(
-                        child: BauhausButton(
-                          label: 'Parent',
-                          icon: Icons.family_restroom_rounded,
-                          fullWidth: true,
-                          color: AppColors.tertiary,
-                          onTap: () {
-                            ref
-                                .read(userProvider.notifier)
-                                .createProfile(
-                                  name: 'Debug Parent',
-                                  role: UserRole.parent,
-                                  educationStage: EducationStage.class10,
-                                  childProfile: ChildProfileSnapshot(
-                                    name: 'Debug Child',
-                                    currentClass: 10,
-                                    board: 'CBSE',
-                                    domicileState: 'OD',
-                                    educationStage: EducationStage.class10,
-                                    pathwayType: PathwayType.school,
-                                    academicStream: AcademicStream.none,
-                                  ),
-                                );
-                            context.go('/debug');
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.space8),
                   BauhausButton(
                     label: 'Flow Map',
                     icon: Icons.map_rounded,

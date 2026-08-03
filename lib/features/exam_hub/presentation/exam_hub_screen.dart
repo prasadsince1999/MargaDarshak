@@ -213,6 +213,7 @@ String _typeLabel(ExamType type) => switch (type) {
   ExamType.management => 'Management',
   ExamType.defence => 'Defence',
   ExamType.design => 'Design',
+  ExamType.olympiad => 'Olympiad',
   ExamType.university => 'University',
   ExamType.professional => 'Professional',
   ExamType.government => 'Government',
@@ -257,4 +258,5 @@ IconData _typeIcon(ExamType type) => switch (type) {
   ExamType.government => Icons.account_balance_rounded,
   ExamType.statePolytechnic => Icons.build_rounded,
   ExamType.board => Icons.assignment_rounded,
+  ExamType.olympiad => Icons.science_rounded,
 };

@@ -62,6 +62,10 @@ final List<Exam> seedExams = [
       'Session 2 exam': 'April',
       'Result declaration': 'Within 15 days of exam',
     },
+    sourceUrl: 'https://jeemain.nta.nic.in',
+    sourceReliability: SourceReliability.examBody,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
   ),
   Exam(
     id: 'exam_jee_advanced',
@@ -109,6 +113,10 @@ final List<Exam> seedExams = [
       'Exam date': 'June',
       'Result': 'June end',
     },
+    sourceUrl: 'https://jeeadv.ac.in',
+    sourceReliability: SourceReliability.examBody,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
   ),
   Exam(
     id: 'exam_bitsat',
@@ -138,6 +146,13 @@ final List<Exam> seedExams = [
       RequiredDocument(name: 'Scanned signature'),
     ],
     linkedCourseIds: ['btech_cs', 'btech_eee'],
+    sourceUrl: 'https://bitsadmission.com',
+    sourceReliability: SourceReliability.universityOfficial,
+    // No record in the research database. The fields above
+    // predate this pass and have not been checked against the
+    // conducting body, so this record must not claim
+    // verification.
+    needsVerification: true,
   ),
 
   // ─── Medical ──────────────────────────────────────────────────────
@@ -192,6 +207,13 @@ final List<Exam> seedExams = [
       'Exam date': 'May',
       'Result': 'June',
     },
+    sourceUrl: 'https://neet.nta.nic.in',
+    sourceReliability: SourceReliability.examBody,
+    // No record in the research database. The fields above
+    // predate this pass and have not been checked against the
+    // conducting body, so this record must not claim
+    // verification.
+    needsVerification: true,
   ),
 
   // ─── Law ──────────────────────────────────────────────────────────
@@ -228,6 +250,10 @@ final List<Exam> seedExams = [
       RequiredDocument(name: 'Passport-size photograph'),
     ],
     linkedCourseIds: ['ba_llb'],
+    sourceUrl: 'https://consortiumofnlus.ac.in',
+    sourceReliability: SourceReliability.examBody,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
   ),
 
   // ─── University ───────────────────────────────────────────────────
@@ -262,6 +288,13 @@ final List<Exam> seedExams = [
       RequiredDocument(name: 'Passport-size photograph'),
     ],
     syllabusUrl: 'https://cuet.samarth.ac.in/syllabus',
+    sourceUrl: 'https://cuet.nta.nic.in',
+    sourceReliability: SourceReliability.examBody,
+    // No record in the research database. The fields above
+    // predate this pass and have not been checked against the
+    // conducting body, so this record must not claim
+    // verification.
+    needsVerification: true,
   ),
 
   // ─── Professional ─────────────────────────────────────────────────
@@ -303,6 +336,13 @@ final List<Exam> seedExams = [
       'May exam': 'May',
       'Nov exam': 'November',
     },
+    sourceUrl: 'https://icai.org',
+    sourceReliability: SourceReliability.statutoryCouncil,
+    // No record in the research database. The fields above
+    // predate this pass and have not been checked against the
+    // conducting body, so this record must not claim
+    // verification.
+    needsVerification: true,
   ),
 
   // ─── Defence ──────────────────────────────────────────────────────
@@ -347,5 +387,352 @@ final List<Exam> seedExams = [
       'NDA I notification': 'December',
       'NDA II notification': 'May',
     },
+    sourceUrl: 'https://upsc.gov.in',
+    sourceReliability: SourceReliability.officialGov,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
+  ),
+  // ─── Higher education & competitive (added Phase 1) ────────────────
+  // Every record below is transcribed from
+  // Research Docs/indian-entrance-exam-database.md, which cites the
+  // conducting body directly. Do not edit these from memory — re-verify
+  // against the official URL and bump lastVerifiedAt.
+  Exam(
+    id: 'exam_gate',
+    name: 'GATE',
+    fullName: 'Graduate Aptitude Test in Engineering',
+    type: ExamType.engineering,
+    conductedBy: 'IISc and seven IITs (rotational)',
+    eligibilityClass: 13,
+    requiredSubjects: const [],
+    ageLimit: 'No upper age limit, no cap on attempts',
+    frequency: ExamFrequency.annual,
+    website: 'https://gate.iitg.ac.in',
+    modes: const [ExamMode.online],
+    registrationFee: 1800.0,
+    registrationFeeByCategory: const {
+      SocialCategory.sc: 900.0,
+      SocialCategory.st: 900.0,
+    },
+    applicationWindows: const [
+      ExamApplicationWindow(
+        session: 'Annual',
+        opensMonth: 'Aug',
+        closesMonth: 'Oct',
+        examMonth: 'Feb',
+        resultMonth: 'Mar',
+      ),
+    ],
+    importantDates: const {'Registration opens': 'August', 'Exam': 'February'},
+    sourceUrl: 'https://gate.iitg.ac.in',
+    sourceReliability: SourceReliability.examBody,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
+  ),
+  Exam(
+    id: 'exam_cat',
+    name: 'CAT',
+    fullName: 'Common Admission Test',
+    type: ExamType.management,
+    conductedBy: 'Indian Institutes of Management (rotational)',
+    eligibilityClass: 13,
+    requiredSubjects: const [],
+    minimumPercentage: 50.0,
+    minPercentageByCategory: const {
+      SocialCategory.sc: 45.0,
+      SocialCategory.st: 45.0,
+    },
+    ageLimit: 'No upper age limit, no cap on attempts',
+    frequency: ExamFrequency.annual,
+    website: 'https://iimcat.ac.in',
+    modes: const [ExamMode.online],
+    registrationFee: 2400.0,
+    registrationFeeByCategory: const {
+      SocialCategory.sc: 1200.0,
+      SocialCategory.st: 1200.0,
+    },
+    applicationWindows: const [
+      ExamApplicationWindow(
+        session: 'Annual',
+        opensMonth: 'Aug',
+        closesMonth: 'Sep',
+        examMonth: 'Nov',
+        resultMonth: 'Jan',
+      ),
+    ],
+    importantDates: const {
+      'Registration': 'August to September',
+      'Exam': 'Last Sunday of November',
+    },
+    sourceUrl: 'https://iimcat.ac.in',
+    sourceReliability: SourceReliability.examBody,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
+  ),
+  Exam(
+    id: 'exam_cuet_pg',
+    name: 'CUET PG',
+    fullName: 'Common University Entrance Test (Postgraduate)',
+    type: ExamType.university,
+    conductedBy: 'NTA',
+    eligibilityClass: 13,
+    requiredSubjects: const [],
+    ageLimit: 'No upper age limit set by NTA; universities may add criteria',
+    frequency: ExamFrequency.annual,
+    website: 'https://exams.nta.nic.in/cuet-pg',
+    modes: const [ExamMode.online],
+    registrationFee: 1400.0,
+    registrationFeeByCategory: const {
+      SocialCategory.obcNcl: 1200.0,
+      SocialCategory.ews: 1200.0,
+      SocialCategory.sc: 1100.0,
+      SocialCategory.st: 1100.0,
+    },
+    applicationWindows: const [
+      ExamApplicationWindow(
+        session: 'Annual',
+        opensMonth: 'Dec',
+        closesMonth: 'Jan',
+        examMonth: 'Mar',
+        resultMonth: 'Apr',
+      ),
+    ],
+    importantDates: const {
+      'Registration': 'December to January',
+      'Exam': 'March',
+    },
+    sourceUrl: 'https://exams.nta.nic.in/cuet-pg',
+    sourceReliability: SourceReliability.examBody,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
+  ),
+  Exam(
+    id: 'exam_upsc_cse',
+    name: 'UPSC CSE',
+    fullName: 'Civil Services Examination',
+    type: ExamType.government,
+    conductedBy: 'Union Public Service Commission',
+    eligibilityClass: 13,
+    requiredSubjects: const [],
+    ageLimit:
+        '21-32 years (General). Plus 3 years OBC, plus 5 years SC/ST. '
+        'Attempts capped at 6 General, 9 OBC, unlimited SC/ST within age limit',
+    frequency: ExamFrequency.annual,
+    website: 'https://upsc.gov.in',
+    modes: const [ExamMode.offline],
+    registrationFee: 100.0,
+    registrationFeeByCategory: const {
+      SocialCategory.sc: 0.0,
+      SocialCategory.st: 0.0,
+    },
+    applicationWindows: const [
+      ExamApplicationWindow(
+        session: 'Annual',
+        opensMonth: 'Feb',
+        closesMonth: 'Mar',
+        examMonth: 'May',
+        resultMonth: 'Jun',
+      ),
+    ],
+    importantDates: const {'Prelims': 'May or June', 'Mains': 'September'},
+    sourceUrl: 'https://upsc.gov.in',
+    sourceReliability: SourceReliability.officialGov,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
+  ),
+  Exam(
+    id: 'exam_ssc_cgl',
+    name: 'SSC CGL',
+    fullName: 'Staff Selection Commission Combined Graduate Level',
+    type: ExamType.government,
+    conductedBy: 'Staff Selection Commission',
+    eligibilityClass: 13,
+    requiredSubjects: const [],
+    ageLimit:
+        '18-32 years depending on the post. Plus 3 years OBC, plus 5 years '
+        'SC/ST. No cap on attempts within the age window',
+    frequency: ExamFrequency.annual,
+    website: 'https://ssc.gov.in',
+    modes: const [ExamMode.online],
+    registrationFee: 100.0,
+    registrationFeeByCategory: const {
+      SocialCategory.sc: 0.0,
+      SocialCategory.st: 0.0,
+    },
+    applicationWindows: const [
+      ExamApplicationWindow(
+        session: 'Annual',
+        opensMonth: 'Jun',
+        closesMonth: 'Jul',
+      ),
+    ],
+    importantDates: const {'Notification': 'June'},
+    sourceUrl: 'https://ssc.gov.in',
+    sourceReliability: SourceReliability.officialGov,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
+  ),
+  Exam(
+    id: 'exam_ibps_po',
+    name: 'IBPS PO',
+    fullName: 'IBPS Probationary Officer / Management Trainee Examination',
+    type: ExamType.government,
+    conductedBy: 'Institute of Banking Personnel Selection',
+    eligibilityClass: 16,
+    requiredSubjects: const [],
+    ageLimit:
+        '20-30 years (General). Plus 3 years OBC, plus 5 years SC/ST. '
+        'A clean credit history is increasingly required',
+    frequency: ExamFrequency.annual,
+    website: 'https://ibps.in',
+    modes: const [ExamMode.online],
+    registrationFee: 850.0,
+    registrationFeeByCategory: const {
+      SocialCategory.sc: 175.0,
+      SocialCategory.st: 175.0,
+    },
+    applicationWindows: const [
+      ExamApplicationWindow(
+        session: 'Annual',
+        opensMonth: 'Aug',
+        examMonth: 'Oct',
+      ),
+    ],
+    importantDates: const {'Prelims': 'October'},
+    sourceUrl: 'https://ibps.in',
+    sourceReliability: SourceReliability.examBody,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
+  ),
+  Exam(
+    id: 'exam_cds',
+    name: 'CDS',
+    fullName: 'Combined Defence Services Examination',
+    type: ExamType.defence,
+    conductedBy: 'Union Public Service Commission',
+    eligibilityClass: 13,
+    requiredSubjects: const [],
+    ageLimit:
+        'Roughly 19-24 years depending on the academy. Unmarried candidates. '
+        'Must clear SSB physical and medical evaluation',
+    frequency: ExamFrequency.biannual,
+    website: 'https://upsc.gov.in',
+    modes: const [ExamMode.offline],
+    registrationFee: 200.0,
+    registrationFeeByCategory: const {
+      SocialCategory.sc: 0.0,
+      SocialCategory.st: 0.0,
+    },
+    applicationWindows: const [
+      ExamApplicationWindow(session: 'CDS I', examMonth: 'Apr'),
+      ExamApplicationWindow(session: 'CDS II', examMonth: 'Sep'),
+    ],
+    importantDates: const {'CDS I': 'April', 'CDS II': 'September'},
+    sourceUrl: 'https://upsc.gov.in',
+    sourceReliability: SourceReliability.officialGov,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
+  ),
+  Exam(
+    id: 'exam_ugc_net',
+    name: 'UGC NET',
+    fullName: 'University Grants Commission National Eligibility Test',
+    type: ExamType.professional,
+    conductedBy: 'NTA on behalf of UGC',
+    eligibilityClass: 17,
+    requiredSubjects: const [],
+    minimumPercentage: 55.0,
+    minPercentageByCategory: const {
+      SocialCategory.sc: 50.0,
+      SocialCategory.st: 50.0,
+      SocialCategory.obcNcl: 50.0,
+    },
+    ageLimit:
+        'JRF: 30 years with standard relaxations. No age limit for Assistant '
+        'Professor eligibility or PhD admission',
+    frequency: ExamFrequency.biannual,
+    website: 'https://ugcnet.nta.ac.in',
+    modes: const [ExamMode.online],
+    registrationFee: 1150.0,
+    registrationFeeByCategory: const {
+      SocialCategory.obcNcl: 600.0,
+      SocialCategory.ews: 600.0,
+      SocialCategory.sc: 325.0,
+      SocialCategory.st: 325.0,
+    },
+    applicationWindows: const [
+      ExamApplicationWindow(session: 'June cycle', examMonth: 'Jun'),
+      ExamApplicationWindow(session: 'December cycle', examMonth: 'Dec'),
+    ],
+    importantDates: const {'Cycles': 'June and December'},
+    sourceUrl: 'https://ugcnet.nta.ac.in',
+    sourceReliability: SourceReliability.examBody,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
+  ),
+  Exam(
+    id: 'exam_olympiad',
+    name: 'NSEJS',
+    fullName: 'National Standard Examination in Junior Science',
+    type: ExamType.olympiad,
+    conductedBy: 'IAPT and HBCSE',
+    eligibilityClass: 8,
+    requiredSubjects: const ['Science'],
+    ageLimit:
+        'Must be studying in Class 8, 9 or 10, within a fixed birth-year '
+        'bracket set each cycle. Indian passport or eligibility to hold one',
+    frequency: ExamFrequency.annual,
+    website: 'https://olympiads.hbcse.tifr.res.in',
+    modes: const [ExamMode.offline],
+    registrationFee: 300.0,
+    registrationFeeByCategory: const {},
+    applicationWindows: const [
+      ExamApplicationWindow(
+        session: 'Annual',
+        opensMonth: 'Aug',
+        closesMonth: 'Sep',
+        examMonth: 'Nov',
+      ),
+    ],
+    importantDates: const {
+      'Registration': 'August to September',
+      'Exam': 'November',
+    },
+    sourceUrl: 'https://olympiads.hbcse.tifr.res.in',
+    sourceReliability: SourceReliability.statutoryCouncil,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
+  ),
+  Exam(
+    id: 'exam_polytechnic',
+    name: 'Polytechnic CET',
+    fullName:
+        'State Polytechnic Common Entrance Test (JEECUP, TS POLYCET and equivalents)',
+    type: ExamType.statePolytechnic,
+    conductedBy: 'State Technical Education Boards',
+    eligibilityClass: 10,
+    requiredSubjects: const ['Mathematics', 'Science'],
+    minimumPercentage: 35.0,
+    ageLimit:
+        'Usually no upper limit; a lower limit of 14-15 years applies in some '
+        'states',
+    frequency: ExamFrequency.annual,
+    isNational: false,
+    website: 'https://jeecup.admissions.nic.in',
+    modes: const [ExamMode.online],
+    registrationFee: 500.0,
+    registrationFeeByCategory: const {},
+    applicationWindows: const [
+      ExamApplicationWindow(session: 'Annual', examMonth: 'Apr'),
+    ],
+    importantDates: const {'Exam': 'April or May'},
+    sourceUrl: 'https://jeecup.admissions.nic.in',
+    sourceReliability: SourceReliability.officialGov,
+    lastVerifiedAt: examsLastVerifiedAt,
+    needsVerification: false,
   ),
 ];
+
+/// Date the seeded exam records were last checked against their conducting
+/// body's official page. Bump only when the check is actually redone.
+final DateTime examsLastVerifiedAt = DateTime(2026, 8, 3);

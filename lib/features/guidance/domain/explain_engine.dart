@@ -40,14 +40,18 @@ class ExplainEngine {
 
     // 3. Interest alignment.
     if (profile.interests.isNotEmpty) {
+      // Whole-word matching, not substring containment.
+      //
+      // The previous check asked whether either string contained the other,
+      // which made short tags match by accident: "CA" matched *health*ca*re*
+      // and *edu*ca*tion*, "IT" matched cybersecur*it*y, hosp*it*ality and
+      // f*it*ness. A student who chose Healthcare was told the Chartered
+      // Accountancy roadmap aligned with their interests. Claiming a false
+      // thing about a student's own stated interests is the same defect as
+      // showing them an invented number.
+      final interestWords = profile.interests.expand(_significantWords).toSet();
       final matching = roadmap.tags
-          .where(
-            (t) => profile.interests.any(
-              (i) =>
-                  i.toLowerCase().contains(t.toLowerCase()) ||
-                  t.toLowerCase().contains(i.toLowerCase()),
-            ),
-          )
+          .where((t) => _significantWords(t).any(interestWords.contains))
           .toList();
       if (matching.isNotEmpty) {
         buf.writeln('• It aligns with your interests: ${matching.join(', ')}.');
@@ -194,3 +198,13 @@ String _branchLabel(AfterTenthBranch branch) => switch (branch) {
   AfterTenthBranch.vocational => 'Vocational',
   AfterTenthBranch.earlyWork => 'Early Work',
 };
+
+/// Lower-cased words of [value], with separators stripped.
+///
+/// Matching happens on whole words so "CA" only ever matches the token "ca",
+/// never the middle of "healthcare".
+Set<String> _significantWords(String value) => value
+    .toLowerCase()
+    .split(RegExp(r'[^a-z0-9]+'))
+    .where((w) => w.isNotEmpty)
+    .toSet();

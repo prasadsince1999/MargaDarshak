@@ -119,6 +119,13 @@ class _ExamDetailBody extends ConsumerWidget {
             ),
           const SizedBox(height: AppSpacing.space16),
 
+          // ── Verification status ──
+          // Every figure below comes from a bundled snapshot. If that
+          // snapshot was never checked against the conducting body, the
+          // student is told so here rather than reading fees and cut-offs
+          // as established fact.
+          _VerificationBanner(exam: exam),
+
           // ── Eligibility Status ──
           if (eligibility != null) ...[
             _EligibilityPanel(result: eligibility),
@@ -555,3 +562,71 @@ class _RequiredDocumentsWithReadiness extends ConsumerWidget {
     };
   }
 }
+
+/// States plainly whether this record has been checked, and links to the
+/// conducting body so a student can confirm anything that matters.
+class _VerificationBanner extends StatelessWidget {
+  const _VerificationBanner({required this.exam});
+
+  final Exam exam;
+
+  @override
+  Widget build(BuildContext context) {
+    final verified = exam.isVerified;
+    final date = exam.lastVerifiedAt;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.space16),
+      child: BauhausPanel(
+        color: verified ? AppColors.surfaceVariant : AppColors.accentYellow,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              verified ? Icons.verified_outlined : Icons.error_outline_rounded,
+              size: 22,
+            ),
+            const SizedBox(width: AppSpacing.space12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    verified ? 'CHECKED' : 'NOT YET CHECKED',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  const SizedBox(height: AppSpacing.space4),
+                  Text(
+                    verified
+                        ? 'Checked against the official site'
+                              '${date == null ? '' : ' on ${_dmy(date)}'}. '
+                              'Always confirm dates and fees there before you '
+                              'apply.'
+                        : 'We have not checked these details against the '
+                              'official site yet. Treat the numbers below as a '
+                              'rough guide and confirm every one of them before '
+                              'you apply.',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  if (exam.website != null) ...[
+                    const SizedBox(height: AppSpacing.space8),
+                    Text(
+                      exam.website!,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+String _dmy(DateTime d) =>
+    '${d.day.toString().padLeft(2, '0')}/'
+    '${d.month.toString().padLeft(2, '0')}/${d.year}';
