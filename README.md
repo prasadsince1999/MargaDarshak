@@ -1,113 +1,165 @@
-# Margadarshak
+# 🧭 Mārgadarshak — मार्गदर्शक
 
-> **Clear direction for every student stage.**
+> *"The one who shows the path."*
 
-A decision system for Indian students and parents. Margadarshak helps learners understand where they are, what options are realistically available, and what the next right step is — across every decision point from Class 9 to post-graduation.
+A **decision system for Indian students and parents** — from Class 9 to post-graduation. Mārgadarshak turns scattered career information into a stage-wise map: stream choices, exams, eligibility, documents, cost, risk, backup routes, and parent–student clarity.
+
+**Free, and the build all of this is for.** This is not a coaching app. This is a decision system for families.
+
+Built by [KSM × Tech](https://ksmxtech.com), a one-person product studio in Bhubaneswar, India.
 
 ---
 
 ## The Problem
 
-Indian students navigate critical life decisions — stream selection after Class 10, course choice after +2, degree vs diploma, government vs private career routes — through relatives, coaching ads, and incomplete information. Parents are deeply involved but lack structured awareness of timelines, costs, eligibility rules, and backup options.
+Indian students navigate **critical life decisions** — stream selection after Class 10, course choice after +2, degree vs diploma, government vs private career routes — through relatives, coaching ads, and incomplete information.
 
-**Common pain points:**
-- _"I don't know what to do after 10th or 12th."_
-- _"I don't know what marks or subjects are needed for this path."_
-- _"I don't know which exams I can apply for."_
-- _"My parents and I don't know what options are actually available."_
-- _"I need a backup route if my first dream doesn't work out."_
+Parents are deeply involved but lack structured awareness of timelines, costs, eligibility rules, and backup options.
 
-**The result:** Wrong course choices, lost time, family pressure, and regret — not because students are weak, but because they never got clear direction at the right time.
+> *"I don't know what to do after 10th or 12th."*
+>
+> *"I don't know what marks or subjects are needed for this path."*
+>
+> *"My parents and I don't know what options are actually available."*
+>
+> *"I need a backup route if my first dream doesn't work out."*
 
----
-
-## What Margadarshak Does
-
-> **Status — read this first.** Mārgadarshak is in development and has not been
-> released. The roadmap, exam and career content below is real and complete;
-> most of the *tools* that sit on top of it are not built yet. Anything marked
-> **planned** does not exist in the app — it appears as a "Coming soon" card.
-> This README describes what is there today, not what is intended.
-
-### Smart Feature System (16 features × 5 groups)
-
-All features are managed through a **single registry** (`SmartFeatureCard`) that dynamically filters visibility based on the user's education stage, goal status, role, and target exams.
-
-| Group | Features | Status |
-|-------|----------|--------|
-| **Goal Checks** | Goal Active | built |
-| | Goal Bridge, Shared Career Clusters, Backup Trigger | planned |
-| **Exam Strategy** | Exam Stack Planner, Goal-to-Exam Bundle, Syllabus Overlap, Exam Readiness | planned |
-| **Stream & Subject** | What-if Simulator | built |
-| | Wrong Stream Bridge | planned |
-| **Admission Support** | Documents & Deadlines, State Rules, Scholarship Match, Skill Gap → Resources | planned |
-| **Parent & Wellbeing** | Parent Budget & ROI, Pressure Check | planned |
-
-**2 of 16 registry features are implemented.** Separately from the registry,
-these screens are built and working: stage-aware roadmaps, roadmap detail,
-exam hub and exam detail with eligibility, the impact simulator, foundation
-check, document readiness, path comparison, goal selection, parent view, and
-profile/settings including full local data deletion.
-
-### Core Guidance System
-- **Stage-Aware Roadmaps** — Career paths filtered by the student's exact education stage (Class 9–12, Diploma, ITI, UG, PG, Dropper)
-- **Eligibility Engine** — Subject requirements, percentage thresholds, exam criteria, and category-based reservation checks. Category is asked for at the point of use, not during onboarding.
-- **Exam Hub** — Filterable exam database with eligibility analysis against the student's profile
-- **Impact Simulator** — "What changes if I switch subjects/stream?" analysis with visual impact mapping
-- **Foundation Check** — Self-assessment of readiness for a chosen path with gap identification
-- **Compare Paths** — Side-by-side comparison of career routes on time, cost, competition, and outcomes
-
-### Student Voice Network — *domain models and survey UI only; no network, no live data*
-- **Campus Truth Score** — Real student/parent feedback on institutions (fee honesty, placement truth, safety)
-- **Course Reality Check** — First-hand survey data from current students and alumni
-- **Trust-Weighted Recommendations** — Verified feedback weighted by respondent credibility (current student > alumni > anonymous)
-- **Survey System** — Structured feedback collection with verification levels and anonymity controls
-
-### Parent Mode — *pair-code linking is local-only*
-- **Family Bridge** — Pair-code based parent-child linking with shared path saves
-- **Parent Awareness** — Cost, time, risk, safety, and backup route visibility
-- **Goal Conflict Detection** — When student and parent goals differ, the system flags it constructively
-
-### AI Mentor — *planned; the screen shows suggested prompts and a "Coming soon" banner*
-- **Grounded AI Guidance** — AI explains verified facts; it does not invent official data
-- **Stage-Contextual Prompts** — Suggested questions based on the student's current stage and profile
+**The result:** Wrong course choices, lost time, family pressure, and regret — not because students are weak, but because they **never got clear direction at the right time.**
 
 ---
 
-## Ethical Rule
+## The Ethical Rule
 
 ```
 No student's future can be sold to the highest-paying institution.
 ```
 
-- Sponsored colleges cannot buy ranking
-- Sponsored options must always be disclosed
-- Payment never changes fit score, trust score, or student voice score
+- Sponsored colleges **cannot** buy ranking
+- Sponsored options must **always** be disclosed
+- Payment **never** changes fit score, trust score, or student voice score
 - Every recommendation shows 3–5 relevant options where possible
-- Institutions validated against UGC fake university list and AICTE registry
+- Institutions validated against the **UGC fake university list** and **AICTE registry**
+
+This is non-negotiable. It's not a feature — it's the foundation.
 
 ---
 
-## Education Stages Supported
+## What's Built
 
-There are **65 roadmaps** and every stage has content: Class 9-12 have 10-16
-each, Diploma 8, ITI 10, Undergraduate 7, Graduate 11, Postgraduate 5,
-Dropper 8, and "Not sure" has 1 with 2-3 diagnostic placement questions.
-All eleven stages are selectable in onboarding. The "key tools" column below
-is the intended set — most of those tools are planned, not built.
+> **Status note:** Mārgadarshak is in development and has not been released. The content below describes what exists in the codebase today. Features marked **planned** appear as "Coming soon" cards.
 
-| Stage | Stream | Key Tools Available |
-|-------|--------|-------------------|
-| Class 9 | — | Foundation Check, Interest Discovery |
-| Class 10 | — | After-10th Paths, Stream Outcomes, Impact Simulator, Goal Fit |
-| Class 11 | Science / Commerce / Arts / Vocational | Stream Fit, Subject Switch Impact, Exam Awareness |
-| Class 12 | Science / Commerce / Arts / Vocational | Eligibility Check, Exam Finder, Documents Checklist, Scholarships |
-| Diploma | Trade-specific | Lateral Entry, B.Tech Route, Apprenticeship |
-| ITI | Trade-specific | Trade Path, Apprenticeship, Job Options, Skill Upgrade |
-| Undergraduate | Discipline-specific | Internship Path, PG Path, Govt Exam Path, Career Pivot |
-| Graduate | Discipline-specific | Job Path, PG/MBA Path, Interview Prep, Skill Gap |
-| Postgraduate | Discipline-specific | PhD/Research, NET/JRF, Fellowships, Specialist Career |
-| Dropper | — | Exam Strategy, Backup Route, Pressure Support, Timeline Reset |
+### Core Decision System ✅
+
+| Feature | What It Does |
+|---|---|
+| **Stage-Aware Roadmaps** | Career paths filtered by the student's exact education stage — 65 roadmaps across all 11 stages |
+| **Eligibility Engine** | Subject requirements, percentage thresholds, exam criteria, category-based reservation checks |
+| **Exam Hub** | Filterable exam database with eligibility analysis against the student's profile |
+| **Impact Simulator** | "What changes if I switch subjects/stream?" — visual impact mapping |
+| **Foundation Check** | Self-assessment of readiness for a chosen path with gap identification |
+| **Compare Paths** | Side-by-side comparison of career routes on time, cost, competition, and outcomes |
+
+### Smart Feature System
+
+16 features across 5 groups, all managed through a **single registry** (`SmartFeatureCard`) that dynamically filters visibility based on education stage, goal status, role, and target exams.
+
+| Group | Built | Planned |
+|---|---|---|
+| **Goal Checks** | Goal Active | Goal Bridge · Shared Career Clusters · Backup Trigger |
+| **Stream & Subject** | What-If Simulator | Wrong Stream Bridge |
+| **Exam Strategy** | — | Exam Stack Planner · Goal-to-Exam Bundle · Syllabus Overlap · Exam Readiness |
+| **Admission Support** | — | Documents & Deadlines · State Rules · Scholarship Match · Skill Gap → Resources |
+| **Parent & Wellbeing** | — | Parent Budget & ROI · Pressure Check |
+
+### Parent Mode
+
+Family is part of the decision. Not separate from it.
+
+- **Pair-code linking** — parent-child connection with shared path saves (local-only)
+- **Parent awareness** — cost, time, risk, safety, and backup route visibility
+- **Goal conflict detection** — when student and parent goals differ, the system flags it constructively
+
+### Student Voice Network *(domain models + survey UI only — no live data)*
+
+- Campus Truth Score — real student/parent feedback on institutions
+- Course Reality Check — first-hand survey data from current students and alumni
+- Trust-weighted recommendations — verified feedback weighted by respondent credibility
+
+---
+
+## Education Stages
+
+All **11 stages** are selectable in onboarding. Every stage has content.
+
+| Stage | Roadmaps | Key Tools |
+|---|---|---|
+| **Class 9** | Foundation paths | Foundation Check, Interest Discovery |
+| **Class 10** | After-10th options | Stream Outcomes, Impact Simulator, Goal Fit |
+| **Class 11** | Science / Commerce / Arts / Vocational | Stream Fit, Subject Switch Impact, Exam Awareness |
+| **Class 12** | Science / Commerce / Arts / Vocational | Eligibility Check, Exam Finder, Documents Checklist |
+| **Diploma** | Trade-specific | Lateral Entry, B.Tech Route, Apprenticeship |
+| **ITI** | Trade-specific | Trade Path, Apprenticeship, Job Options, Skill Upgrade |
+| **Undergraduate** | Discipline-specific | Internship Path, PG Path, Govt Exam Path |
+| **Graduate** | Discipline-specific | Job Path, PG/MBA Path, Interview Prep |
+| **Postgraduate** | Discipline-specific | PhD/Research, NET/JRF, Fellowships |
+| **Dropper** | Re-attempt paths | Exam Strategy, Backup Route, Pressure Support, Timeline Reset |
+| **Not Sure** | Diagnostic | 2–3 placement questions to find the right stage |
+
+---
+
+## Onboarding
+
+9-step stage-aware flow (10 for parents). Each step collects only data relevant to the selected stage.
+
+```
+1 → Role (Student / Parent)
+2 → Value Proposition (3 roadmap previews)
+3 → Basic Info (Name, DOB, Gender, Phone)
+4 → Education Stage (11 stages)
+5 → Stage Details (Board, Stream, Discipline — varies by stage)
+6 → Location (State, District)
+7 → Interests (2 families → up to 4 sub-interests, age-appropriate labels)
+8 → Strategy (Target Exams, Backup Style, Risk Tolerance)
+9 → Goal Selection (exploring / decided / exam-focused / backup)
+P → Parent Concerns (parent role only, appended as Step 10)
+```
+
+---
+
+## Design System
+
+**Bauhaus Neo-Brutalist** — sharp, structured, trustworthy, bold.
+
+```
+Not cute. Not childish. Not coaching-app flashy.
+A serious decision system for families.
+```
+
+| Token | Value |
+|---|---|
+| **Ink** | `#1A1A1A` |
+| **Paper** | `#F5F0E8` (warm white) |
+| **Accent Yellow** | `#FFCC00` |
+| **Accent Red** | `#D02A1D` (5.21:1 contrast) |
+| **Accent Blue** | `#0055FF` |
+| **Typography** | Space Grotesk (display) + Inter (body) |
+| **Shape** | Sharp corners, thick borders, offset shadows |
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Framework** | Flutter 3 / Dart 3 |
+| **State** | Riverpod |
+| **Navigation** | go_router |
+| **Storage** | shared_preferences (local-first) |
+| **Fonts** | google_fonts |
+| **i18n** | intl + flutter_localizations |
+| **Design** | Custom Bauhaus Neo-Brutalist system |
+
+**Planned (not integrated):** Firebase · Vertex AI / Gemini API · Isar offline cache
 
 ---
 
@@ -116,213 +168,122 @@ is the intended set — most of those tools are planned, not built.
 ```
 lib/
 ├── core/
-│   ├── domain/models/          # 25+ domain models (UserProfile, Roadmap, Exam,
-│   │                           #   SmartFeatureCard, GoalBridge, ExamStack, etc.)
+│   ├── domain/models/          # 25+ domain models
 │   ├── domain/taxonomies.dart  # Education boards, streams, stages, branches
-│   ├── providers/              # Riverpod providers:
-│   │   ├── smart_feature_provider.dart  # ★ Central feature registry (16 features)
-│   │   ├── effective_profile_provider   # Merged student+parent profile
-│   │   ├── data_providers               # Seed data (goals, roadmaps, exams)
-│   │   └── ...                          # user, plan, stage_roadmaps
-│   ├── router/                 # go_router; onboarding gate only (no role guards yet)
-│   ├── storage/                # SharedPreferences persistence codec
-│   ├── theme/                  # Bauhaus design tokens (colors, spacing, shape)
-│   └── widgets/                # Reusable Bauhaus components
+│   ├── providers/              # Riverpod providers
+│   │   ├── smart_feature_provider  # ★ Central feature registry (16 features)
+│   │   ├── effective_profile       # Merged student+parent profile
+│   │   └── data_providers          # Seed data (goals, roadmaps, exams)
+│   ├── router/                 # go_router with onboarding gate
+│   ├── storage/                # SharedPreferences persistence
+│   ├── theme/                  # Bauhaus design tokens
+│   └── widgets/                # Reusable components
 │
 ├── features/
-│   ├── onboarding/             # 7-step stage-aware flow (8 for parents)
-│   ├── home/                   # Stage banner, goal status, quick actions
-│   ├── explore/                # Roadmap explorer (Explore / My Plan / Checks tabs)
-│   ├── roadmap/                # Roadmap detail, compare, path analysis
-│   ├── exam_hub/               # Exam database with eligibility filtering
-│   ├── subject_impact/         # Subject/stream impact simulator
-│   ├── skill_check/            # Foundation diagnosis + repair suggestions
-│   ├── eligibility/            # (empty — logic lives in core/domain/eligibility.dart)
-│   ├── ai/                     # AI mentor — UI shell only, no backend (planned)
-│   ├── student_voice/          # Survey system, trust scores, moderation
-│   ├── family_bridge/          # Parent-child pair linking
-│   ├── guidance/               # Guidance engine with explain templates
-│   ├── profile/                # User profile management
-│   ├── settings/               # App settings and data controls
-│   ├── career_detail/          # Detailed career path information
-│   └── debug/                  # Flow Map diagnostic dashboard (debug only)
+│   ├── onboarding/     # 9-step stage-aware flow
+│   ├── home/           # Stage banner, goal status, quick actions
+│   ├── explore/        # Roadmap explorer (Explore / My Plan / Checks)
+│   ├── roadmap/        # Roadmap detail, compare, path analysis
+│   ├── exam_hub/       # Exam database with eligibility filtering
+│   ├── subject_impact/ # Subject/stream impact simulator
+│   ├── skill_check/    # Foundation diagnosis + repair
+│   ├── ai/             # AI mentor — UI shell only (planned)
+│   ├── student_voice/  # Survey system, trust scores
+│   ├── family_bridge/  # Parent-child pair linking
+│   ├── guidance/       # Guidance engine with templates
+│   ├── profile/        # User profile management
+│   ├── settings/       # App settings and data controls
+│   └── career_detail/  # Detailed career path information
 │
+├── data/               # Data layer
+├── services/           # Service layer
 └── main.dart
 ```
 
 ---
 
-## Screen Inventory
-
-| Screen | Route | Description |
-|--------|-------|-------------|
-| Splash | `/splash` | App entry with branding |
-| Onboarding | `/onboarding` | 9-step role/stage/details flow (10 for parents) |
-| Home | `/home` | Stage banner, guidance cards, survey prompt |
-| Explore | `/explore` | Roadmap browser with Explore/My Plan/Checks tabs |
-| Roadmap Detail | `/roadmap/:id` | Full path detail with actions |
-| Compare | `/compare` | Side-by-side path comparison |
-| Exam Hub | `/exams` | Filterable exam database |
-| Exam Detail | `/exams/:id` | Individual exam with eligibility |
-| Subject Impact | `/subject-impact` | Stream/subject change simulator |
-| Foundation Check | `/foundation-check` | Self-assessment diagnostic |
-| AI Mentor | `/ai` | Grounded AI guidance chat |
-| Student Voice | `/survey/:id` | Institution/course feedback surveys |
-| Career Detail | `/career/:id` | Detailed career path information |
-| Family Bridge | `/family-bridge` | Parent-child pair linking |
-| Profile | `/profile` | User data management |
-| Settings | `/settings` | App preferences |
-| Flow Map | `/flow-map` | Debug-only 6-column diagnostic dashboard |
-
----
-
-## Onboarding Flow
-
-```
-Step 1: Role Selection (Student / Parent)
-Step 2: Value Proposition (3 sample roadmap previews)
-Step 3: Basic Info (Name, DOB, Gender, Phone)
-Step 4: Education Stage (11 stages)
-Step 5: Stage Details (Board, Stream, Discipline — varies by stage;
-        "Not sure" gets diagnostic placement questions instead)
-Step 6: Location (State, District)
-Step 7: Interests — two-step funnel: 2 families then up to 4 sub-interests
-        with age-appropriate labels, plus dream/goal text
-Step 8: Strategy (Target Exams, Backup Style, Risk Tolerance)
-Step 9: Goal Selection (exploring, decided, exam focused, backup)
-Step P: Parent Concerns (parent role only, appended as Step 10)
-```
-
-Each step collects only data relevant to the selected stage. The system adapts which fields appear based on the stage selected in Step 3.
-
----
-
-## Design System
-
-**Bauhaus Neo-Brutalist** — Sharp, structured, trustworthy, bold.
-
-```
-Not cute. Not childish. Not coaching-app flashy.
-A serious decision system for families.
-```
-
-| Token | Value |
-|-------|-------|
-| Primary | `#1A1A2E` (deep navy) |
-| Secondary | `#E94560` (action red) |
-| Surface | `#FFFDF5` (warm white) |
-| Typography | Outfit (headers) + Inter (body) |
-| Shape | Sharp corners, thick borders, offset shadows |
-| Components | BauhausPanel, BauhausChip, BauhausButton, BauhausSectionTitle |
-
-Design documentation: `docs/01-product.md` through `docs/05-roadmap.md`
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Framework | Flutter 3 / Dart 3 |
-| State | Riverpod (flutter_riverpod + riverpod_annotation) |
-| Navigation | go_router |
-| Fonts | google_fonts |
-| i18n | intl + flutter_localizations |
-| Local Storage | shared_preferences |
-| Design | Bauhaus-inspired Neo-Brutalist (custom) |
-
-**Planned (not yet integrated):**
-- Firebase (Auth, Firestore, Cloud Functions, FCM)
-- Vertex AI / Gemini API
-- Isar DB for offline cache
-
----
-
-## Debug Dashboard
-
-A development-only diagnostic shortcut on the onboarding role page that lets
-developers skip onboarding and jump directly to a debug profile. Visible only
-in debug builds.
-
----
-
-## Privacy
-
-Compliant with India's **Digital Personal Data Protection Act 2023**.
-
-- For minors: sensitive features require guardian consent
-- Data minimization — collect only what is needed
-- Right to delete personal data
-- No public exposure of minor's assessment results without consent
-- Anonymous survey submission with verification-level transparency
-
----
-
 ## Project Status
 
-**Building:** MVP 1 — Working Decision System + Smart Feature System
-
 | Component | Status |
-|-----------|--------|
+|---|---|
 | Onboarding (9 steps, 10 for parents) | ✅ Complete |
-| Interest taxonomy (8 families, 35 interests, 2-step funnel) | ✅ Complete |
+| Interest taxonomy (8 families, 35 interests) | ✅ Complete |
 | Home Screen | ✅ Complete |
-| Roadmap Explorer | ✅ Complete |
-| Roadmap Detail | ✅ Complete |
+| Roadmap Explorer + Detail | ✅ Complete |
 | Compare Paths | ✅ Complete |
 | Exam Hub + Detail | ✅ Complete |
 | Subject Impact Simulator | ✅ Complete |
 | Foundation Check | ✅ Complete |
 | Student Voice (domain + UI) | ✅ Complete |
 | AI Mentor (UI shell) | ✅ Complete |
-| Family Bridge (local sim) | ✅ Complete |
+| Family Bridge (local) | ✅ Complete |
 | Profile & Settings | ✅ Complete |
-| Stage-Conditional Tools | ✅ Complete |
-| **Smart Feature Registry** | ✅ **Complete** |
-| **Checks Tab (registry-driven)** | ✅ **Complete** |
-| **Goal Bridge (model + seeds)** | ✅ **Model ready** |
-| **Exam Stack (model + seeds)** | ✅ **Model ready** |
-| **Shared Career Clusters** | ✅ **Seed data** |
-| Font scale 1.3×/2.0× (all screens) | ✅ **Verified** |
-| Stage × role smoke tests (165 tests) | ✅ **Passing** |
+| Smart Feature Registry | ✅ Complete |
+| Checks Tab (registry-driven) | ✅ Complete |
+| Stage × role smoke tests (165 tests) | ✅ Passing |
 | Goal Bridge UI | 🔲 Planned |
 | Exam Stack UI | 🔲 Planned |
 | Documents & Deadlines | 🔲 Planned |
-| Home → priority cards | 🔲 Planned |
 | Firebase Backend | ⬜ Not started |
 | Isar Offline Cache | ⬜ Not started |
-| Production AI Integration | ⬜ Not started |
+| Production AI | ⬜ Not started |
 | Localization (Hindi +) | ⬜ Not started |
 
 ---
 
-## Running
+## Privacy
+
+Compliant with India's **Digital Personal Data Protection Act 2023.**
+
+- Minors: sensitive features require guardian consent
+- Data minimization — collect only what is needed
+- Right to delete personal data
+- No public exposure of a minor's assessment results without consent
+- Anonymous survey submission with verification-level transparency
+
+---
+
+## Running Locally
 
 ```bash
 flutter pub get
-flutter run -d chrome    # Web
-flutter run -d <device>  # Android / iOS
+flutter run -d chrome      # Web
+flutter run -d <device>    # Android / iOS
 ```
 
 ---
 
 ## Documentation
 
-Design and product docs live in `docs/`.
+Design and product docs live in [`docs/`](docs/).
 
 ```
 docs/
-├── 01-product.md            # Product identity, principles, features, roadmap
-├── 02-brand.md              # Brand voice, competitor analysis, content pillars
-├── 03-design-system.md      # Design tokens, components, accessibility
-├── 04-engineering.md        # Flutter rules, screen patterns, QA checklist
-├── 05-roadmap.md            # Implementation roadmap, V2 feature queue, phase status
-├── 06-social-content.md     # Social media strategy, founder profiles, website copy
-└── SKILL.md                 # Flutter/Dart coding rules for agents
+├── 01-product.md         # Product identity, principles, features
+├── 02-brand.md           # Brand voice, competitor analysis
+├── 03-design-system.md   # Design tokens, components, accessibility
+├── 04-engineering.md     # Flutter rules, screen patterns, QA
+├── 05-roadmap.md         # Implementation roadmap, phase status
+├── 06-social-content.md  # Social media strategy, website copy
+└── 07-open-path-strategy.md  # Open-data strategy
 ```
+
+---
+
+## Part of KSM × Tech
+
+Mārgadarshak is one of three builds from [KSM × Tech](https://ksmxtech.com):
+
+| Build | What It Refuses |
+|---|---|
+| **Mārgadarshak** | Pay-to-rank — no institution can buy a student's ranking |
+| **[Book Is Your Friend](https://github.com/prasadsince1999/Shelfmind)** | The black box — deterministic, transparent recommendations |
+| **[Krishna as Sarathi](https://github.com/prasadsince1999/krishna-as-sarathi)** | Generic motivation — it reads the situation, not the sentence |
+
+> *The guide I needed at 16.*
 
 ---
 
 ## License
 
-Private. All rights reserved.
+All rights reserved.
