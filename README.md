@@ -277,7 +277,7 @@ Mārgadarshak is one of three builds from [KSM × Tech](https://ksmxtech.com):
 | Build | What It Refuses |
 |---|---|
 | **Mārgadarshak** | Pay-to-rank — no institution can buy a student's ranking |
-| **[Book Is Your Friend](https://github.com/prasadsince1999/Shelfmind)** | The black box — deterministic, transparent recommendations |
+| **[Book Is Your Friend](https://github.com/prasadsince1999/BYF)** | The black box — deterministic, transparent recommendations |
 | **[Krishna as Sarathi](https://github.com/prasadsince1999/krishna-as-sarathi)** | Generic motivation — it reads the situation, not the sentence |
 
 > *The guide I needed at 16.*
