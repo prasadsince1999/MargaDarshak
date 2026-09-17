@@ -45,6 +45,10 @@ class HomeScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ─── Judge Persona Quick Switcher ─────────────
+            const JudgePersonaBar(),
+            const SizedBox(height: AppSpacing.space12),
+
             // ─── Greeting ─────────────────────────────────
             AppBrutalSectionHeader(
               key: const Key('student_home_heading'),

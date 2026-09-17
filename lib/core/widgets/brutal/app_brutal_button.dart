@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../theme/theme.dart';
 import 'app_brutal_panel.dart';
@@ -40,46 +41,52 @@ class AppBrutalButton extends StatelessWidget {
     final background = active ? style.background : AppColors.paperDim;
     final border = active ? style.border : AppColors.borderMuted;
 
-    final child = Container(
-      width: fullWidth ? double.infinity : null,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.space16,
-        vertical: AppSpacing.space12,
+    final child = ConstrainedBox(
+      constraints: const BoxConstraints(
+        minHeight: kMinInteractiveDimension,
+        minWidth: kMinInteractiveDimension,
       ),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppShape.buttonRadius,
-        border: Border.all(color: border, width: AppShape.borderStrong),
-        boxShadow: active
-            ? const [
-                BoxShadow(
-                  color: AppColors.ink,
-                  offset: AppShape.shadowOffsetSm,
-                  blurRadius: 0,
+      child: Container(
+        width: fullWidth ? double.infinity : null,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.space16,
+          vertical: AppSpacing.space12,
+        ),
+        decoration: BoxDecoration(
+          color: background,
+          borderRadius: AppShape.buttonRadius,
+          border: Border.all(color: border, width: AppShape.borderStrong),
+          boxShadow: active
+              ? const [
+                  BoxShadow(
+                    color: AppColors.ink,
+                    offset: AppShape.shadowOffsetSm,
+                    blurRadius: 0,
+                  ),
+                ]
+              : null,
+        ),
+        child: Row(
+          mainAxisSize: fullWidth ? MainAxisSize.max : MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, size: AppIconSizes.md, color: foreground),
+              const SizedBox(width: AppSpacing.space8),
+            ],
+            Flexible(
+              child: Text(
+                label.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: foreground,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 0.6,
                 ),
-              ]
-            : null,
-      ),
-      child: Row(
-        mainAxisSize: fullWidth ? MainAxisSize.max : MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (icon != null) ...[
-            Icon(icon, size: AppIconSizes.md, color: foreground),
-            const SizedBox(width: AppSpacing.space8),
-          ],
-          Flexible(
-            child: Text(
-              label.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: foreground,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 0.6,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
 
@@ -89,7 +96,12 @@ class AppBrutalButton extends StatelessWidget {
       enabled: active,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: active ? onPressed : null,
+        onTap: active
+            ? () {
+                HapticFeedback.lightImpact();
+                onPressed!();
+              }
+            : null,
         child: child,
       ),
     );

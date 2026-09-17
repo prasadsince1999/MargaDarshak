@@ -6,13 +6,25 @@ import '../../data/repositories/seed_career_repository.dart';
 import '../../data/repositories/seed_course_repository.dart';
 import '../../data/repositories/seed_exam_repository.dart';
 import '../../data/repositories/seed_goal_repository.dart';
+import '../../data/repositories/seed_institution_repository.dart';
 import '../../data/repositories/seed_roadmap_repository.dart';
+import '../../data/repositories/seed_scholarship_repository.dart';
 import '../../data/repositories/seed_stream_outcome_repository.dart';
 import '../../data/repositories/seed_subject_combination_repository.dart';
+import '../../data/seed/document_seeds.dart';
 import '../../features/subject_impact/domain/impact_engine.dart';
+import 'user_provider.dart';
 
 // ─── Repository Providers ────────────────────────────────────────────
 // Single point to swap from seed → Isar → Firestore.
+
+final scholarshipRepositoryProvider = Provider<ScholarshipRepository>((ref) {
+  return const SeedScholarshipRepository();
+});
+
+final institutionRepositoryProvider = Provider<InstitutionRepository>((ref) {
+  return SeedInstitutionRepository();
+});
 
 final roadmapRepositoryProvider = Provider<RoadmapRepository>((ref) {
   return SeedRoadmapRepository();
@@ -47,7 +59,21 @@ final streamOutcomeRepositoryProvider = Provider<StreamOutcomeRepository>((
 
 // ─── Data Query Providers ────────────────────────────────────────────
 
-/// All roadmaps, optionally filtered by branch.
+/// All institutions, optionally filtered by stateCode or NIRF tier.
+final institutionsProvider = FutureProvider.family<List<Institution>, String?>((
+  ref,
+  stateCode,
+) {
+  final repo = ref.watch(institutionRepositoryProvider);
+  return repo.getInstitutions(stateCode: stateCode);
+});
+
+/// Search institutions by query string.
+final institutionsSearchProvider =
+    FutureProvider.family<List<Institution>, String>((ref, query) {
+      final repo = ref.watch(institutionRepositoryProvider);
+      return repo.searchInstitutions(query);
+    });
 final roadmapsProvider =
     FutureProvider.family<List<Roadmap>, AfterTenthBranch?>((ref, branch) {
       final repo = ref.watch(roadmapRepositoryProvider);
@@ -217,4 +243,37 @@ final percentageImpactProvider = Provider.family<ImpactResult?, ImpactInput>((
     courses: courses,
     exams: exams,
   );
+});
+
+// ─── Scholarship Providers ──────────────────────────────────────────
+
+/// All scholarships, optionally filtered by state.
+final scholarshipsProvider = FutureProvider.family<List<Scholarship>, String?>((
+  ref,
+  stateCode,
+) {
+  final repo = ref.watch(scholarshipRepositoryProvider);
+  return repo.getScholarships(stateCode: stateCode);
+});
+
+/// Scholarships tailored to current active user profile.
+final eligibleScholarshipsProvider = FutureProvider<List<Scholarship>>((ref) {
+  final user = ref.watch(userProvider);
+  if (user == null) return [];
+  final repo = ref.watch(scholarshipRepositoryProvider);
+  return repo.getEligibleScholarships(user);
+});
+
+/// Search scholarships.
+final scholarshipsSearchProvider =
+    FutureProvider.family<List<Scholarship>, String>((ref, query) {
+      final repo = ref.watch(scholarshipRepositoryProvider);
+      return repo.searchScholarships(query);
+    });
+
+// ─── Document Types Provider ────────────────────────────────────────
+
+/// Canonical seed catalog of all document definitions.
+final documentTypesProvider = Provider<List<DocumentType>>((ref) {
+  return seedDocumentTypes;
 });

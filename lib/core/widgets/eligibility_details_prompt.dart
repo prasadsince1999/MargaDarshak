@@ -118,7 +118,7 @@ class _EligibilityDetailsSheetState extends State<_EligibilityDetailsSheet> {
           AppSpacing.space20,
           AppSpacing.space20,
           AppSpacing.space20,
-          AppSpacing.space20 + MediaQuery.of(context).viewInsets.bottom,
+          AppSpacing.space20 + MediaQuery.viewInsetsOf(context).bottom,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,

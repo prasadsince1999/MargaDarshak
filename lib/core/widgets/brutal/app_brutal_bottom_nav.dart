@@ -32,7 +32,7 @@ class AppBrutalBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).padding.bottom;
+    final bottomInset = MediaQuery.paddingOf(context).bottom;
 
     return Container(
       padding: EdgeInsets.only(bottom: bottomInset),

@@ -190,7 +190,7 @@ class BauhausBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).padding.bottom;
+    final bottomInset = MediaQuery.paddingOf(context).bottom;
     const destinations = appNavDestinations;
 
     return Container(
@@ -361,7 +361,7 @@ class BauhausChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width - AppSpacing.space32,
+        maxWidth: MediaQuery.sizeOf(context).width - AppSpacing.space32,
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.space8,

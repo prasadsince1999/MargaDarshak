@@ -153,6 +153,17 @@ class LocalPersistence {
     await _prefs.remove(LocalStorageKeys.documentReadiness);
     await _prefs.remove(LocalStorageKeys.consistencyChecks);
     await _prefs.remove(LocalStorageKeys.onboardingDraft);
+    await _prefs.remove(LocalStorageKeys.appLanguage);
+  }
+
+  // ─── App Language ──────────────────────────────────────────────────────
+
+  /// Load preferred app language code, or null if unset.
+  String? loadLanguage() => _prefs.getString(LocalStorageKeys.appLanguage);
+
+  /// Save preferred app language code.
+  Future<void> saveLanguage(String code) async {
+    await _prefs.setString(LocalStorageKeys.appLanguage, code);
   }
 
   // ─── Raw Key-Value Access ──────────────────────────────────────────────

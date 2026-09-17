@@ -44,7 +44,8 @@ const _allFeatures = <SmartFeatureCard>[
     group: SmartFeatureGroup.goalChecks,
     visibleStages: [],
     visibleGoalStatuses: [GoalStatus.studentDecided, GoalStatus.parentDecided],
-    isImplemented: false,
+    isImplemented: true,
+    route: '/goal-bridge',
     homePriority: 2,
     aiPrompt:
         'Explain the common ground between my goal and my parent\'s '
@@ -79,7 +80,8 @@ const _allFeatures = <SmartFeatureCard>[
       EducationStage.dropper,
     ],
     requiresTargetExam: true,
-    isImplemented: false,
+    isImplemented: true,
+    route: '/exam-stack',
     homePriority: 4,
     aiPrompt: 'Explain my exam stack — what common topics connect my exams?',
   ),
@@ -113,7 +115,8 @@ const _allFeatures = <SmartFeatureCard>[
       EducationStage.dropper,
     ],
     requiresTargetExam: true,
-    isImplemented: false,
+    isImplemented: true,
+    route: '/exam-stack',
     homePriority: 99,
     aiPrompt: 'Show the syllabus overlap between my target exams.',
   ),
@@ -200,17 +203,24 @@ const _allFeatures = <SmartFeatureCard>[
   SmartFeatureCard(
     id: 'documents_deadline',
     title: 'Documents & Deadlines',
-    subtitle: 'Track required documents and upcoming deadlines.',
+    subtitle: 'Zero-upload self-check to prevent admission rejection.',
     icon: Icons.description_rounded,
     group: SmartFeatureGroup.admissionSupport,
     visibleStages: [
+      EducationStage.class9,
+      EducationStage.class10,
+      EducationStage.class11,
       EducationStage.class12,
       EducationStage.diploma,
+      EducationStage.iti,
       EducationStage.undergraduate,
       EducationStage.graduate,
       EducationStage.postgraduate,
+      EducationStage.dropper,
+      EducationStage.other,
     ],
-    isImplemented: false,
+    isImplemented: true,
+    route: '/documents-radar',
     homePriority: 1,
     aiPrompt: 'What documents do I need for my target admissions?',
   ),
@@ -236,20 +246,26 @@ const _allFeatures = <SmartFeatureCard>[
   // ─── 14. Scholarship Match ─────────────────────────────────────
   SmartFeatureCard(
     id: 'scholarship_match',
-    title: 'Scholarship Match',
-    subtitle: 'Scholarships matching your profile and stage.',
-    icon: Icons.local_atm_rounded,
+    title: 'Scholarship Matcher',
+    subtitle: 'NSP, AICTE & state schemes matching your profile.',
+    icon: Icons.currency_rupee_rounded,
     group: SmartFeatureGroup.admissionSupport,
     visibleStages: [
+      EducationStage.class9,
       EducationStage.class10,
+      EducationStage.class11,
       EducationStage.class12,
       EducationStage.diploma,
+      EducationStage.iti,
       EducationStage.undergraduate,
       EducationStage.graduate,
       EducationStage.postgraduate,
+      EducationStage.dropper,
+      EducationStage.other,
     ],
-    isImplemented: false,
-    homePriority: 99,
+    isImplemented: true,
+    route: '/scholarships',
+    homePriority: 2,
     aiPrompt: 'What scholarships am I eligible for?',
   ),
 
@@ -303,6 +319,29 @@ const _allFeatures = <SmartFeatureCard>[
     isImplemented: false,
     homePriority: 6,
     aiPrompt: 'I feel overwhelmed — help me understand my options calmly.',
+  ),
+
+  // ─── 18. Colleges & NIRF Directory ─────────────────────────────
+  SmartFeatureCard(
+    id: 'institutions_directory',
+    title: 'Colleges & Institutes',
+    subtitle: 'Verified NIRF rankings, placements, and fee ranges.',
+    icon: Icons.account_balance_rounded,
+    group: SmartFeatureGroup.admissionSupport,
+    visibleStages: [
+      EducationStage.class10,
+      EducationStage.class11,
+      EducationStage.class12,
+      EducationStage.diploma,
+      EducationStage.undergraduate,
+      EducationStage.graduate,
+      EducationStage.dropper,
+    ],
+    isImplemented: true,
+    route: '/colleges',
+    homePriority: 2,
+    aiPrompt:
+        'Show me top verified colleges for my target career and entrance exams.',
   ),
 ];
 
@@ -615,6 +654,100 @@ final seedCareerClustersProvider = Provider<List<SharedCareerCluster>>((ref) {
         'PCB → BDS / BAMS',
         'PCB → BSc Nursing → GNM',
         'PCB → B.Pharm → Pharma Industry',
+      ],
+    ),
+  ];
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SEED DATA — Exam Stacks
+// ═══════════════════════════════════════════════════════════════════════════
+
+/// Seeded exam stacks mapping core syllabus overlaps across major national entrances.
+final seedExamStacksProvider = Provider<List<ExamStack>>((ref) {
+  return const [
+    ExamStack(
+      id: 'engineering_stack',
+      title: 'National Engineering Stack',
+      primaryExamId: 'exam_jee_main',
+      backupExamIds: ['exam_bitsat', 'exam_comedk', 'exam_mht_cet'],
+      commonSubjects: ['Physics', 'Chemistry', 'Mathematics'],
+      examSpecificExtras: {
+        'exam_bitsat': ['English Proficiency', 'Logical Reasoning'],
+        'exam_comedk': ['Speed Problem Solving (No Negative Marking)'],
+        'exam_mht_cet': ['State Board Textbook Alignment'],
+      },
+      overlapScore: 92,
+      suggestedStudyOrder: ['exam_jee_main', 'exam_bitsat', 'exam_mht_cet'],
+    ),
+    ExamStack(
+      id: 'medical_stack',
+      title: 'Medical & Life Sciences Stack',
+      primaryExamId: 'exam_neet',
+      backupExamIds: ['exam_cuet', 'exam_iiser_iat'],
+      commonSubjects: ['Physics', 'Chemistry', 'Biology / Biotechnology'],
+      examSpecificExtras: {
+        'exam_iiser_iat': ['Basic Mathematics Aptitude'],
+        'exam_cuet': ['General Test & English'],
+      },
+      overlapScore: 88,
+      suggestedStudyOrder: ['exam_neet', 'exam_iiser_iat', 'exam_cuet'],
+    ),
+    ExamStack(
+      id: 'defence_stack',
+      title: 'Armed Forces Officer Stack',
+      primaryExamId: 'exam_nda',
+      backupExamIds: ['exam_cds', 'exam_afcat'],
+      commonSubjects: ['Mathematics', 'General Ability (English & GK)'],
+      examSpecificExtras: {
+        'exam_afcat': ['Military Reasoning & Spatial Ability'],
+        'exam_cds': ['Elementary Mathematics & English Comprehension'],
+      },
+      overlapScore: 84,
+      suggestedStudyOrder: ['exam_nda', 'exam_cds', 'exam_afcat'],
+    ),
+    ExamStack(
+      id: 'civil_services_stack',
+      title: 'Civil Services & Public Sector Stack',
+      primaryExamId: 'exam_upsc_cse',
+      backupExamIds: ['exam_ssc_cgl', 'exam_rbi_grade_b'],
+      commonSubjects: [
+        'Indian Polity & Governance',
+        'History & Geography',
+        'Indian Economy',
+        'Logical Reasoning',
+      ],
+      examSpecificExtras: {
+        'exam_ssc_cgl': ['Quantitative Aptitude Tier-II'],
+        'exam_rbi_grade_b': ['Finance & Economic Management'],
+      },
+      overlapScore: 80,
+      suggestedStudyOrder: [
+        'exam_upsc_cse',
+        'exam_ssc_cgl',
+        'exam_rbi_grade_b',
+      ],
+    ),
+    ExamStack(
+      id: 'commerce_ca_stack',
+      title: 'Finance, CA & Banking Stack',
+      primaryExamId: 'exam_ca_foundation',
+      backupExamIds: ['exam_cma_foundation', 'exam_cs_eet'],
+      commonSubjects: [
+        'Principles of Accounting',
+        'Business Mathematics',
+        'Logical Reasoning',
+        'Economics',
+      ],
+      examSpecificExtras: {
+        'exam_cs_eet': ['Legal Aptitude & Company Law basics'],
+        'exam_cma_foundation': ['Costing Fundamentals'],
+      },
+      overlapScore: 86,
+      suggestedStudyOrder: [
+        'exam_ca_foundation',
+        'exam_cma_foundation',
+        'exam_cs_eet',
       ],
     ),
   ];

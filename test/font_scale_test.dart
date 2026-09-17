@@ -10,6 +10,11 @@ import 'package:margadarshak/features/family_bridge/presentation/parent_mode_scr
 import 'package:margadarshak/features/home/presentation/home_screen.dart';
 import 'package:margadarshak/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:margadarshak/features/profile/presentation/profile_screen.dart';
+import 'package:margadarshak/features/institutions/presentation/institutions_screen.dart';
+import 'package:margadarshak/features/scholarships/presentation/scholarships_screen.dart';
+import 'package:margadarshak/features/documents/presentation/documents_radar_screen.dart';
+import 'package:margadarshak/features/exam_hub/presentation/exam_stack_screen.dart';
+import 'package:margadarshak/features/goals/presentation/goal_bridge_screen.dart';
 import 'package:margadarshak/core/providers/user_provider.dart';
 
 import 'support/test_harness.dart';
@@ -68,6 +73,11 @@ void main() {
     'explore': const ExploreScreen(),
     'profile': const ProfileScreen(),
     'onboarding': const OnboardingScreen(),
+    'institutions': const InstitutionsScreen(),
+    'scholarships': const ScholarshipsScreen(),
+    'documents-radar': const DocumentsRadarScreen(),
+    'exam-stack': const ExamStackScreen(),
+    'goal-bridge': const GoalBridgeScreen(),
   };
 
   /// All previously-overflowing screens have been fixed. Keep the skip

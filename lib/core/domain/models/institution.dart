@@ -15,9 +15,13 @@ class Institution {
     required this.state,
     required this.city,
     this.coursesOfferedIds = const [],
+    this.entranceExamIds = const [],
     this.feesRangeMin,
     this.feesRangeMax,
     this.placementRatePercent,
+    this.medianSalaryLpa,
+    this.nirfRank,
+    this.district,
     this.website,
     this.latitude,
     this.longitude,
@@ -37,6 +41,16 @@ class Institution {
 
   final String state;
   final String city;
+  final String? district;
+
+  /// National Institutional Ranking Framework (NIRF) rank, if ranked.
+  final int? nirfRank;
+
+  /// Median placement salary in Lakhs Per Annum (LPA).
+  final double? medianSalaryLpa;
+
+  /// Accepted entrance exam IDs (e.g., 'exam_jee_main', 'exam_neet_ug', etc.).
+  final List<String> entranceExamIds;
 
   /// Course IDs offered by this institution.
   final List<String> coursesOfferedIds;

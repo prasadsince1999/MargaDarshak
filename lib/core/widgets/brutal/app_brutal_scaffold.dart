@@ -14,6 +14,7 @@ class AppBrutalScaffold extends StatelessWidget {
     this.bottomNav,
     this.backgroundColor = AppColors.paper,
     this.safeBottom = false,
+    this.maxContentWidth = 768.0,
   });
 
   /// Kept for API compat — no longer rendered in a top bar.
@@ -26,11 +27,25 @@ class AppBrutalScaffold extends StatelessWidget {
   final Color backgroundColor;
   final bool safeBottom;
 
+  /// Optional maximum content width for large screens. Defaults to 768dp.
+  /// Pass null to disable centering constraints.
+  final double? maxContentWidth;
+
   @override
   Widget build(BuildContext context) {
+    final content = maxContentWidth != null
+        ? Align(
+            alignment: Alignment.topCenter,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: maxContentWidth!),
+              child: body,
+            ),
+          )
+        : body;
+
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: SafeArea(bottom: safeBottom, child: body),
+      body: SafeArea(bottom: safeBottom, child: content),
       bottomNavigationBar: bottomNav,
     );
   }

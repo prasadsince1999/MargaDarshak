@@ -34,4 +34,7 @@ class LocalStorageKeys {
 
   /// JSON list of user consistency check entries.
   static const consistencyChecks = 'consistency_checks_v1';
+
+  /// Preferred app language code ('en', 'hi', 'or', etc.).
+  static const appLanguage = 'app_language_v1';
 }

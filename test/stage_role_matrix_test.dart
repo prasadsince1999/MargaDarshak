@@ -116,9 +116,10 @@ void main() {
       // Locks in the audit finding. When Checks features ship for Diploma,
       // ITI, UG, Graduate, PG, Dropper and Other this number drops and the
       // test fails — which is the point: it forces the docs to be updated.
+      // Dropped to 0 after shipping Scholarships Matcher and Documents Radar across all stages.
       expect(
         stagesWithNoWorkingFeature,
-        7,
+        0,
         reason:
             'Stages with zero openable Checks features. Current rows:\n'
             '${rows.join('\n')}',

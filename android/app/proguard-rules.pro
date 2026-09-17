@@ -20,11 +20,12 @@
 # MethodChannel, which R8 cannot see as a reference.
 -keep class io.flutter.plugins.sharedpreferences.** { *; }
 
-# ─── AndroidX / Kotlin housekeeping ──────────────────────────────────────
+# ─── AndroidX / Kotlin / Play Core housekeeping ──────────────────────────
 -dontwarn kotlin.**
 -dontwarn kotlinx.**
+-dontwarn com.google.android.play.core.**
 -keepattributes *Annotation*
 
-# Keep line numbers so Play crash reports stay readable after obfuscation.
+# Keep line numbers so crash reports stay readable after obfuscation.
 -keepattributes SourceFile,LineNumberTable
 -renamesourcefileattribute SourceFile

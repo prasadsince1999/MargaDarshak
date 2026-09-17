@@ -8,21 +8,26 @@ import '../../features/admin/presentation/moderation_queue_screen.dart';
 import '../../features/ai/presentation/ai_screen.dart';
 import '../../features/career_detail/presentation/career_detail_screen.dart';
 import '../../features/debug/presentation/debug_dashboard_screen.dart';
+import '../../features/documents/presentation/documents_radar_screen.dart';
 import '../../features/future_ready/presentation/future_ready_screen.dart';
+import '../../features/goals/presentation/goal_bridge_screen.dart';
 import '../../features/goals/presentation/goal_selection_screen.dart';
 import '../../features/debug/flow_map/flow_map_screen.dart';
 import '../../features/exam_hub/presentation/exam_detail_screen.dart';
 import '../../features/exam_hub/presentation/exam_hub_screen.dart';
+import '../../features/exam_hub/presentation/exam_stack_screen.dart';
 import '../../features/explore/presentation/explore_screen.dart';
 import '../../features/explore/presentation/stream_comparator_screen.dart';
 import '../../features/family_bridge/presentation/parent_mode_screen.dart';
 import '../../features/guidance/presentation/guidance_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
+import '../../features/institutions/presentation/institutions_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/profile/presentation/child_profile_screen.dart';
 import '../../features/profile/presentation/parent_profile_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/roadmap/presentation/roadmap_detail_screen.dart';
+import '../../features/scholarships/presentation/scholarships_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/skill_check/presentation/foundation_check_screen.dart';
 import '../../features/skill_check/presentation/parent_summary_screen.dart';
@@ -247,6 +252,46 @@ GoRouter createAppRouter(WidgetRef ref) {
         path: '/goals',
         name: 'goalSelection',
         builder: (context, state) => const GoalSelectionScreen(),
+      ),
+
+      // ─── Goal Bridge (Student-Parent Common Ground) ───────
+      GoRoute(
+        path: '/goal-bridge',
+        name: 'goalBridge',
+        builder: (context, state) => const GoalBridgeScreen(),
+      ),
+
+      // ─── Exam Stack Planner ──────────────────────────────
+      GoRoute(
+        path: '/exam-stack',
+        name: 'examStack',
+        builder: (context, state) => const ExamStackScreen(),
+      ),
+
+      // ─── Colleges & Institutions ─────────────────────────
+      GoRoute(
+        path: '/institutions',
+        name: 'institutions',
+        builder: (context, state) => const InstitutionsScreen(),
+      ),
+      GoRoute(
+        path: '/colleges',
+        name: 'colleges',
+        builder: (context, state) => const InstitutionsScreen(),
+      ),
+
+      // ─── Scholarships ────────────────────────────────────
+      GoRoute(
+        path: '/scholarships',
+        name: 'scholarships',
+        builder: (context, state) => const ScholarshipsScreen(),
+      ),
+
+      // ─── Documents & Deadline Radar ──────────────────────
+      GoRoute(
+        path: '/documents-radar',
+        name: 'documentsRadar',
+        builder: (context, state) => const DocumentsRadarScreen(),
       ),
 
       // ─── Settings / Account Controls ────────────────────

@@ -311,14 +311,15 @@ class _RoadmapDetailContent extends ConsumerWidget {
 
           AppBrutalSectionHeader(
             eyebrow: 'Roadmap',
-            title: 'Timeline (${roadmap.stages.length})',
+            title: 'Milestone Tree (${roadmap.stages.length})',
           ),
           const SizedBox(height: AppSpacing.space12),
-          for (var index = 0; index < roadmap.stages.length; index++)
-            _ExpandableStage(
-              stage: roadmap.stages[index],
-              isLast: index == roadmap.stages.length - 1,
-            ),
+          AppBrutalVerticalNodeTree(
+            stages: roadmap.stages,
+            backupRoadmaps: backupsAsync.value ?? const [],
+            onBackupTap: (backup) => context.push('/roadmap/${backup.id}'),
+            onExamTap: (examId) => context.push('/exams/$examId'),
+          ),
           const SizedBox(height: AppSpacing.space24),
           const AppBrutalSectionHeader(
             eyebrow: 'Alternatives',
@@ -443,191 +444,6 @@ class _RoadmapDetailContent extends ConsumerWidget {
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ExpandableStage extends StatefulWidget {
-  const _ExpandableStage({required this.stage, required this.isLast});
-
-  final RoadmapStage stage;
-  final bool isLast;
-
-  @override
-  State<_ExpandableStage> createState() => _ExpandableStageState();
-}
-
-class _ExpandableStageState extends State<_ExpandableStage> {
-  bool _isExpanded = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final stage = widget.stage;
-
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 36,
-            child: Column(
-              children: [
-                Container(
-                  width: 30,
-                  height: 30,
-                  alignment: Alignment.center,
-                  decoration: appBrutalDecoration(
-                    tone: AppBrutalTone.yellow,
-                    borderRadius: AppShape.borderRadiusXs,
-                    borderWidth: AppShape.borderDefault,
-                  ),
-                  child: Text(
-                    '${stage.order}',
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                ),
-                if (!widget.isLast)
-                  Expanded(
-                    child: Container(
-                      width: AppShape.borderWidthThin,
-                      color: AppColors.outline,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(width: AppSpacing.space12),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.space16),
-              child: AppBrutalPanel(
-                tone: AppBrutalTone.raised,
-                onTap: () => setState(() => _isExpanded = !_isExpanded),
-                semanticLabel: 'Toggle stage ${stage.title}',
-                selected: _isExpanded,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            stage.title.toUpperCase(),
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                        ),
-                        AnimatedRotation(
-                          turns: _isExpanded ? 0.5 : 0,
-                          duration: AppMotion.durationFast,
-                          child: const Icon(Icons.expand_more_rounded),
-                        ),
-                      ],
-                    ),
-                    if (stage.description != null) ...[
-                      const SizedBox(height: AppSpacing.space8),
-                      Text(
-                        stage.description!,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                    if (stage.durationMonths != null) ...[
-                      const SizedBox(height: AppSpacing.space8),
-                      AppBrutalChip(
-                        label: _formatDuration(stage.durationMonths!),
-                        tone: AppBrutalTone.low,
-                        icon: Icons.schedule_rounded,
-                      ),
-                    ],
-                    AnimatedCrossFade(
-                      firstChild: const SizedBox.shrink(),
-                      secondChild: _ExpandedStageContent(stage: stage),
-                      crossFadeState: _isExpanded
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
-                      duration: AppMotion.durationMedium,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  String _formatDuration(int months) {
-    if (months < 12) return '$months months';
-    final years = months ~/ 12;
-    final remaining = months % 12;
-    if (remaining == 0) return '$years ${years == 1 ? "year" : "years"}';
-    return '$years ${years == 1 ? "year" : "years"} $remaining months';
-  }
-}
-
-class _ExpandedStageContent extends StatelessWidget {
-  const _ExpandedStageContent({required this.stage});
-
-  final RoadmapStage stage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (stage.actionItems.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.space16),
-          const Divider(),
-          const SizedBox(height: AppSpacing.space12),
-          Text('ACTION ITEMS', style: Theme.of(context).textTheme.labelLarge),
-          const SizedBox(height: AppSpacing.space8),
-          for (final item in stage.actionItems)
-            _BulletLine(icon: Icons.check_rounded, text: item),
-        ],
-        if (stage.freeResources.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.space16),
-          Text('FREE RESOURCES', style: Theme.of(context).textTheme.labelLarge),
-          const SizedBox(height: AppSpacing.space8),
-          for (final resource in stage.freeResources)
-            _BulletLine(
-              icon: _resourceIcon(resource.type),
-              text: resource.title,
-            ),
-        ],
-      ],
-    );
-  }
-
-  IconData _resourceIcon(ResourceType type) => switch (type) {
-    ResourceType.youtube => Icons.play_circle_outline_rounded,
-    ResourceType.mooc => Icons.school_rounded,
-    ResourceType.ncertCareerCard => Icons.article_rounded,
-    ResourceType.diksha => Icons.menu_book_rounded,
-    ResourceType.website => Icons.language_rounded,
-    ResourceType.pdf => Icons.picture_as_pdf_rounded,
-  };
-}
-
-class _BulletLine extends StatelessWidget {
-  const _BulletLine({required this.icon, required this.text});
-
-  final IconData icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.space8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 18),
-          const SizedBox(width: AppSpacing.space8),
-          Expanded(
-            child: Text(text, style: Theme.of(context).textTheme.bodyMedium),
           ),
         ],
       ),

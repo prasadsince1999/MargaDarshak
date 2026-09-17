@@ -2035,7 +2035,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   right: AppSpacing.space20,
                   top: AppSpacing.space20,
                   bottom:
-                      MediaQuery.of(context).viewInsets.bottom +
+                      MediaQuery.viewInsetsOf(context).bottom +
                       AppSpacing.space20,
                 ),
                 child: Column(
@@ -2518,7 +2518,7 @@ class _ChipButton extends StatelessWidget {
         // exams, board and stream selection through the whole flow.
         constraints: BoxConstraints(
           minHeight: 48,
-          maxWidth: MediaQuery.of(context).size.width - AppSpacing.space32,
+          maxWidth: MediaQuery.sizeOf(context).width - AppSpacing.space32,
         ),
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(
