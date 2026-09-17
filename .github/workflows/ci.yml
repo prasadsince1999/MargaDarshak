@@ -1,14 +1,14 @@
-name: CI
+name: Flutter CI
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [ main, audit-fixes ]
   pull_request:
-    branches: [ master, main ]
+    branches: [ main ]
 
 jobs:
-  analyze_and_test:
-    name: Code Quality & Tests
+  analyze-and-test:
+    name: Analyze & Test Suite
     runs-on: ubuntu-latest
 
     steps:
@@ -30,11 +30,11 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Check Code Formatting
-        run: dart format --output=none --set-exit-if-changed lib/ test/
+      - name: Verify Formatting
+        run: dart format --output=none --set-exit-if-changed .
 
-      - name: Run Static Analysis
+      - name: Static Analysis
         run: flutter analyze
 
-      - name: Run Automated Test Suite
-        run: flutter test
+      - name: Run Test Suite
+        run: flutter test --coverage

@@ -1,18 +1,21 @@
 # 🧭 Mārgadarshak — मार्गदर्शक
 
-> *"The one who shows the path."*
+> *"The one who shows the path."*  
+> **A 100% offline, privacy-first career guidance decision engine & Digital Public Good for 250M+ Indian students and parents.**
 
-[![Release](https://img.shields.io/badge/Release-v1.0.0-blue?style=for-the-badge&logo=android)](https://github.com/prasadsince1999/MargaDarshak/releases/latest)
-[![CI](https://img.shields.io/badge/CI-Passing-brightgreen?style=for-the-badge&logo=githubactions)](https://github.com/prasadsince1999/MargaDarshak/actions/workflows/ci.yml)
-[![Platform](https://img.shields.io/badge/Platform-Android_100%25_Offline-green?style=for-the-badge&logo=android)](https://github.com/prasadsince1999/MargaDarshak/releases)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue?style=for-the-badge)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-226%2F226_Passing-success?style=for-the-badge)](test/)
+[![Flutter CI](https://img.shields.io/badge/Flutter_CI-Passing-00C853?style=for-the-badge&logo=github)](https://github.com/prasadsince1999/MargaDarshak/actions)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge&logo=apache)](LICENSE)
+[![Platform: Android Offline](https://img.shields.io/badge/Platform-100%25_Offline-2E7D32?style=for-the-badge&logo=android&logoColor=white)](https://github.com/prasadsince1999/MargaDarshak/releases)
+[![Digital Public Good](https://img.shields.io/badge/DPG-Eligible-orange?style=for-the-badge&logo=open-access&logoColor=white)](https://digitalpublicgoods.net/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
+[![Tests Passing](https://img.shields.io/badge/Tests-226_Passing-00C853?style=for-the-badge&logo=flutter&logoColor=white)](test/)
+[![Official Case Study](https://img.shields.io/badge/Case_Study-ksmxtech.com-0E2244?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ksmxtech.com/work/margadarshak/)
 
-A **100% offline, privacy-first career decision system and Digital Public Good** for 250M+ Indian students and parents — from Class 9 to post-graduation. Mārgadarshak turns scattered, opaque career information into an intuitive, stage-wise visual map: stream choices, entrance exams, eligibility rules, NIRF colleges, scholarships, documents, costs, risk, backup routes, and parent–student clarity.
+A **100% offline, privacy-first decision system for Indian students and parents** — from Class 9 to post-graduation. Mārgadarshak turns scattered career information into an intuitive, stage-wise visual map: stream choices, exams, eligibility, NIRF institutions, scholarships, documents, costs, risk, backup routes, and parent–student clarity.
 
-**100% Free, Offline, Non-Commercial, and Privacy-Guaranteed.** No ads, no pay-to-rank sponsorship, no tracking, and zero cloud dependency.
+**100% Free, Offline, Non-Commercial, and Digital Public Good.** No ads, no pay-to-rank sponsorship, no tracking, and no Google Play login required.
 
-Built by [KSM × Tech](https://ksmxtech.com), a one-person product studio in Bhubaneswar, India for the **Build What Moves India** challenge.
+Built by [KSM × Tech](https://ksmxtech.com), an independent product studio in Bhubaneswar, India for the **Build What Moves India** challenge.
 
 ---
 
