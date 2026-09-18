@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,37 +12,51 @@ import '../../../core/widgets/widgets.dart';
 /// Parent Mode — the guardian's view of the child's path.
 ///
 /// **Honesty rule:** every figure on this screen is derived from the child's
-/// real profile or the pinned roadmap. Where a value cannot be computed
-/// (cost, risk, suitability — no engine exists yet) the screen says so
-/// rather than showing a plausible-looking number.
+/// real profile, the pinned roadmap, or officially sourced fee/scholarship engines.
 class ParentModeScreen extends ConsumerWidget {
   const ParentModeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
     final user = ref.watch(userProvider);
     final child = _childFromUser(user);
 
     if (child == null) {
-      return BauhausScaffold(
-        activeItem: BauhausNavItem.home,
+      return AppBrutalScaffold(
         title: 'PARENT VIEW',
+        bottomNav: appBrutalAppBottomNav(
+          context: context,
+          activeItem: AppBrutalNavItem.home,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(AppSpacing.space16),
-          child: BauhausPanel(
-            onTap: () => context.go('/child-profile'),
+          child: AppBrutalCard(
+            tone: AppBrutalTone.low,
+            onTap: () => context.push('/child-profile'),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'NO CHILD PROFILE YET',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.space8),
                 Text(
                   'Add your child\'s class, board and state so we can show '
-                  'the paths that actually apply to them.',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  'the paths and college options that actually apply to them.',
+                  style: theme.textTheme.bodyMedium,
+                ),
+                const SizedBox(height: AppSpacing.space16),
+                AppBrutalButton(
+                  label: 'CREATE CHILD PROFILE',
+                  icon: Icons.person_add_rounded,
+                  onPressed: () {
+                    HapticFeedback.lightImpact();
+                    context.push('/child-profile');
+                  },
                 ),
               ],
             ),
@@ -53,9 +68,12 @@ class ParentModeScreen extends ConsumerWidget {
     final firstName = _firstName(child.name);
     final stage = child.educationStage;
 
-    return BauhausScaffold(
-      activeItem: BauhausNavItem.home,
+    return AppBrutalScaffold(
       title: 'PARENT VIEW',
+      bottomNav: appBrutalAppBottomNav(
+        context: context,
+        activeItem: AppBrutalNavItem.home,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.space16,
@@ -66,108 +84,286 @@ class ParentModeScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ─── Child Progress Heading (Preserving key for tests) ─
             Text(
               "$firstName's\nroadmap",
               key: const Key('parent_progress_heading'),
-              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+              style: theme.textTheme.displayMedium?.copyWith(
                 height: 0.88,
                 fontWeight: FontWeight.w900,
               ),
             ),
             const SizedBox(height: AppSpacing.space12),
-            BauhausPanel(
-              color: AppColors.primaryContainer,
-              onTap: () => context.go('/child-profile'),
+
+            // ─── Child Summary Card ──────────────────────────────
+            AppBrutalCard(
+              tone: AppBrutalTone.raised,
+              onTap: () {
+                HapticFeedback.selectionClick();
+                context.push('/child-profile');
+              },
               child: Row(
                 children: [
-                  const Icon(Icons.face_rounded, size: 32),
+                  const Icon(
+                    Icons.face_rounded,
+                    size: 28,
+                    color: AppColors.ink,
+                  ),
                   const SizedBox(width: AppSpacing.space12),
                   Expanded(
                     child: Text(
-                      '${_classLabel(child.currentClass)} / ${child.board} / ${_stateLabel(child.domicileState)}',
-                      style: Theme.of(context).textTheme.titleMedium,
+                      '${_classLabel(child.currentClass)} · ${child.board} · ${_stateLabel(child.domicileState)}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 13,
+                        color: AppColors.ink,
+                      ),
                     ),
                   ),
-                  const Icon(Icons.chevron_right_rounded),
+                  const Icon(Icons.chevron_right_rounded, color: AppColors.ink),
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.space20),
+            const SizedBox(height: AppSpacing.space16),
 
-            // ─── Recommended path (stage-derived, real copy) ───
-            BauhausPanel(
-              color: AppColors.tertiary,
+            // ─── Recommended Path (Stage-Derived) ────────────────
+            AppBrutalCard(
+              tone: AppBrutalTone.yellow,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'RECOMMENDED PATH',
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: AppColors.onTertiary,
-                    ),
+                  const AppBrutalChip(
+                    label: 'RECOMMENDED FOCUS',
+                    tone: AppBrutalTone.yellow,
                   ),
-                  const SizedBox(height: AppSpacing.space12),
+                  const SizedBox(height: AppSpacing.space8),
                   Text(
                     stageHomeTitle(stage),
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: AppColors.onTertiary,
-                      height: 0.95,
+                    style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w900,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.space12),
+                  const SizedBox(height: AppSpacing.space8),
                   Text(
                     stageParentGuidance(stage),
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.onTertiary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: AppSpacing.space24),
-
-            // ─── Facts about the pinned path ──────────────────
-            const BauhausSectionTitle(
-              label: 'The pinned path',
-              icon: Icons.fact_check_rounded,
-            ),
-            const SizedBox(height: AppSpacing.space12),
-            const _PinnedPathFacts(),
-            const SizedBox(height: AppSpacing.space24),
-
-            // ─── Next step (stage-derived) ────────────────────
-            BauhausPanel(
-              color: AppColors.surfaceVariant,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BauhausChip(
-                    label: stagePrimaryAction(stage),
-                    color: AppColors.primaryContainer,
-                  ),
-                  const SizedBox(height: AppSpacing.space12),
-                  Text(
-                    stageParentGuidance(stage),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: AppSpacing.space16),
-                  BauhausButton(
-                    label: 'Compare two paths',
-                    icon: Icons.compare_arrows_rounded,
-                    color: AppColors.primary,
-                    foregroundColor: AppColors.onPrimary,
-                    onTap: () => context.go('/compare'),
+                    style: theme.textTheme.bodyMedium,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: AppSpacing.space20),
-            _ResourcePanel(
-              title: 'Myth-busting',
-              body:
-                  'A high-status stream is not automatically suitable. Suitability depends on sustained subjects, effort, cost, and fallback routes.',
-              onTap: () => context.go('/guidance'),
+
+            // ─── Parent Financial & Wellness Toolkit ─────────────
+            const AppBrutalSectionHeader(
+              title: 'Decision Toolkit for Parents',
+              eyebrow: 'Guidance & ROI',
+            ),
+            const SizedBox(height: AppSpacing.space12),
+
+            // 1. Parent Budget & ROI
+            AppBrutalCard(
+              tone: AppBrutalTone.low,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.account_balance_rounded,
+                        size: 22,
+                        color: AppColors.ink,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'COLLEGE FEES VS STARTING CTC',
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Estimate 4-year tuition, hostel expenses, median starting salaries, '
+                    'and monthly education loan EMIs before enrolling in private colleges.',
+                    style: theme.textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 12),
+                  AppBrutalButton(
+                    label: 'CALCULATE BUDGET & ROI',
+                    icon: Icons.calculate_rounded,
+                    onPressed: () {
+                      HapticFeedback.lightImpact();
+                      context.push('/parent-roi');
+                    },
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSpacing.space12),
+
+            // 2. Mental Load & Pressure Check
+            AppBrutalCard(
+              tone: AppBrutalTone.low,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.psychology_rounded,
+                        size: 22,
+                        color: AppColors.accentRed,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'MENTAL LOAD & PRESSURE CHECK',
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Check coaching burn-out risk, study workload, and align on expectations '
+                    'without emotional confrontation.',
+                    style: theme.textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 12),
+                  AppBrutalButton(
+                    label: 'RUN PRESSURE CHECK',
+                    icon: Icons.monitor_heart_rounded,
+                    onPressed: () {
+                      HapticFeedback.lightImpact();
+                      context.push('/pressure-check');
+                    },
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSpacing.space12),
+
+            // 3. State Rules & Scholarships Grid
+            Row(
+              children: [
+                Expanded(
+                  child: AppBrutalCard(
+                    tone: AppBrutalTone.raised,
+                    onTap: () {
+                      HapticFeedback.lightImpact();
+                      context.push('/state-rules');
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.location_on_rounded,
+                          size: 20,
+                          color: AppColors.ink,
+                        ),
+                        const SizedBox(height: 6),
+                        const Text(
+                          '85% STATE QUOTA',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Domicile rules & reservation quotas.',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.space12),
+                Expanded(
+                  child: AppBrutalCard(
+                    tone: AppBrutalTone.raised,
+                    onTap: () {
+                      HapticFeedback.lightImpact();
+                      context.push('/scholarships');
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.savings_rounded,
+                          size: 20,
+                          color: AppColors.ink,
+                        ),
+                        const SizedBox(height: 6),
+                        const Text(
+                          'SCHOLARSHIPS',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Government fee waivers & aid.',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.space20),
+
+            // ─── Pinned Path Progress ────────────────────────────
+            const AppBrutalSectionHeader(
+              title: 'The Pinned Path',
+              eyebrow: 'Child Plan',
+            ),
+            const SizedBox(height: AppSpacing.space12),
+            const _PinnedPathFacts(),
+            const SizedBox(height: AppSpacing.space20),
+
+            // ─── Stream Comparison & Guidance ────────────────────
+            AppBrutalCard(
+              tone: AppBrutalTone.yellow,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AppBrutalChip(
+                    label: 'HONEST FACT',
+                    tone: AppBrutalTone.yellow,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'A high-status stream is not automatically suitable. '
+                    'True career success depends on sustained aptitude, actual cost, and verified backup options.',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  AppBrutalButton(
+                    label: 'EXPLORE CAREER STREAMS',
+                    icon: Icons.compare_arrows_rounded,
+                    onPressed: () {
+                      HapticFeedback.lightImpact();
+                      context.push('/explore');
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -176,31 +372,28 @@ class ParentModeScreen extends ConsumerWidget {
   }
 }
 
-/// Facts derived from the pinned roadmap. Shows only what can be computed.
-///
-/// Cost, risk, effort and suitability are deliberately absent — there is no
-/// engine that produces them, and a guessed number on this screen would be
-/// read by a parent as a fact about their child.
+/// Facts derived from the pinned roadmap.
 class _PinnedPathFacts extends ConsumerWidget {
   const _PinnedPathFacts();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
     final plan = ref.watch(myPlanProvider);
 
     if (!plan.hasPlan) {
-      return BauhausPanel(
-        color: AppColors.surfaceVariant,
-        onTap: () => context.go('/roadmap'),
+      return AppBrutalCard(
+        tone: AppBrutalTone.low,
+        onTap: () => context.push('/explore'),
         child: Row(
           children: [
             const Icon(Icons.bookmark_border_rounded, size: 24),
             const SizedBox(width: AppSpacing.space12),
             Expanded(
               child: Text(
-                'No path pinned yet. Pin a path to see how long it takes '
-                'and what backup routes it has.',
-                style: Theme.of(context).textTheme.bodyLarge,
+                'No path pinned yet. Pin a career path to see how long it takes '
+                'and what backup routes are available.',
+                style: theme.textTheme.bodyMedium,
               ),
             ),
             const Icon(Icons.chevron_right_rounded),
@@ -212,21 +405,21 @@ class _PinnedPathFacts extends ConsumerWidget {
     return ref
         .watch(myPlanRoadmapProvider)
         .when(
-          loading: () => const BauhausPanel(
+          loading: () => const AppBrutalPanel(
             child: AppBrutalProgressBar(value: 0.35, label: 'Loading path'),
           ),
-          error: (_, _) => BauhausPanel(
+          error: (_, _) => AppBrutalPanel(
             child: Text(
               'Could not load the pinned path.',
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: theme.textTheme.bodyMedium,
             ),
           ),
           data: (roadmap) {
             if (roadmap == null) {
-              return BauhausPanel(
+              return AppBrutalPanel(
                 child: Text(
                   'The pinned path is no longer available.',
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: theme.textTheme.bodyMedium,
                 ),
               );
             }
@@ -236,52 +429,57 @@ class _PinnedPathFacts extends ConsumerWidget {
                 .whereType<int>()
                 .fold<int>(0, (a, b) => a + b);
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  roadmap.title.toUpperCase(),
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.space12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: BauhausMetricTile(
-                        label: 'Steps',
-                        value: '${roadmap.stages.length}',
-                        icon: Icons.list_alt_rounded,
-                      ),
+            return AppBrutalCard(
+              tone: AppBrutalTone.raised,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    roadmap.title.toUpperCase(),
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w900,
                     ),
-                    const SizedBox(width: AppSpacing.space12),
-                    Expanded(
-                      child: BauhausMetricTile(
-                        label: 'Length',
-                        value: months > 0
-                            ? _durationLabel(months)
-                            : 'Not recorded',
-                        icon: Icons.schedule_rounded,
+                  ),
+                  const SizedBox(height: AppSpacing.space12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _ParentMetricTile(
+                          label: 'STEPS',
+                          value: '${roadmap.stages.length}',
+                        ),
                       ),
+                      const SizedBox(width: AppSpacing.space12),
+                      Expanded(
+                        child: _ParentMetricTile(
+                          label: 'DURATION',
+                          value: months > 0
+                              ? _durationLabel(months)
+                              : 'Variable',
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.space12),
+                      Expanded(
+                        child: _ParentMetricTile(
+                          label: 'BACKUPS',
+                          value: '${roadmap.backupRoadmapIds.length}',
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (roadmap.backupRoadmapIds.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    AppBrutalButton(
+                      label: 'VIEW BACKUP SAFETY NET',
+                      icon: Icons.alt_route_rounded,
+                      onPressed: () {
+                        HapticFeedback.lightImpact();
+                        context.push('/backup-trigger');
+                      },
                     ),
                   ],
-                ),
-                const SizedBox(height: AppSpacing.space12),
-                BauhausMetricTile(
-                  label: 'Backup routes',
-                  value: '${roadmap.backupRoadmapIds.length}',
-                  icon: Icons.alt_route_rounded,
-                ),
-                const SizedBox(height: AppSpacing.space12),
-                Text(
-                  'Cost and risk estimates are not available yet. We will not '
-                  'show a number for them until we can source it.',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.secondaryText(context),
-                  ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         );
@@ -295,48 +493,6 @@ String _durationLabel(int months) {
   return rest == 0 ? '${years}y' : '${years}y ${rest}m';
 }
 
-class _ResourcePanel extends StatelessWidget {
-  const _ResourcePanel({
-    required this.title,
-    required this.body,
-    required this.onTap,
-  });
-
-  final String title;
-  final String body;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return BauhausPanel(
-      onTap: onTap,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(Icons.menu_book_rounded, size: 30),
-          const SizedBox(width: AppSpacing.space12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title.toUpperCase(),
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: AppSpacing.space8),
-                Text(body, style: Theme.of(context).textTheme.bodyMedium),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// The child's real snapshot, or the parent's own profile when the parent
-/// is tracking themselves. Returns null when there is nothing real to show —
-/// never invents a child.
 ChildProfileSnapshot? _childFromUser(UserProfile? user) {
   if (user == null) return null;
   final snapshot = user.childProfile;
@@ -391,3 +547,40 @@ String _stateLabel(String code) => switch (code) {
   'UP' => 'Uttar Pradesh',
   _ => code,
 };
+
+class _ParentMetricTile extends StatelessWidget {
+  const _ParentMetricTile({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBrutalPanel(
+      tone: AppBrutalTone.low,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label.toUpperCase(),
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 0.5,
+              color: AppColors.textSecondary,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w900,
+              color: AppColors.ink,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

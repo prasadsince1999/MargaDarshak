@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] — 2026-09-19
+
+### 🚀 Complete Offline Smart Features Release
+
+### Added
+- **🛡️ Backup Trigger Engine (`/backup-trigger`)**:
+  - Three-tier safety architecture (Plan A dream target, Plan B parallel exams with 80%+ overlap, Plan C direct non-entrance routes).
+  - Clear trigger conditions preventing the single-point-of-failure tragedy in competitive entrance exams.
+- **💳 Parent ROI & Loan EMI Calculator (`/parent-roi`)**:
+  - Real-world 4-year tuition, hostel fees, and median starting salaries across college tiers (IIT/NIT/Central, State Govt, Private).
+  - Built-in student loan EMI calculator with monthly debt-to-salary repayment ratios.
+- **🧠 Pressure & Mental Load Check (`/pressure-check`)**:
+  - 5-factor coaching pressure audit (daily hours, mock fluctuations, coaching schedule density, peer comparison, family alignment).
+  - Actionable burnout mitigation guidance and healthy family conversation starters.
+- **🔄 Wrong Stream Bridge Finder (`/wrong-stream-bridge`)**:
+  - Validated crossover pathways without repeating Class 11-12 under NEP 2020:
+    - *PCB → Tech:* BCA + MCA route approved by AICTE for non-Maths students.
+    - *Arts → Corporate Law:* 5-Year Integrated BA-LLB via CLAT/AILET.
+    - *Commerce → FinTech:* Integrated IPM at IIM Indore/Rohtak.
+    - *Diploma → B.Tech:* AICTE Lateral Entry directly into 2nd year.
+- **📍 State Rules & 85% Domicile Quota (`/state-rules`)**:
+  - Detailed breakdown of 85% state quota seats in government medical and engineering colleges across states (Odisha, Maharashtra, Karnataka, Uttar Pradesh, Tamil Nadu, West Bengal).
+  - State entrance exams (OJEE, MHT-CET, KCET, WBJEE), domicile criteria, and state-vs-central reservation trap warnings.
+- **🤖 Offline Bharat Career Copilot (`/ai`)**:
+  - 100% on-device AI guidance with zero cloud calls, zero latency, and zero tracking.
+  - Interactive deterministic answers for student questions regarding drop years, private university fee reality, exam overlaps, and government scholarships.
+- **👨‍👩‍👧 Modernized Parent Decision Hub (`/parent-mode`)**:
+  - Completely redesigned using Bauhaus Neo-Brutalist design tokens.
+  - Direct quick-actions for Budget & ROI, Mental Load Check, State Domicile Rules, and Scholarships.
+- **🧪 Comprehensive Test Suite Expansion**:
+  - Added unit and widget tests for all new screens (`backup_trigger_test.dart`, `parent_roi_test.dart`, `pressure_check_test.dart`, `wrong_stream_bridge_test.dart`, `state_rules_test.dart`, `ai_screen_test.dart`).
+  - Total automated test count expanded to 249 tests passing with 0 failures.
+  - Font scaling resilience verified at 1.3× and 2.0× scale across all 15 screens with zero overflows.
+
+---
+
 ## [1.0.0] — 2026-09-04
 
 ### 🌟 Initial Standalone Android FOSS Release

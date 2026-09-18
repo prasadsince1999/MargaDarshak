@@ -154,8 +154,9 @@ const _allFeatures = <SmartFeatureCard>[
       EducationStage.undergraduate,
     ],
     visibleGoalStatuses: [GoalStatus.studentDecided, GoalStatus.examFocused],
-    isImplemented: false,
-    homePriority: 99,
+    isImplemented: true,
+    route: '/wrong-stream-bridge',
+    homePriority: 5,
     aiPrompt:
         'Is my current stream compatible with my goal? '
         'If not, what bridges exist?',
@@ -192,7 +193,8 @@ const _allFeatures = <SmartFeatureCard>[
       GoalStatus.examFocused,
       GoalStatus.needsBackup,
     ],
-    isImplemented: false,
+    isImplemented: true,
+    route: '/backup-trigger',
     homePriority: 3,
     aiPrompt:
         'Explain why my backup plan was triggered '
@@ -238,8 +240,9 @@ const _allFeatures = <SmartFeatureCard>[
       EducationStage.iti,
       EducationStage.undergraduate,
     ],
-    isImplemented: false,
-    homePriority: 99,
+    isImplemented: true,
+    route: '/state-rules',
+    homePriority: 6,
     aiPrompt: 'What state-specific admission rules apply to me?',
   ),
 
@@ -299,7 +302,8 @@ const _allFeatures = <SmartFeatureCard>[
     group: SmartFeatureGroup.parentWellbeing,
     visibleStages: [],
     requiresParentContext: true,
-    isImplemented: false,
+    isImplemented: true,
+    route: '/parent-roi',
     homePriority: 99,
     aiPrompt: 'Explain the cost and return of my child\'s chosen path.',
   ),
@@ -316,7 +320,8 @@ const _allFeatures = <SmartFeatureCard>[
       EducationStage.dropper,
       EducationStage.undergraduate,
     ],
-    isImplemented: false,
+    isImplemented: true,
+    route: '/pressure-check',
     homePriority: 6,
     aiPrompt: 'I feel overwhelmed — help me understand my options calmly.',
   ),

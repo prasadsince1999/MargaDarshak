@@ -14,7 +14,13 @@ import 'package:margadarshak/features/institutions/presentation/institutions_scr
 import 'package:margadarshak/features/scholarships/presentation/scholarships_screen.dart';
 import 'package:margadarshak/features/documents/presentation/documents_radar_screen.dart';
 import 'package:margadarshak/features/exam_hub/presentation/exam_stack_screen.dart';
+import 'package:margadarshak/features/goals/presentation/backup_trigger_screen.dart';
 import 'package:margadarshak/features/goals/presentation/goal_bridge_screen.dart';
+import 'package:margadarshak/features/family_bridge/presentation/parent_roi_screen.dart';
+import 'package:margadarshak/features/guidance/presentation/pressure_check_screen.dart';
+import 'package:margadarshak/features/subject_impact/presentation/wrong_stream_bridge_screen.dart';
+import 'package:margadarshak/features/institutions/presentation/state_rules_screen.dart';
+import 'package:margadarshak/features/ai/presentation/ai_screen.dart';
 import 'package:margadarshak/core/providers/user_provider.dart';
 
 import 'support/test_harness.dart';
@@ -78,6 +84,12 @@ void main() {
     'documents-radar': const DocumentsRadarScreen(),
     'exam-stack': const ExamStackScreen(),
     'goal-bridge': const GoalBridgeScreen(),
+    'backup-trigger': const BackupTriggerScreen(),
+    'parent-roi': const ParentRoiScreen(),
+    'pressure-check': const PressureCheckScreen(),
+    'wrong-stream-bridge': const WrongStreamBridgeScreen(),
+    'state-rules': const StateRulesScreen(),
+    'ai': const AiScreen(),
   };
 
   /// All previously-overflowing screens have been fixed. Keep the skip

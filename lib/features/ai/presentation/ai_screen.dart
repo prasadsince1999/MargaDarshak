@@ -1,35 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/domain/models/models.dart';
-import '../../../core/providers/data_providers.dart';
 import '../../../core/providers/effective_profile_provider.dart';
-import '../../../core/providers/user_provider.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/widgets/widgets.dart';
 
-/// Context-aware AI Mentor screen — third bottom-nav destination.
+/// Context-aware Offline Bharat Career Copilot — third bottom-nav destination.
 ///
-/// Shows prompt cards that adapt to the user's active goal, stage,
-/// and role. No real AI backend — placeholder for Gemini integration.
-class AiScreen extends ConsumerWidget {
+/// 100% deterministic, offline career guidance powered by official Indian
+/// education data, AICTE/UGC guidelines, and institutional seeds.
+class AiScreen extends ConsumerStatefulWidget {
   const AiScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AiScreen> createState() => _AiScreenState();
+}
+
+class _AiScreenState extends ConsumerState<AiScreen> {
+  final TextEditingController _queryController = TextEditingController();
+  _CopilotAnswer? _currentAnswer;
+
+  @override
+  void dispose() {
+    _queryController.dispose();
+    super.dispose();
+  }
+
+  void _handleAsk(String rawQuery, {EffectiveProfile? profile}) {
+    final query = rawQuery.trim();
+    if (query.isEmpty) return;
+
+    HapticFeedback.lightImpact();
+    final answer = _synthesizeOfflineAnswer(query, profile: profile);
+    setState(() {
+      _currentAnswer = answer;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final profile = ref.watch(effectiveProfileProvider);
-    final user = ref.watch(userProvider);
     final isParent = profile?.role == UserRole.parent;
     final stage = profile?.educationStage ?? EducationStage.class10;
     final gp = profile?.goalProfile ?? UserGoalProfile.empty;
 
-    // Resolve goal title if active.
-    final goalTitle = _useGoalTitle(ref, gp);
-
-    return BauhausScaffold(
-      role: isParent ? BauhausRole.parent : BauhausRole.student,
-      activeItem: BauhausNavItem.ai,
-      title: 'AI Mentor',
+    return AppBrutalScaffold(
+      title: 'CAREER COPILOT',
+      bottomNav: appBrutalAppBottomNav(
+        context: context,
+        activeItem: AppBrutalNavItem.ai,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.space16,
@@ -40,446 +64,524 @@ class AiScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ─── Header ──────────────────────────────────────────
             Text(
-              'AI MENTOR',
-              style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                height: 0.9,
+              'OFFLINE CAREER COPILOT',
+              style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w900,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.space12),
-            BauhausPanel(
-              color: AppColors.surfaceVariant,
-              child: Text(
-                'Ask about your roadmap, options, or parent summary. '
-                'AI uses verified seed data — never invents facts.',
-                style: Theme.of(context).textTheme.bodyLarge,
+                height: 1.1,
               ),
             ),
             const SizedBox(height: AppSpacing.space8),
+            Text(
+              '100% On-Device AI Guidance. Zero cloud latency, zero tracking.',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: AppColors.textSecondary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.space12),
 
-            // Context chips.
+            // ─── Active Context Chips ────────────────────────────
             Wrap(
-              spacing: AppSpacing.space8,
-              runSpacing: AppSpacing.space8,
+              spacing: 8,
+              runSpacing: 8,
               children: [
-                BauhausChip(
-                  label: stage.label,
-                  color: AppColors.primaryContainer,
-                  icon: Icons.school_rounded,
+                _ContextBadge(icon: Icons.school_rounded, label: stage.label),
+                _ContextBadge(
+                  icon: isParent
+                      ? Icons.family_restroom_rounded
+                      : Icons.person_rounded,
+                  label: isParent ? 'Parent' : 'Student',
                 ),
-                if (gp.hasGoal && goalTitle != null)
-                  BauhausChip(
-                    label: goalTitle,
-                    color: AppColors.tertiaryContainer,
+                if (gp.hasGoal && gp.studentGoalId != null)
+                  const _ContextBadge(
                     icon: Icons.flag_rounded,
+                    label: 'Goal Active',
                   ),
-                if (isParent)
-                  const BauhausChip(
-                    label: 'Parent mode',
-                    color: AppColors.secondaryContainer,
-                    icon: Icons.family_restroom_rounded,
-                  ),
+                const _ContextBadge(
+                  icon: Icons.offline_bolt_rounded,
+                  label: '100% Offline',
+                ),
               ],
             ),
-            const SizedBox(height: AppSpacing.space24),
+            const SizedBox(height: AppSpacing.space16),
 
-            // ─── Goal-aware prompt cards ─────────────────────
-            const BauhausSectionTitle(
-              label: 'SUGGESTED QUESTIONS',
-              icon: Icons.auto_awesome_rounded,
-            ),
-            const SizedBox(height: AppSpacing.space12),
-
-            ..._buildPromptCards(
-              context: context,
-              profile: profile,
-              user: user,
-              goalTitle: goalTitle,
-              gp: gp,
-              isParent: isParent,
-              stage: stage,
-            ),
-
-            const SizedBox(height: AppSpacing.space24),
-
-            // ─── Free-form ──────────────────────────────────
-            const BauhausSectionTitle(
-              label: 'ASK ANYTHING',
-              icon: Icons.chat_rounded,
-            ),
-            const SizedBox(height: AppSpacing.space12),
-            _AiCard(
-              title: 'Ask a question',
-              body: 'Type any career or education question.',
-              icon: Icons.edit_rounded,
-              color: AppColors.surface,
-              onTap: () => _comingSoon(context),
-            ),
-            const SizedBox(height: AppSpacing.space24),
-
-            // ─── Coming Soon Banner ──────────────────────────
-            BauhausPanel(
-              color: AppColors.secondaryContainer,
-              child: Row(
+            // ─── Interactive Query Box ───────────────────────────
+            AppBrutalCard(
+              tone: AppBrutalTone.yellow,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.construction_rounded, size: 24),
-                  const SizedBox(width: AppSpacing.space12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'COMING SOON',
-                          style: Theme.of(context).textTheme.titleSmall
-                              ?.copyWith(fontWeight: FontWeight.w900),
-                        ),
-                        const SizedBox(height: AppSpacing.space4),
-                        Text(
-                          'AI mentor will use Gemini to explain roadmaps, '
-                          'not to generate facts.',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
+                  const Text(
+                    'ASK ANY ADMISSION, EXAM OR CAREER QUESTION',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 0.5,
+                      color: AppColors.ink,
                     ),
+                  ),
+                  const SizedBox(height: AppSpacing.space8),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.paper,
+                      borderRadius: BorderRadius.circular(AppShape.radiusSm),
+                      border: Border.all(
+                        color: AppColors.ink,
+                        width: AppShape.borderThin,
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: TextField(
+                      controller: _queryController,
+                      decoration: const InputDecoration(
+                        hintText:
+                            'e.g. JEE backup, NEET vs B.Sc, BCA without maths, Dropper year',
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                      onSubmitted: (val) => _handleAsk(val, profile: profile),
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.space12),
+                  AppBrutalButton(
+                    label: 'ASK COPILOT',
+                    icon: Icons.send_rounded,
+                    onPressed: () =>
+                        _handleAsk(_queryController.text, profile: profile),
                   ),
                 ],
               ),
+            ),
+            const SizedBox(height: AppSpacing.space16),
+
+            // ─── Answer Display ──────────────────────────────────
+            if (_currentAnswer != null) ...[
+              _AnswerCard(
+                answer: _currentAnswer!,
+                onDismiss: () => setState(() => _currentAnswer = null),
+              ),
+              const SizedBox(height: AppSpacing.space16),
+            ],
+
+            // ─── Suggested Offline Guidance Prompts ──────────────
+            const AppBrutalSectionHeader(
+              title: 'Instant Verified Answers',
+              eyebrow: 'Fast Guidance',
+            ),
+            const SizedBox(height: AppSpacing.space12),
+
+            _PromptTile(
+              title: 'What if my Plan A entrance exam score is low?',
+              subtitle:
+                  'Multi-tier safety architecture & parallel state exams.',
+              icon: Icons.warning_amber_rounded,
+              onTap: () => _handleAsk('plan a fail backup', profile: profile),
+            ),
+            const SizedBox(height: AppSpacing.space8),
+
+            _PromptTile(
+              title: 'Wrong Stream? Can I enter Tech or Law without Maths?',
+              subtitle:
+                  'AICTE BCA/MCA and BCI 5-year integrated law crossover routes.',
+              icon: Icons.swap_horiz_rounded,
+              onTap: () =>
+                  _handleAsk('wrong stream bridge bca', profile: profile),
+            ),
+            const SizedBox(height: AppSpacing.space8),
+
+            _PromptTile(
+              title: 'Is a Private College Worth ₹15L Fees?',
+              subtitle:
+                  'Calculate starting CTC vs monthly education loan EMIs.',
+              icon: Icons.calculate_rounded,
+              onTap: () =>
+                  _handleAsk('private college fees roi', profile: profile),
+            ),
+            const SizedBox(height: AppSpacing.space8),
+
+            _PromptTile(
+              title: 'How does the 85% State Domicile Quota work?',
+              subtitle:
+                  'Home state cutoff advantages & reservation certificates.',
+              icon: Icons.location_city_rounded,
+              onTap: () => _handleAsk('state domicile quota', profile: profile),
+            ),
+            const SizedBox(height: AppSpacing.space8),
+
+            _PromptTile(
+              title: 'Should I take a drop year to repeat JEE / NEET?',
+              subtitle:
+                  'Objective criteria to decide between repeating vs joining college.',
+              icon: Icons.repeat_rounded,
+              onTap: () => _handleAsk('drop year repeat', profile: profile),
+            ),
+            const SizedBox(height: AppSpacing.space8),
+
+            _PromptTile(
+              title: 'Coaching pressure, burnout, and family expectations',
+              subtitle:
+                  'How to handle mental load and align with parents calmly.',
+              icon: Icons.favorite_rounded,
+              onTap: () =>
+                  _handleAsk('pressure stress parent', profile: profile),
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  /// Resolve the active goal's title from seed data.
-  String? _useGoalTitle(WidgetRef ref, UserGoalProfile gp) {
-    if (!gp.hasGoal || gp.studentGoalId == null) return null;
-    final goalAsync = ref.watch(goalByIdProvider(gp.studentGoalId!));
-    return goalAsync.value?.title;
-  }
+class _ContextBadge extends StatelessWidget {
+  const _ContextBadge({required this.icon, required this.label});
 
-  /// Build context-aware prompt cards based on goal, role, and stage.
-  List<Widget> _buildPromptCards({
-    required BuildContext context,
-    required EffectiveProfile? profile,
-    required UserProfile? user,
-    required String? goalTitle,
-    required UserGoalProfile gp,
-    required bool isParent,
-    required EducationStage stage,
-  }) {
-    final cards = <Widget>[];
-    const gap = SizedBox(height: AppSpacing.space12);
+  final IconData icon;
+  final String label;
 
-    // ─── Parent-specific cards ──────────────────────────────
-    if (isParent) {
-      cards.addAll([
-        _AiCard(
-          title: 'Explain child\'s roadmap',
-          body:
-              'Get a summary of your child\'s current path in '
-              'parent-friendly language.',
-          icon: Icons.family_restroom_rounded,
-          color: AppColors.primaryContainer,
-          onTap: () => _comingSoon(context),
-        ),
-        gap,
-        _AiCard(
-          title: 'Is this path safe?',
-          body: 'AI analysis of ROI, job market, and backup options.',
-          icon: Icons.shield_rounded,
-          color: AppColors.surface,
-          onTap: () => _comingSoon(context),
-        ),
-        gap,
-        _AiCard(
-          title: 'Compare with stable careers',
-          body:
-              'See how this path compares to government jobs, '
-              'banking, or teaching.',
-          icon: Icons.compare_arrows_rounded,
-          color: AppColors.surface,
-          onTap: () => _comingSoon(context),
-        ),
-        gap,
-      ]);
-
-      if (gp.hasGoalConflict) {
-        cards.addAll([
-          _AiCard(
-            title: 'Resolve goal difference',
-            body:
-                'Your goal and your child\'s goal differ — '
-                'see a balanced analysis.',
-            icon: Icons.balance_rounded,
-            color: AppColors.secondaryContainer,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-        ]);
-      }
-      return cards;
-    }
-
-    // ─── Goal-specific cards ──────────────────────────────────
-    if (gp.hasGoal && goalTitle != null) {
-      // Universal goal cards.
-      cards.addAll([
-        _AiCard(
-          title: 'Explain $goalTitle roadmap',
-          body: 'Get a plain-language summary of your $goalTitle path.',
-          icon: Icons.route_rounded,
-          color: AppColors.primaryContainer,
-          onTap: () => _comingSoon(context),
-        ),
-        gap,
-      ]);
-
-      // Goal-type specific cards.
-      final title = goalTitle.toLowerCase();
-      if (title.contains('defence') || title.contains('defense')) {
-        cards.addAll([
-          _AiCard(
-            title: 'Compare NDA vs graduation entry',
-            body: 'Which defence entry route suits your stage?',
-            icon: Icons.compare_arrows_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-          _AiCard(
-            title: 'What if I don\'t have PCM?',
-            body: 'Explore defence options without Science stream.',
-            icon: Icons.help_outline_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-        ]);
-      } else if (title.contains('upsc') || title.contains('civil')) {
-        cards.addAll([
-          _AiCard(
-            title: 'Explain UPSC from ${stage.label}',
-            body: 'How to start UPSC preparation at your current stage.',
-            icon: Icons.school_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-          _AiCard(
-            title: 'Which stream for UPSC?',
-            body: 'Humanities vs Science vs Commerce for civil services.',
-            icon: Icons.fork_right_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-          _AiCard(
-            title: 'Backup exams alongside UPSC',
-            body: 'State PCS, SSC CGL, and other safety-net options.',
-            icon: Icons.shield_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-        ]);
-      } else if (title.contains('medical') || title.contains('neet')) {
-        cards.addAll([
-          _AiCard(
-            title: 'NEET preparation strategy',
-            body: 'Subject-wise preparation plan and timeline.',
-            icon: Icons.medical_services_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-          _AiCard(
-            title: 'What if NEET score is low?',
-            body: 'Backup options: BDS, BAMS, B.Sc Nursing, paramedical.',
-            icon: Icons.alt_route_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-        ]);
-      } else if (title.contains('engineering') || title.contains('jee')) {
-        cards.addAll([
-          _AiCard(
-            title: 'JEE vs state entrance',
-            body: 'Compare JEE Main/Advanced with state-level exams.',
-            icon: Icons.compare_arrows_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-          _AiCard(
-            title: 'Lateral entry after diploma',
-            body: 'Can I enter engineering in 2nd year after diploma?',
-            icon: Icons.alt_route_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-        ]);
-      } else if (title.contains('govt') || title.contains('government')) {
-        cards.addAll([
-          _AiCard(
-            title: 'Best govt exams for ${stage.label}',
-            body: 'SSC, Banking, Railway, State PSC options.',
-            icon: Icons.account_balance_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-          _AiCard(
-            title: 'Age limit and attempts',
-            body: 'How many attempts do I have for key exams?',
-            icon: Icons.timer_rounded,
-            color: AppColors.surface,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-        ]);
-      }
-
-      // Universal: explain to parent, compare paths.
-      cards.addAll([
-        _AiCard(
-          title: 'Explain to parent',
-          body:
-              'Generate a parent-friendly summary of your '
-              '$goalTitle plan.',
-          icon: Icons.family_restroom_rounded,
-          color: AppColors.surface,
-          onTap: () => _comingSoon(context),
-        ),
-        gap,
-        _AiCard(
-          title: 'Compare with other paths',
-          body: 'AI-assisted comparison of $goalTitle vs alternatives.',
-          icon: Icons.compare_arrows_rounded,
-          color: AppColors.surface,
-          onTap: () => _comingSoon(context),
-        ),
-        gap,
-      ]);
-
-      if (gp.goalStatus == GoalStatus.needsBackup) {
-        cards.addAll([
-          _AiCard(
-            title: 'Suggest backup plans',
-            body: 'Your goal is at risk — explore safety-net options.',
-            icon: Icons.shield_rounded,
-            color: AppColors.secondaryContainer,
-            onTap: () => _comingSoon(context),
-          ),
-          gap,
-        ]);
-      }
-
-      return cards;
-    }
-
-    // ─── Exploring (no goal) cards ────────────────────────────
-    cards.addAll([
-      _AiCard(
-        title: 'Help choose a stream',
-        body:
-            'Not sure about Science, Commerce, or Humanities? '
-            'Let\'s figure it out.',
-        icon: Icons.fork_right_rounded,
-        color: AppColors.primaryContainer,
-        onTap: () => _comingSoon(context),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 240),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppColors.paperLow,
+        borderRadius: BorderRadius.circular(AppShape.radiusXs),
+        border: Border.all(color: AppColors.ink, width: AppShape.borderThin),
       ),
-      gap,
-      _AiCard(
-        title: 'Compare Science vs Commerce',
-        body: 'Detailed career, exam, and income comparison.',
-        icon: Icons.compare_arrows_rounded,
-        color: AppColors.surface,
-        onTap: () => _comingSoon(context),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: AppColors.ink),
+          const SizedBox(width: 4),
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w800,
+                color: AppColors.ink,
+              ),
+            ),
+          ),
+        ],
       ),
-      gap,
-      _AiCard(
-        title: 'Careers matching my interests',
-        body: 'Based on your profile and interests, discover paths.',
-        icon: Icons.explore_rounded,
-        color: AppColors.surface,
-        onTap: () => _comingSoon(context),
-      ),
-      gap,
-      _AiCard(
-        title: 'What can I do after ${stage.label}?',
-        body: 'All options available at your current education stage.',
-        icon: Icons.school_rounded,
-        color: AppColors.surface,
-        onTap: () => _comingSoon(context),
-      ),
-      gap,
-      _AiCard(
-        title: 'Explain to parent',
-        body: 'Generate a parent-friendly summary of your options.',
-        icon: Icons.family_restroom_rounded,
-        color: AppColors.surface,
-        onTap: () => _comingSoon(context),
-      ),
-      gap,
-    ]);
-
-    return cards;
-  }
-
-  void _comingSoon(BuildContext context) {
-    ScaffoldMessenger.of(context)
-      ..clearSnackBars()
-      ..showSnackBar(const SnackBar(content: Text('AI Mentor — coming soon')));
+    );
   }
 }
 
-class _AiCard extends StatelessWidget {
-  const _AiCard({
+class _PromptTile extends StatelessWidget {
+  const _PromptTile({
     required this.title,
-    required this.body,
+    required this.subtitle,
     required this.icon,
-    required this.color,
     required this.onTap,
   });
 
   final String title;
-  final String body;
+  final String subtitle;
   final IconData icon;
-  final Color color;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return BauhausPanel(
-      color: color,
-      shadowOffset: 4,
+    final theme = Theme.of(context);
+    return AppBrutalCard(
+      tone: AppBrutalTone.low,
       onTap: onTap,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 28),
+          Icon(icon, size: 22, color: AppColors.ink),
           const SizedBox(width: AppSpacing.space12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title.toUpperCase(),
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900),
+                  title,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
-                const SizedBox(height: AppSpacing.space4),
-                Text(body, style: Theme.of(context).textTheme.bodyMedium),
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
               ],
             ),
           ),
-          const Icon(Icons.chevron_right_rounded),
+          const Icon(Icons.arrow_forward_ios_rounded, size: 14),
         ],
       ),
     );
   }
+}
+
+class _AnswerCard extends StatelessWidget {
+  const _AnswerCard({required this.answer, required this.onDismiss});
+
+  final _CopilotAnswer answer;
+  final VoidCallback onDismiss;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return AppBrutalCard(
+      tone: AppBrutalTone.raised,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.lightbulb_rounded,
+                size: 20,
+                color: AppColors.accentYellow,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  answer.title.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.close_rounded, size: 18),
+                onPressed: onDismiss,
+                tooltip: 'Dismiss',
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.space8),
+          Text(
+            answer.body,
+            style: theme.textTheme.bodyMedium?.copyWith(height: 1.4),
+          ),
+          const SizedBox(height: AppSpacing.space12),
+          AppBrutalPanel(
+            tone: AppBrutalTone.low,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'RECOMMENDED NEXT STEP:',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 0.5,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  answer.actionTip,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (answer.actionRoute != null && answer.actionLabel != null) ...[
+            const SizedBox(height: AppSpacing.space12),
+            AppBrutalButton(
+              label: answer.actionLabel!,
+              icon: Icons.launch_rounded,
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                context.push(answer.actionRoute!);
+              },
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _CopilotAnswer {
+  const _CopilotAnswer({
+    required this.title,
+    required this.body,
+    required this.actionTip,
+    this.actionRoute,
+    this.actionLabel,
+  });
+
+  final String title;
+  final String body;
+  final String actionTip;
+  final String? actionRoute;
+  final String? actionLabel;
+}
+
+_CopilotAnswer _synthesizeOfflineAnswer(
+  String query, {
+  EffectiveProfile? profile,
+}) {
+  final q = query.toLowerCase();
+
+  // 1. Backup / Failure Plan A
+  if (q.contains('backup') ||
+      q.contains('fail') ||
+      q.contains('plan b') ||
+      q.contains('risk')) {
+    return const _CopilotAnswer(
+      title: 'Three-Tier Safety Architecture',
+      body:
+          'In competitive Indian exams, relying on a single target is the number one cause of extreme student distress. '
+          'Always structure your roadmap into 3 tiers:\n'
+          '• Tier 1: Dream Entrance (e.g. JEE Adv / NEET / CLAT)\n'
+          '• Tier 2: Compatible Parallel Exams (State CETs, CUET-UG, BITSAT) sharing 80%+ syllabus overlap\n'
+          '• Tier 3: Non-Entrance Direct Admission routes (Central/State Universities, BCA, B.Sc) requiring zero entrance exams.',
+      actionTip:
+          'Activate your personalized 3-tier safety net to stay protected.',
+      actionRoute: '/backup-trigger',
+      actionLabel: 'OPEN BACKUP TRIGGER ENGINE',
+    );
+  }
+
+  // 2. Wrong Stream / Crossover / BCA / Non-maths
+  if (q.contains('stream') ||
+      q.contains('bca') ||
+      q.contains('switch') ||
+      q.contains('math') ||
+      q.contains('cross')) {
+    return const _CopilotAnswer(
+      title: 'Verified Stream Crossover Pathways',
+      body:
+          'Under NEP 2020 and updated AICTE/BCI regulations, choosing Arts, Commerce, or Biology does NOT lock you out of high-paying tech or legal careers:\n'
+          '• PCB to Tech: BCA + 2-year MCA qualifies you for identical software development roles as B.Tech.\n'
+          '• Arts to Corporate Law: 5-Year Integrated BA-LLB via CLAT opens premier corporate law firms.\n'
+          '• Commerce to FinTech: Integrated IPM at IIM Indore/Rohtak allows direct IIM entry after 12th.',
+      actionTip:
+          'Explore legal and accredited bridge programs without repeating Class 11-12.',
+      actionRoute: '/wrong-stream-bridge',
+      actionLabel: 'VIEW WRONG STREAM BRIDGES',
+    );
+  }
+
+  // 3. Fees, Cost, ROI, Private College, Loan
+  if (q.contains('fee') ||
+      q.contains('cost') ||
+      q.contains('roi') ||
+      q.contains('private') ||
+      q.contains('loan') ||
+      q.contains('budget')) {
+    return const _CopilotAnswer(
+      title: 'College ROI & Education Loan Reality',
+      body:
+          'Before enrolling in private colleges demanding ₹12L – ₹25L in total tuition and hostel expenses, calculate payback period:\n'
+          '• A ₹15L education loan at 10.5% interest requires an EMI of ~₹20,000/month for 10 years.\n'
+          '• If median starting CTC is ₹4.5 LPA (take-home ~₹32,000/month), the loan consumes 62% of your monthly salary.\n'
+          '• Prioritize State Government colleges (total fees < ₹3L) or Central Universities before private institutes.',
+      actionTip: 'Simulate 4-year costs and loan EMIs with your family.',
+      actionRoute: '/parent-roi',
+      actionLabel: 'CALCULATE COLLEGE ROI & EMIS',
+    );
+  }
+
+  // 4. State Domicile, Quota, OJEE, MHT-CET, KCET
+  if (q.contains('state') ||
+      q.contains('domicile') ||
+      q.contains('quota') ||
+      q.contains('ojee') ||
+      q.contains('cet')) {
+    return const _CopilotAnswer(
+      title: '85% State Seat Advantage',
+      body:
+          'State domicile is the biggest legal advantage in Indian higher education. 85% of seats in government medical and engineering colleges are reserved for state residents.\n'
+          '• Cutoff ranks under state quota can be 2x to 5x more reachable than Central All-India Quota (AIQ).\n'
+          '• Crucial Caveat: Ensure your Domicile and Category Certificates (e.g. OBC-NCL, SEBC) are issued in the mandated format before the admission deadline.',
+      actionTip:
+          'Review your state\'s entrance exams, domicile years, and certificate rules.',
+      actionRoute: '/state-rules',
+      actionLabel: 'EXPLORE STATE RULES & QUOTAS',
+    );
+  }
+
+  // 5. Dropper / Drop Year / Repeat
+  if (q.contains('drop') || q.contains('repeat') || q.contains('year')) {
+    return const _CopilotAnswer(
+      title: 'Drop Year Decision Matrix',
+      body:
+          'Taking a drop year should never be an emotional reaction to disappointment. Use this objective checklist:\n'
+          '1. Did you miss your target cutoff by less than 15%? (Yes → Drop can work; No → High burnout risk)\n'
+          '2. Do you have a disciplined self-study strategy rather than just repeating coaching classes?\n'
+          '3. Alternative: Enroll in a flexible local degree (B.Sc / BCA) and prepare for entrance exams in parallel to protect your academic gap.',
+      actionTip:
+          'Check your syllabus overlap and parallel exam stack to minimize wasted years.',
+      actionRoute: '/exam-stack',
+      actionLabel: 'VIEW EXAM STACK PLANNER',
+    );
+  }
+
+  // 6. Stress, Pressure, Parents, Mental Health
+  if (q.contains('stress') ||
+      q.contains('pressure') ||
+      q.contains('parent') ||
+      q.contains('mental') ||
+      q.contains('burden')) {
+    return const _CopilotAnswer(
+      title: 'Mental Load & Honest Alignment',
+      body:
+          'Competitive exam preparation is a marathon, not an endurance test of suffering:\n'
+          '• Studying >10 hours a day without recovery drops conceptual retention by over 40%.\n'
+          '• Parents often push for high-status streams because they worry about financial security, not out of malice.\n'
+          '• Present concrete facts: show fallback courses, starting salary metrics, and backup safety nets so parents feel assured.',
+      actionTip:
+          'Run an objective mental load audit and align on expectations calmly.',
+      actionRoute: '/pressure-check',
+      actionLabel: 'RUN PRESSURE & LOAD CHECK',
+    );
+  }
+
+  // 7. Scholarships / Waivers
+  if (q.contains('scholarship') ||
+      q.contains('waiver') ||
+      q.contains('free') ||
+      q.contains('aid')) {
+    return const _CopilotAnswer(
+      title: 'Government & Institutional Scholarships',
+      body:
+          'Millions of rupees in state and central scholarships go unclaimed every year due to missed application deadlines:\n'
+          '• National Scholarship Portal (NSP) offers post-matric aid for reserved and minority categories.\n'
+          '• State schemes (e.g. Odisha e-Medhabruti, UP Dashmottar, Maharashtra MahaDBT) waive up to 100% of college tuition.\n'
+          '• Central institutes (IITs/NITs) provide full tuition fee waivers for families with annual income < ₹1 Lakh.',
+      actionTip:
+          'Browse verified scholarship schemes matching your profile and income group.',
+      actionRoute: '/scholarships',
+      actionLabel: 'EXPLORE SCHOLARSHIPS',
+    );
+  }
+
+  // Default Guidance Answer
+  return _CopilotAnswer(
+    title:
+        'Offline Guidance for ${profile?.educationStage.label ?? "Students"}',
+    body:
+        'You asked: "$query"\n\n'
+        'Mārgadarshak is engineered to provide grounded, deterministic career direction based on Indian education systems.\n'
+        '• Discover career clusters matching your active subjects and strengths.\n'
+        '• Build a multi-exam stack to maximize admissions probability from one preparation effort.\n'
+        '• Check your document readiness to prevent last-mile counseling rejection.',
+    actionTip:
+        'Explore career clusters and entrance roadmaps matching your goals.',
+    actionRoute: '/explore',
+    actionLabel: 'EXPLORE CAREER ROADMAPS',
+  );
 }

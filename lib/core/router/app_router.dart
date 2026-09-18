@@ -10,6 +10,7 @@ import '../../features/career_detail/presentation/career_detail_screen.dart';
 import '../../features/debug/presentation/debug_dashboard_screen.dart';
 import '../../features/documents/presentation/documents_radar_screen.dart';
 import '../../features/future_ready/presentation/future_ready_screen.dart';
+import '../../features/goals/presentation/backup_trigger_screen.dart';
 import '../../features/goals/presentation/goal_bridge_screen.dart';
 import '../../features/goals/presentation/goal_selection_screen.dart';
 import '../../features/debug/flow_map/flow_map_screen.dart';
@@ -19,9 +20,12 @@ import '../../features/exam_hub/presentation/exam_stack_screen.dart';
 import '../../features/explore/presentation/explore_screen.dart';
 import '../../features/explore/presentation/stream_comparator_screen.dart';
 import '../../features/family_bridge/presentation/parent_mode_screen.dart';
+import '../../features/family_bridge/presentation/parent_roi_screen.dart';
 import '../../features/guidance/presentation/guidance_screen.dart';
+import '../../features/guidance/presentation/pressure_check_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/institutions/presentation/institutions_screen.dart';
+import '../../features/institutions/presentation/state_rules_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/profile/presentation/child_profile_screen.dart';
 import '../../features/profile/presentation/parent_profile_screen.dart';
@@ -36,6 +40,7 @@ import '../../features/skill_check/domain/supervision.dart';
 import '../../features/splash/presentation/splash_screen.dart';
 import '../../features/student_voice/presentation/survey_form_screen.dart';
 import '../../features/subject_impact/presentation/subject_impact_screen.dart';
+import '../../features/subject_impact/presentation/wrong_stream_bridge_screen.dart';
 import '../domain/models/models.dart';
 import '../providers/user_provider.dart';
 
@@ -292,6 +297,41 @@ GoRouter createAppRouter(WidgetRef ref) {
         path: '/documents-radar',
         name: 'documentsRadar',
         builder: (context, state) => const DocumentsRadarScreen(),
+      ),
+
+      // ─── Backup Trigger Engine ───────────────────────────
+      GoRoute(
+        path: '/backup-trigger',
+        name: 'backupTrigger',
+        builder: (context, state) => const BackupTriggerScreen(),
+      ),
+
+      // ─── Parent Budget & ROI Calculator ─────────────────
+      GoRoute(
+        path: '/parent-roi',
+        name: 'parentRoi',
+        builder: (context, state) => const ParentRoiScreen(),
+      ),
+
+      // ─── Pressure & Mental Load Check ───────────────────
+      GoRoute(
+        path: '/pressure-check',
+        name: 'pressureCheck',
+        builder: (context, state) => const PressureCheckScreen(),
+      ),
+
+      // ─── Wrong Stream Bridge Screen ─────────────────────
+      GoRoute(
+        path: '/wrong-stream-bridge',
+        name: 'wrongStreamBridge',
+        builder: (context, state) => const WrongStreamBridgeScreen(),
+      ),
+
+      // ─── State Rules & Quotas Screen ───────────────────
+      GoRoute(
+        path: '/state-rules',
+        name: 'stateRules',
+        builder: (context, state) => const StateRulesScreen(),
       ),
 
       // ─── Settings / Account Controls ────────────────────

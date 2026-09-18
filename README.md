@@ -5,10 +5,11 @@
 
 [![Flutter CI](https://img.shields.io/badge/Flutter_CI-Passing-00C853?style=for-the-badge&logo=github)](https://github.com/prasadsince1999/MargaDarshak/actions)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge&logo=apache)](LICENSE)
+[![Release: v1.1.0](https://img.shields.io/badge/Release-v1.1.0-blue?style=for-the-badge&logo=github)](https://github.com/prasadsince1999/MargaDarshak/releases)
 [![Platform: Android Offline](https://img.shields.io/badge/Platform-100%25_Offline-2E7D32?style=for-the-badge&logo=android&logoColor=white)](https://github.com/prasadsince1999/MargaDarshak/releases)
 [![Digital Public Good](https://img.shields.io/badge/DPG-Eligible-orange?style=for-the-badge&logo=open-access&logoColor=white)](https://digitalpublicgoods.net/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
-[![Tests Passing](https://img.shields.io/badge/Tests-226_Passing-00C853?style=for-the-badge&logo=flutter&logoColor=white)](test/)
+[![Tests Passing](https://img.shields.io/badge/Tests-249_Passing-00C853?style=for-the-badge&logo=flutter&logoColor=white)](test/)
 [![Official Case Study](https://img.shields.io/badge/Case_Study-ksmxtech.com-0E2244?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ksmxtech.com/work/margadarshak/)
 
 A **100% offline, privacy-first decision system for Indian students and parents** — from Class 9 to post-graduation. Mārgadarshak turns scattered career information into an intuitive, stage-wise visual map: stream choices, exams, eligibility, NIRF institutions, scholarships, documents, costs, risk, backup routes, and parent–student clarity.
@@ -19,15 +20,15 @@ Built by [KSM × Tech](https://ksmxtech.com), an independent product studio in B
 
 ---
 
-## 📲 Download & Sideload (Direct APK)
+## 📲 Download & Sideload (Direct Production APKs)
 
 Mārgadarshak is distributed directly via **GitHub Releases** without Google Play Store gatekeeping. Indian students and parents in low-connectivity areas can install and use it with **zero internet needed after installation**:
 
 | Build Architecture | Release Artifact | Ideal For | Size |
 |---|---|---|---|
-| **Modern Phones (64-bit)** | [**`app-arm64-v8a-release.apk`**](https://github.com/prasadsince1999/MargaDarshak/releases/latest) | Most Android phones from 2018 onwards | **~19.6 MB** |
-| **Budget Phones (32-bit)** | [**`app-armeabi-v7a-release.apk`**](https://github.com/prasadsince1999/MargaDarshak/releases/latest) | Ultra-compact for entry-level budget phones | **~17.3 MB** |
-| **Universal Installer** | [**`app-release.apk`**](https://github.com/prasadsince1999/MargaDarshak/releases/latest) | Compatible with all Android devices & emulators | **~54.6 MB** |
+| **Modern Phones (64-bit)** | [**`app-arm64-v8a-release.apk`**](https://github.com/prasadsince1999/MargaDarshak/releases/latest) | Most Android phones from 2018 onwards | **19.7 MB** |
+| **Budget Phones (32-bit)** | [**`app-armeabi-v7a-release.apk`**](https://github.com/prasadsince1999/MargaDarshak/releases/latest) | Ultra-compact for entry-level budget phones | **17.4 MB** |
+| **Emulators / x86_64** | [**`app-x86_64-release.apk`**](https://github.com/prasadsince1999/MargaDarshak/releases/latest) | Android emulators & Chromebook devices | **21.1 MB** |
 
 ### How to Install:
 1. Download the `.apk` file for your phone from the [Latest GitHub Release](https://github.com/prasadsince1999/MargaDarshak/releases/latest).
@@ -65,6 +66,41 @@ No student's future can be monetized, tracked, or sold to the highest bidder.
 - **Transparent Fee Ceilings**: All college fees and median placements are verified against regulatory records (**UGC, AICTE, NIRF**).
 - **Hardcoded Fake-University Filter**: Validated against the official **UGC fake university registry**.
 - **Local-First DPDP Compliance**: Complete privacy under India's **Digital Personal Data Protection Act 2023**. Zero telemetry, zero analytics tracking, and zero personal data harvesting.
+
+---
+
+## 🚀 What's New in v1.1.0
+
+### 🛡️ 1. Backup Trigger Engine (`/backup-trigger`)
+- Early warning and three-tier safety net architecture (Plan A primary, Plan B parallel exams with 80%+ overlap, Plan C direct admissions).
+- Eliminates the single-point-of-failure tragedy where missing a single entrance cutoff causes year loss or acute distress.
+
+### 💳 2. Parent ROI & Education Loan EMI Calculator (`/parent-roi`)
+- Real-world 4-year tuition, hostel expenses, median starting CTC, and payback period calculator.
+- Built-in student loan EMI estimator showing monthly repayment burdens and debt-to-salary ratios before committing to private university admissions.
+
+### 🧠 3. Pressure & Mental Load Check (`/pressure-check`)
+- 5-factor coaching pressure & burnout risk assessment: daily study hours, mock test score fluctuations, coaching schedule density, peer comparison, and family alignment.
+- Actionable stress-relief guidance and healthy conversation starters for Indian families.
+
+### 🔄 4. Wrong Stream Bridge Finder (`/wrong-stream-bridge`)
+- Accredited recovery crossovers without repeating Class 11-12 under NEP 2020:
+  - *PCB → Software/Tech:* BCA + MCA route approved by AICTE for students without 12th Maths.
+  - *Arts → Corporate Law:* 5-Year Integrated BA-LLB via CLAT/AILET.
+  - *Commerce → FinTech & Management:* Integrated IPMAT at IIM Indore/Rohtak.
+  - *Polytechnic Diploma → B.Tech:* AICTE Lateral Entry directly into 2nd year engineering.
+
+### 📍 5. State Rules & 85% Domicile Quota Detector (`/state-rules`)
+- Detailed analysis of 85% state quota seats in government medical and engineering colleges across states (Odisha, Maharashtra, Karnataka, Uttar Pradesh, Tamil Nadu, West Bengal).
+- State entrance exams (OJEE, MHT-CET, KCET, WBJEE, TNEA), domicile certificate criteria, and reservation traps (e.g. State SEBC vs Central OBC-NCL formatting rules).
+
+### 🤖 6. Offline Bharat Career Copilot (`/ai`)
+- 100% On-Device AI Guidance with zero cloud calls, zero latency, and zero tracking.
+- Instant deterministic answers for complex student questions (Drop year checklists, private college fee reality, stream switching, exam backups, scholarship portals).
+
+### 👨‍👩‍👧 7. Modernized Parent Decision Hub (`/parent-mode`)
+- Fully redesigned with Bauhaus Neo-Brutalist design tokens.
+- Direct quick-actions for Budget & ROI, Mental Load Check, State Domicile Rules, and Scholarship Waivers.
 
 ---
 
@@ -191,7 +227,7 @@ Mārgadarshak maintains a **100% automated test pass rate**:
 # Run static analysis (0 issues)
 flutter analyze
 
-# Run unit and widget test suite (226 tests)
+# Run unit and widget test suite (249 tests)
 flutter test
 
 # Run font scaling resilience tests (1.3x and 2.0x scales)

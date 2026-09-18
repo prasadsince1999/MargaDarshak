@@ -1,7 +1,7 @@
 name: margadarshak
 description: "Mārgadarshak — a career decision system for Indian students and parents, Class 9 to post-graduation."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: ^3.11.5
