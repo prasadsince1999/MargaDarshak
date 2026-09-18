@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/theme.dart';
 import '../../../core/widgets/widgets.dart';
+import '../domain/roi_engine.dart';
 
 /// Screen for Parent Budget, Loan EMI & Education ROI Calculator.
 class ParentRoiScreen extends ConsumerStatefulWidget {
@@ -25,36 +26,13 @@ class _ParentRoiScreenState extends ConsumerState<ParentRoiScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Derived costs (in INR)
-    final annualTuition = switch (_collegeTier) {
-      0 => 125000.0, // Top Govt (IIT/NIT/Central)
-      1 => 45000.0, // State Govt / Autonomous Aided
-      _ => 220000.0, // Private / Deemed University
-    };
-
-    final annualHostel = _includeHostel ? 65000.0 : 0.0;
-    final totalCourseCost = (annualTuition + annualHostel) * _durationYears;
-
-    // Expected Median Salary (Annual INR)
-    final medianSalary = switch (_collegeTier) {
-      0 => 1200000.0, // ₹12 LPA
-      1 => 550000.0, // ₹5.5 LPA
-      _ => 400000.0, // ₹4.0 LPA
-    };
-
-    // Monthly take-home estimate (approx 85% of CTC / 12)
-    final monthlyInHand = (medianSalary * 0.85) / 12;
-
-    // Standard SBI Student Loan EMI: 5-year repayment @ 9.5% interest
-    // Monthly interest rate r = 0.095 / 12 = 0.007916
-    // EMI = [P * r * (1+r)^n] / [(1+r)^n - 1], where n = 60 months
-    const r = 0.095 / 12;
-    const n = 60;
-    final factor = _pow(1 + r, n);
-    final monthlyEmi = (_customLoanAmount * r * factor) / (factor - 1);
-
-    // Payback period (Years) = Total Cost / Median Salary
-    final paybackYears = (totalCourseCost / medianSalary).toStringAsFixed(1);
+    // Derived financial & ROI metrics computed via pure Domain Engine
+    final estimate = RoiEngine.calculate(
+      collegeTier: _collegeTier,
+      durationYears: _durationYears,
+      includeHostel: _includeHostel,
+      loanAmount: _customLoanAmount,
+    );
 
     return AppBrutalScaffold(
       title: 'PARENT BUDGET & ROI',
@@ -252,7 +230,8 @@ class _ParentRoiScreenState extends ConsumerState<ParentRoiScreen> {
                       Expanded(
                         child: _MetricCard(
                           title: 'TOTAL 4-YR COST',
-                          value: '₹${_formatCurrency(totalCourseCost)}',
+                          value:
+                              '₹${RoiEstimate.formatCurrency(estimate.totalCourseCost)}',
                           subtitle: 'Tuition + Living',
                           tone: AppBrutalTone.paper,
                         ),
@@ -261,7 +240,8 @@ class _ParentRoiScreenState extends ConsumerState<ParentRoiScreen> {
                       Expanded(
                         child: _MetricCard(
                           title: 'MEDIAN START CTC',
-                          value: '₹${_formatCurrency(medianSalary)}',
+                          value:
+                              '₹${RoiEstimate.formatCurrency(estimate.medianSalary)}',
                           subtitle: 'NIRF Placement Median',
                           tone: AppBrutalTone.yellow,
                         ),
@@ -285,7 +265,7 @@ class _ParentRoiScreenState extends ConsumerState<ParentRoiScreen> {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'PAYBACK TIMELINE: $paybackYears YEARS',
+                              'PAYBACK TIMELINE: ${estimate.paybackYears} YEARS',
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w900,
@@ -296,8 +276,8 @@ class _ParentRoiScreenState extends ConsumerState<ParentRoiScreen> {
                         const SizedBox(height: 6),
                         Text(
                           _collegeTier == 2
-                              ? 'High investment risk: Private university fees require ~$paybackYears years of gross salary to recover. Strongly recommend evaluating state government colleges or scholarship waivers.'
-                              : 'Healthy financial return: Government fee caps allow complete recovery within ~$paybackYears years with minimal debt burden.',
+                              ? 'High investment risk: Private university fees require ~${estimate.paybackYears} years of gross salary to recover. Strongly recommend evaluating state government colleges or scholarship waivers.'
+                              : 'Healthy financial return: Government fee caps allow complete recovery within ~${estimate.paybackYears} years with minimal debt burden.',
                           style: theme.textTheme.bodySmall,
                         ),
                       ],
@@ -339,7 +319,7 @@ class _ParentRoiScreenState extends ConsumerState<ParentRoiScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Loan Amount: ₹${_formatCurrency(_customLoanAmount)} (5 Years @ 9.5% p.a.)',
+                      'Loan Amount: ₹${RoiEstimate.formatCurrency(_customLoanAmount)} (5 Years @ 9.5% p.a.)',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -350,7 +330,8 @@ class _ParentRoiScreenState extends ConsumerState<ParentRoiScreen> {
                       min: 100000,
                       max: 1500000,
                       divisions: 14,
-                      label: '₹${_formatCurrency(_customLoanAmount)}',
+                      label:
+                          '₹${RoiEstimate.formatCurrency(_customLoanAmount)}',
                       onChanged: (val) =>
                           setState(() => _customLoanAmount = val),
                     ),
@@ -368,7 +349,7 @@ class _ParentRoiScreenState extends ConsumerState<ParentRoiScreen> {
                           ),
                         ),
                         Text(
-                          '₹${monthlyEmi.toStringAsFixed(0)} / month',
+                          '₹${estimate.monthlyEmi.toStringAsFixed(0)} / month',
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w900,
@@ -379,8 +360,8 @@ class _ParentRoiScreenState extends ConsumerState<ParentRoiScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Estimated Take-Home: ~₹${monthlyInHand.toStringAsFixed(0)}/mo. '
-                      'EMI takes ~${((monthlyEmi / monthlyInHand) * 100).toStringAsFixed(0)}% of entry monthly pay.',
+                      'Estimated Take-Home: ~₹${estimate.monthlyInHand.toStringAsFixed(0)}/mo. '
+                      'EMI takes ~${((estimate.monthlyEmi / estimate.monthlyInHand) * 100).toStringAsFixed(0)}% of entry monthly pay.',
                       style: theme.textTheme.bodySmall,
                     ),
                   ],
@@ -412,22 +393,6 @@ class _ParentRoiScreenState extends ConsumerState<ParentRoiScreen> {
         ],
       ),
     );
-  }
-
-  static double _pow(double base, int exponent) {
-    double result = 1.0;
-    for (int i = 0; i < exponent; i++) {
-      result *= base;
-    }
-    return result;
-  }
-
-  static String _formatCurrency(double amount) {
-    if (amount >= 100000) {
-      final inLakhs = amount / 100000;
-      return '${inLakhs.toStringAsFixed(1)} L';
-    }
-    return amount.toStringAsFixed(0);
   }
 }
 

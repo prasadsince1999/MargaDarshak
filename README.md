@@ -10,7 +10,7 @@
 [![UI/UX Audit: 9.4/10](https://img.shields.io/badge/UI%2FUX_Audit-9.4%2F10_(A%2B)-FFCC00?style=for-the-badge&logo=material-design&logoColor=black)](#-design-system--uiux-audit-score-94--10-grade-a)
 [![Digital Public Good](https://img.shields.io/badge/DPG-Eligible-orange?style=for-the-badge&logo=open-access&logoColor=white)](https://digitalpublicgoods.net/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
-[![Tests Passing](https://img.shields.io/badge/Tests-249_Passing-00C853?style=for-the-badge&logo=flutter&logoColor=white)](test/)
+[![Tests Passing](https://img.shields.io/badge/Tests-261_Passing-00C853?style=for-the-badge&logo=flutter&logoColor=white)](test/)
 [![Official Case Study](https://img.shields.io/badge/Case_Study-ksmxtech.com-0E2244?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ksmxtech.com/work/margadarshak/)
 
 A **100% offline, privacy-first decision system for Indian students and parents** — from Class 9 to post-graduation. Mārgadarshak turns scattered career information into an intuitive, stage-wise visual map: stream choices, exams, eligibility, NIRF institutions, scholarships, documents, costs, risk, backup routes, and parent–student clarity.
@@ -204,7 +204,7 @@ Sharp, structured, high-contrast, and deeply respectful of Indian students and p
 |---|---|---|:---:|:---:|
 | **Phase 1** | **Core Decision Engines** | Backup Trigger, Parent ROI, Pressure Check, Wrong Stream Bridge, State Rules, Offline Copilot | **Completed** | 6 New Screen Engines & Models Verified |
 | **Phase 2** | **Stage & Parent Integration** | Stage-Aware Action Cards across all 11 Education Stages + Modern Parent Mode Hub | **Completed** | Feature Registry & Routing Matrix Verified |
-| **Phase 3** | **Automated Test Suite** | 249 Unit, Widget, Font Scaling, and Integration Tests | **Completed** | `249/249 Passed`, `0 Analysis Issues` |
+| **Phase 3** | **Automated Test Suite** | 261 Unit, Widget, Font Scaling, and Integration Tests | **Completed** | `261/261 Passed`, `0 Analysis Issues` |
 | **Phase 4** | **Production Packaging** | Release Split APKs for `arm64-v8a`, `armeabi-v7a`, `x86_64` | **Completed** | Tagged `v1.1.0` on GitHub Releases |
 | **Phase 5** | **UI/UX & Accessibility Hardening** | `ui-ux-pro-max` 10-Pillar Design Audit | **Completed** | Audit Report Generated (**9.4/10, Grade: A+**) |
 
@@ -253,7 +253,7 @@ Mārgadarshak maintains a **100% automated test pass rate**:
 # Run static analysis (0 issues)
 flutter analyze
 
-# Run unit and widget test suite (249 tests)
+# Run unit and widget test suite (261 tests)
 flutter test
 
 # Run font scaling resilience tests (1.3x and 2.0x scales)

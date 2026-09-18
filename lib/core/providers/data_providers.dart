@@ -12,6 +12,8 @@ import '../../data/repositories/seed_scholarship_repository.dart';
 import '../../data/repositories/seed_stream_outcome_repository.dart';
 import '../../data/repositories/seed_subject_combination_repository.dart';
 import '../../data/seed/document_seeds.dart';
+import '../../features/institutions/domain/state_quota_rule.dart';
+import '../../features/institutions/domain/state_rules_repository.dart';
 import '../../features/subject_impact/domain/impact_engine.dart';
 import 'user_provider.dart';
 
@@ -55,6 +57,14 @@ final streamOutcomeRepositoryProvider = Provider<StreamOutcomeRepository>((
   ref,
 ) {
   return SeedStreamOutcomeRepository();
+});
+
+final stateRulesRepositoryProvider = Provider<StateRulesRepository>((ref) {
+  return const InMemoryStateRulesRepository();
+});
+
+final stateRulesProvider = Provider<List<StateQuotaRule>>((ref) {
+  return ref.watch(stateRulesRepositoryProvider).getAllRules();
 });
 
 // ─── Data Query Providers ────────────────────────────────────────────
