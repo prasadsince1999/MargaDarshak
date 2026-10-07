@@ -1,11 +1,11 @@
 # 🧭 Mārgadarshak — मार्गदर्शक
 
-> *“The one who shows the path.”*  
-> **The guide I needed at 16.**  
-> A career decision system for Indian students and parents — from Class 9 to postgraduate study.
+> *“The one who shows the path.”*\
+> **The guide I needed at 16.**\
+> A career decision system for Indian students and parents — with eleven starting points, including repeat attempts and Other / Not Sure.
 
-[![Android Preview](https://img.shields.io/badge/Android-Early_Testing-FFCC00?style=for-the-badge&logo=android&logoColor=1A1A1A)](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.1-preview.1)
-[![Release](https://img.shields.io/badge/Preview-v1.2.1-0055FF?style=for-the-badge&logo=github)](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.1-preview.1)
+[![Android Preview](https://img.shields.io/badge/Android-Early_Testing-FFCC00?style=for-the-badge&logo=android&logoColor=1A1A1A)](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.2-preview.1)
+[![Release](https://img.shields.io/badge/Preview-v1.2.2-0055FF?style=for-the-badge&logo=github)](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.2-preview.1)
 [![Stack](https://img.shields.io/badge/Stack-Flutter_%7C_Dart-02569B?style=for-the-badge&logo=flutter&logoColor=white)](#-tech-stack--architecture)
 [![Ethical Stance](https://img.shields.io/badge/Ethical_Stance-No_Pay--to--Rank-FFCC00?style=for-the-badge)](#the-non-negotiable-ethical-charter)
 [![Product Website](https://img.shields.io/badge/Product_Page-ksmxtech.com-0E2244?style=for-the-badge&logo=googlechrome&logoColor=white)](https://ksmxtech.com/margadarshak/)
@@ -13,7 +13,7 @@
 
 Mārgadarshak turns scattered career information into a stage-wise visual map: **stream choices, exams, requirements, institutions, scholarships, documents, costs, practical next steps and backup routes.**
 
-**What can I do now? Which options should I check? What if I change my mind? What is my backup?**
+**All the “what if?” questions, answered before the decision becomes regret.**
 
 Students explore possibilities. Parents understand the trade-offs. Neither should have to make a life decision from coaching advertisements or half information.
 
@@ -29,11 +29,11 @@ Mārgadarshak is currently available as a **signed early-test APK** through GitH
 
 | Release | Artifact | Android | Verification |
 |---|---|---|---|
-| **1.2.1 · build 4** | [**MargaDarshak-1.2.1-build4-early-test.apk**](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.1-preview.1) | **7.0+ / API 24** | Release signature and published-file checksum checked |
+| **1.2.2 · build 5** | [**MargaDarshak-1.2.2-build5-early-test.apk**](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.2-preview.1) | **7.0+ / API 24** | Release signature and published-file checksum checked |
 
 ### How to install
 
-1. Download the APK from the [early-test release](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.1-preview.1).
+1. Download the APK from the [early-test release](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.2-preview.1).
 2. Open the downloaded file.
 3. If Android asks, allow installation from that source and tap **Install**.
 4. Launch Mārgadarshak and start as **Guest**.
@@ -63,9 +63,9 @@ Indian students navigate **critical life decisions** — stream selection after 
 
 Families need more than a list of career names. They need to understand subjects, requirements, costs, daily work, deadlines and alternatives.
 
-> *“I don't know what to do after 10th or 12th.”*  
-> *“I like computers. What can I learn first?”*  
-> *“My parents want Engineering, but I want Design — how do we compare?”*  
+> *“I don't know what to do after 10th or 12th.”*\
+> *“I like computers. What can I learn first?”*\
+> *“My parents want Engineering, but I want Design — how do we compare?”*\
 > *“If this exam does not work out, what is my backup?”*
 
 **The aim:** turn a confusing choice into a clear set of options, a practical next action and a backup worth investigating.
@@ -84,6 +84,17 @@ The [evidence library](https://ksmxtech.com/margadarshak/evidence-library/) coll
 - **Honest Verification:** a document self-check is not official approval; a practice result is not a career qualification.
 - **Student and Parent Agency:** explain trade-offs without shaming the student or using fear to sell a subscription.
 - **Respect for Privacy:** keep private student evidence separate from public catalogue information and public issues. Local storage is not advertised as encryption.
+
+---
+
+## 🚀 What’s New in v1.2.2 (Consistent Feature Names)
+
+- **Subject Impact Simulator**, **Eligibility Check** and **Parent Mode** now keep the same public names across their app entry points.
+- **Future Ready Check** has its original named Tools entry. It currently shares the Documents Radar self-check flow; broader preparation checks remain in development.
+- **Career Copilot** explicitly describes prepared responses and preview usage; connected Claude assistance is planned.
+- The editor prototype is named **Guidance Review Centre**. It is excluded from the default APK; authenticated review and shared catalogue publishing remain planned.
+- The local website preview brings all eleven feature families into one interactive section, with fictional examples. Production website publication is separate from this APK release.
+- Updated early-test privacy disclosure explains multiple local stores and the current limits of account and deletion controls.
 
 ---
 
@@ -133,19 +144,19 @@ These tools remain part of the current app. Their existence does not make every 
 - Keep Plan A, Plan B and Plan C distinct, with their own requirements and next actions.
 - The student chooses whether to change a plan; the app cannot secure an admission or enrol a backup automatically.
 
-### 💳 2. Parent ROI & Education Loan EMI Calculator
+### 💳 2. Cost, Loan & ROI Calculator
 
 - Edit tuition, living costs, earnings assumptions, interest and loan tenure.
 - See study costs and repayment burdens before committing to a route.
 - Calculations depend on entered assumptions; they are not salary forecasts or guaranteed payback dates.
 
-### 🧠 3. Pressure & Mental Load Check
+### 🧠 3. Pressure Check
 
 - Reflect on study pressure, workload and family expectations.
 - Use practical prompts to start a calmer conversation.
 - This is a reflection tool, not a clinical diagnosis.
 
-### 🔄 4. Wrong Stream Bridge Finder
+### 🔄 4. Wrong Stream Bridge
 
 - Investigate other study and career routes when interests change.
 - Explore relevant options such as computing, law, management and technical further study.
@@ -163,7 +174,7 @@ These tools remain part of the current app. Their existence does not make every 
 - Current answers are prepared local guidance, not Claude model inference.
 - Connected source-based explanations and notice processing are planned.
 
-### 👨‍👩‍👧 7. Parent Decision Hub
+### 👨‍👩‍👧 7. Parent Mode
 
 - Bring budget, time, preferences and alternatives into one family conversation.
 - Related tools include the cost calculator, Goal Bridge and Pressure Check.
@@ -173,7 +184,7 @@ These tools remain part of the current app. Their existence does not make every 
 
 ## ✨ Core Features — From the First Build to Today
 
-The feature names follow the product website. Technical routes and some current app labels differ; related tools remain distinct.
+Public feature names match the website preview. Technical routes remain stable, and related tools stay distinct.
 
 ### 1. 🌳 Stage-Aware Roadmap & Vertical Node Tree
 
@@ -205,7 +216,7 @@ The feature names follow the product website. Technical routes and some current 
 
 ### 6. 📋 Future Ready Check & Documents Radar
 
-- Future Ready Check covers preparation questions and missing details.
+- Future Ready Check has its original named entry and currently shares the document self-check flow. Broader preparation checks remain a workstream.
 - Documents Radar is a related checklist and identity-consistency self-check.
 - Recorded completion means **checked by you**, not approval by an admission authority. No guaranteed certificate turnaround is implied.
 
@@ -213,7 +224,7 @@ The feature names follow the product website. Technical routes and some current 
 
 - Investigate what changes when subjects or streams change.
 - Put two routes side by side and review available time, cost, exam and backup information.
-- The Subject Impact Simulator is currently labelled **What-If Simulator** in the app.
+- **Subject Impact Simulator** is the same public name in Home, Tools, detail screens and the website preview. Technical `/what-if` and `/simulator` routes remain compatible aliases.
 
 ### 8. 🧩 Foundation Check
 
@@ -250,13 +261,13 @@ The local app offers **eleven stage choices**. They provide context for explorat
 | **Class 10** | Which subjects or technical route should I consider? | Stream exploration, Subject Impact Simulator, Compare Paths and Parent Mode. |
 | **Class 11** | How do my subjects connect to my goals? | Subject impact, exam awareness, foundations and alternatives. |
 | **Class 12** | What can I investigate and prepare next? | Exam Stack Planner, Eligibility Check, documents, scholarships and backups. |
-| **Diploma** | Work or further technical study? | Technical careers, apprenticeships and applicable lateral-entry routes. |
-| **ITI** | Where can my trade lead? | Trade careers, apprenticeships and further education. |
+| **Diploma / Polytechnic** | Work or further technical study? | Technical careers, apprenticeships and applicable lateral-entry routes. |
+| **ITI / Vocational** | Where can my trade lead? | Trade careers, apprenticeships and further education. |
 | **Undergraduate** | What should I explore while studying? | Career roles, learning topics, internships and further-study options. |
 | **Graduate** | Work, further study or an exam route? | Job options, postgraduate routes and alternatives. |
 | **Postgraduate** | Specialist career or research? | Advanced roles, research and further qualifications. |
-| **Dropper** | How do I prepare while keeping another option open? | Exam strategy, Backup Trigger, Pressure Check and plan review. |
-| **Not Sure** | Where should I start? | Clarify the current situation and explore without assuming a complete profile. |
+| **Dropper / Repeater** | How do I prepare while keeping another option open? | Exam strategy, Backup Trigger, Pressure Check and plan review. |
+| **Other / Not Sure** | Where should I start? | Clarify the current situation and explore without assuming a complete profile. |
 
 ---
 
@@ -284,13 +295,13 @@ The screenshots show actual current app views. Earlier audit grades, blanket con
 | **Core exploration and tools** | Local screens, calculations and bundled guidance available. | Content review and student-parent usability checks. |
 | **Stage and parent experience** | Eleven stage choices and local family views. | Broader stage coverage and native-device validation. |
 | **Plans and practical steps** | Main paths, backups and milestone progress. | Further scenario and persistence checks. |
-| **Android packaging** | Signed 1.2.1 early-test APK published. | Pilot validation before wider release. |
+| **Android packaging** | Signed 1.2.2 early-test APK published. | Pilot validation before wider release. |
 | **Language and accessibility** | Partial translations and shared design components. | Reviewed translations, screen readers, magnification and device testing. |
 | **Admin workspaces** | Local dashboard, sources, roadmap, institution, moderation and draft-review prototypes. | Authenticated backend, durable drafts and real catalogue publishing. |
 | **Claude and reviewed updates** | Planned. | Source ingestion, structured extraction, evaluation and human review. |
 | **Subscription** | Direction approved; no price or billing period announced. | Real receipts, entitlements, renewal, cancellation and clear terms. |
 
-### Planned admin → student workflow
+### Guidance Review Centre — planned admin → student workflow
 
 ```text
 Official education notice
@@ -328,12 +339,12 @@ Application source is maintained privately. This public repository holds the pro
 
 ## 🧪 Verification & Test Suite
 
-For the 1.2.1 early-test release:
+For the 1.2.2 early-test release:
 
 - Release APK assembled and Android signature verified.
 - Published APK downloaded and matched against the original SHA-256 digest.
-- **14 tests passed** across four selected subscription, admin, editorial and capability test files.
-- App-code analysis reported no issues; whole-project analysis reported three informational findings in screenshot tests.
+- **48 tests passed** across five selected naming/capability, stage-persona, admin, editorial and prepared-AI test files.
+- App-code analysis reported no issues. The wider motion suite still has an unresolved comparison/detail header-position expectation; it is not counted as passed.
 
 These checks do not establish complete data review, native-device readiness, connected services or accessibility certification. The [early-test notes](EARLY-TEST-NOTES.md) retain the exact scope and known limitations.
 
@@ -343,7 +354,7 @@ These checks do not establish complete data review, native-device readiness, con
 
 The public repository is an **APK and product showcase**, so cloning it will not provide the Flutter application source.
 
-1. Install the [early-test APK](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.1-preview.1).
+1. Install the [early-test APK](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.2-preview.1).
 2. Explore a career, compare two routes or try a cost calculation.
 3. Save a main path and a backup, then inspect the next practical step.
 4. Share where the wording, available data or navigation becomes confusing.
@@ -361,7 +372,7 @@ Educators, students and parents can help shape the product through practical fee
 - Suggest clearer wording, missing options or official sources to investigate.
 - Keep personal certificates, identity numbers and private student records out of public issues.
 
-[**Report a problem or suggestion →**](https://github.com/prasadsince1999/MargaDarshak/issues)  
+[**Report a problem or suggestion →**](https://github.com/prasadsince1999/MargaDarshak/issues)\
 [**Contact KSM × Tech →**](mailto:support@ksmxtech.com)
 
 ---
@@ -374,9 +385,9 @@ Earlier Apache-licensed distributions retain their original terms. Making later 
 
 ---
 
-Created with ❤️ by Prasad at KSM × Tech Studio.  
+Created with ❤️ by Prasad at KSM × Tech Studio.\
 *“Built on family values. Guided by truth.”* — **सत्यं · मांगल्यम् · रूपान्तरम्**
 
 ### The guide I needed at 16.
 
-[Website](https://ksmxtech.com/margadarshak/) · [Evidence library](https://ksmxtech.com/margadarshak/evidence-library/) · [Android preview](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.1-preview.1)
+[Website](https://ksmxtech.com/margadarshak/) · [Evidence library](https://ksmxtech.com/margadarshak/evidence-library/) · [Android preview](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.2-preview.1)
