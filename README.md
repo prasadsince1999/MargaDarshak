@@ -374,7 +374,7 @@ Earlier Apache-licensed distributions retain their original terms. Making later 
 
 ---
 
-Created with ❤️ by PrasaD at **[KSM × Tech Studio](https://ksmxtech.com)**, India.  
+Created with ❤️ by Prasad at KSM × Tech Studio.  
 *“Built on family values. Guided by truth.”* — **सत्यं · मांगल्यम् · रूपान्तरम्**
 
 ### The guide I needed at 16.
