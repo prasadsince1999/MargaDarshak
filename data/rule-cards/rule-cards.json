@@ -1,0 +1,1049 @@
+{
+  "schemaVersion": 1,
+  "builtOn": "2026-10-20",
+  "format": "Fields follow docs/research/india-data-sources/agent-playbook.md section 4 (fact record), simplified for rule cards.",
+  "statusValues": {
+    "verified": "Read in the primary document; section given.",
+    "partly_verified": "Official page read; some details only via secondary summaries.",
+    "link_only": "The app links to a live official list instead of storing its content.",
+    "blocked": "Primary document could not be read; do not show as a rule."
+  },
+  "cards": [
+    {
+      "id": "od-le-tech-eligibility-2026",
+      "title": "Odisha lateral entry to B.Tech: who can apply",
+      "rule": "A 3-year (or 2-year lateral-entry) diploma in any branch of engineering/technology with at least 45% (40% for reserved categories); or a B.Sc. with 45% (40%) and Mathematics in 10+2; or D.Voc in the same/allied sector. B.Sc. candidates are considered only after diploma candidates fill the supernumerary seats.",
+      "appliesTo": {
+        "stages": [
+          "diploma"
+        ],
+        "moments": [
+          "D"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Compare Paths",
+        "My Plan"
+      ],
+      "governingBody": "Odisha Joint Entrance Examination (OJEE)",
+      "document": "OJEE 2026 Information Brochure (28-01-2026)",
+      "section": "Eligibility table, row 5 \"LE-TECH\", printed pp.18-19 (PDF pp.21-22)",
+      "cycle": "2026",
+      "sourceUrl": "https://odishajee.com/important_doc/OJEE_information_brochure_28-01-2026_FNL_10.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "od-le-domicile-2026",
+      "title": "Odisha lateral entry is for Odisha natives only",
+      "rule": "Outside-state candidates (ZZ) are not eligible for any lateral-entry programme. Reservations apply only to Odisha natives, who must produce an online resident/nativity certificate from an Odisha competent authority.",
+      "appliesTo": {
+        "stages": [
+          "diploma",
+          "iti"
+        ],
+        "moments": [
+          "D"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Document Check"
+      ],
+      "governingBody": "OJEE",
+      "document": "OJEE 2026 Information Brochure",
+      "section": "State categories, PDF pp.14 and 19",
+      "cycle": "2026",
+      "sourceUrl": "https://odishajee.com/important_doc/OJEE_information_brochure_28-01-2026_FNL_10.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "od-le-reservation-2026",
+      "title": "No category reservation in Odisha lateral entry",
+      "rule": "There is no reservation category for any lateral-entry course except for persons with disability and carried-over EWS vacant seats.",
+      "appliesTo": {
+        "stages": [
+          "diploma"
+        ],
+        "moments": [
+          "D"
+        ]
+      },
+      "usedBy": [
+        "Eligibility"
+      ],
+      "governingBody": "OJEE",
+      "document": "OJEE 2026 Information Brochure",
+      "section": "Section 4.4.5 (ii), PDF p.20",
+      "cycle": "2026",
+      "sourceUrl": "https://odishajee.com/important_doc/OJEE_information_brochure_28-01-2026_FNL_10.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "od-tfw-2026",
+      "title": "Odisha tuition fee waiver seats (TFW)",
+      "rule": "Up to 5% of sanctioned intake per course (supernumerary, as per AICTE) for B.Tech, B.Pharm, MBA, MCA and lateral entry. Family income from all sources must be under Rs 8 lakh. An income certificate from the Tahasildar and an online resident certificate are required, and they must be of the 2025-26 financial year.",
+      "appliesTo": {
+        "stages": [
+          "diploma",
+          "class12",
+          "graduate"
+        ],
+        "moments": [
+          "C",
+          "D",
+          "F"
+        ]
+      },
+      "usedBy": [
+        "Cost Loan & ROI Calculator",
+        "Document Check"
+      ],
+      "governingBody": "OJEE",
+      "document": "OJEE 2026 Information Brochure",
+      "section": "TFW clause, PDF p.17",
+      "cycle": "2026",
+      "sourceUrl": "https://odishajee.com/important_doc/OJEE_information_brochure_28-01-2026_FNL_10.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "josaa-class12-performance-2026",
+      "title": "JoSAA: Class XII performance needed for IIT/NIT+ admission",
+      "rule": "Pass Class XII with at least five subjects and either score at least 75% aggregate (65% for SC, ST, PwD) or be in the category-wise top 20 percentile of your board for that year. The five subjects are Physics, Chemistry, Mathematics, a language and one other subject. Improvement-exam rules differ: for the percentile route you must reappear in all subjects. Marksheets from different boards cannot be combined.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Eligibility"
+      ],
+      "governingBody": "Joint Seat Allocation Authority (JoSAA)",
+      "document": "JoSAA 2026 Business Rules",
+      "section": "Annexure 2(a)/2(b), PDF pp.88-91",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2026/06/20260601632081678.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "josaa-freeze-float-slide-2026",
+      "title": "JoSAA: accepting a seat means choosing Freeze, Float or Slide",
+      "rule": "To stay in the process you must accept the allotted seat and choose Freeze (keep this seat, no upgrades), Float (keep it but consider higher choices anywhere) or Slide (keep it but consider higher choices in the same institute). Then upload documents and pay the seat acceptance fee.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "My Plan"
+      ],
+      "governingBody": "JoSAA",
+      "document": "JoSAA 2026 Business Rules",
+      "section": "Section XX clause 48; online reporting steps, PDF pp.41 and 54",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2026/06/20260601632081678.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "josaa-fee-nonpayment-2026",
+      "title": "JoSAA: an unpaid seat acceptance fee cancels the seat for good",
+      "rule": "If the seat acceptance fee is not paid and updated on the portal within the round's time, the seat may be cancelled. \"Such cancellation is not reversible and no requests would be entertained.\"",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "My Plan"
+      ],
+      "governingBody": "JoSAA",
+      "document": "JoSAA 2026 Business Rules",
+      "section": "Section XXII clause 56, PDF p.58",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2026/06/20260601632081678.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "josaa-withdraw-2026",
+      "title": "JoSAA: withdrawing a seat ends your JoSAA counselling",
+      "rule": "Withdrawal is allowed from round 2 up to the second-last round for IIT/IISc seats (till the end of the NIT+ online rounds). The seat is cancelled, you are excluded from all later JoSAA rounds, and the fee is refunded minus a Rs 7,000 processing charge. Withdrawal needs a signed declaration and OTP; it can be cancelled only before the reporting officer accepts it.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "My Plan"
+      ],
+      "governingBody": "JoSAA",
+      "document": "JoSAA 2026 Business Rules",
+      "section": "Section XXIV clauses 63-66, PDF pp.60-62",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2026/06/20260601632081678.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "josaa-exit-last-round-2026",
+      "title": "JoSAA: a seat given in the last round counts as accepted",
+      "rule": "If you had no seat up to round 4, did not use Exit before round 5, and get a seat in round 5, you are deemed to have accepted it and become ineligible for JEE (Advanced) 2027. Join round 5 only if you would accept any seat on your list.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "My Plan",
+        "Exam Stack"
+      ],
+      "governingBody": "JoSAA",
+      "document": "JoSAA 2026 Business Rules",
+      "section": "Section XXV clauses 68-70, PDF pp.62-63",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2026/06/20260601632081678.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "josaa-seat-blocks-jee-adv-2026",
+      "title": "Accepting a JoSAA seat blocks next year's JEE (Advanced)",
+      "rule": "A candidate who has accepted a seat in JoSAA 2026 is not eligible for JEE (Advanced) 2027, even if they do not report to the institute or attend classes.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Exam Stack",
+        "Eligibility"
+      ],
+      "governingBody": "JoSAA",
+      "document": "JoSAA 2026 Business Rules",
+      "section": "Clause 54, PDF p.57",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2026/06/20260601632081678.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "josaa-category-certificate-window-2026",
+      "title": "JoSAA: OBC-NCL / EWS certificate date",
+      "rule": "For OBC-NCL or GEN-EWS, the certificate must be issued on or after 1 April 2026, or be a government-issued, online-verifiable certificate valid till the date stated in the rules (the NIT+ and IIT annexures state different dates).",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Document Check",
+        "My Plan"
+      ],
+      "governingBody": "JoSAA",
+      "document": "JoSAA 2026 Business Rules",
+      "section": "Document annexure, PDF pp.102-103",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2026/06/20260601632081678.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "This is JoSAA's 2026 rule. Other counselling bodies set their own windows; do not apply it to them."
+    },
+    {
+      "id": "josaa-invalid-category-document-2026",
+      "title": "JoSAA: a missing or invalid category certificate",
+      "rule": "If a category certificate is invalid or not produced in the reporting period and the seat was allotted in that category, the seat is cancelled and you are considered as GEN in later rounds. If the seat was in the OPEN category, it is provisionally confirmed. Wilful forgery leads to debarment.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Document Check"
+      ],
+      "governingBody": "JoSAA",
+      "document": "JoSAA 2026 Business Rules",
+      "section": "Section XXVII clauses 73-75, PDF pp.65-66",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2026/06/20260601632081678.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "josaa-class12-status-change-2026",
+      "title": "JoSAA: Class XII result revised after choice locking",
+      "rule": "If re-evaluation makes you ineligible, the seat is cancelled even at a later stage. If it makes you eligible, email the organising institute with the revised certificate by the stated deadline (15 July 2026); you are considered only in later rounds and only if you had registered and filled choices.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "My Plan",
+        "Eligibility"
+      ],
+      "governingBody": "JoSAA",
+      "document": "JoSAA 2026 Business Rules",
+      "section": "Section XXVI clause 72, PDF p.64",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2026/06/20260601632081678.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "mcc-ug-security-deposit-forfeit-2026",
+      "title": "NEET UG (MCC): leaving a seat from round 2 onward loses the deposit",
+      "rule": "Round 1: free exit. If you are allotted a seat in round 2 or later and do not join, the security deposit is forfeited. It is also forfeited if admission is cancelled for any reason, such as wrong registration information or missing documents. After joining a round 3 seat you cannot resign.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "My Plan",
+        "Cost Loan & ROI Calculator"
+      ],
+      "governingBody": "Medical Counselling Committee (MCC), DGHS",
+      "document": "UG Information Bulletin 2026 (01-08-2026)",
+      "section": "PDF pp.8, 15-16, 49-53",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260801170630.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "A revised bulletin dated 20-08-2026 exists; it was not compared. Check it before publishing."
+    },
+    {
+      "id": "mcc-ug-deemed-security-2026",
+      "title": "NEET UG (MCC): deemed university security amount",
+      "rule": "For deemed universities the candidate pays Rs 5,000 counselling/registration fee plus a Rs 2,00,000 security amount.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Cost Loan & ROI Calculator"
+      ],
+      "governingBody": "MCC, DGHS",
+      "document": "UG Information Bulletin 2026 (01-08-2026)",
+      "section": "FAQ Q.3-4, PDF p.53",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260801170630.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Check the revised bulletin (20-08-2026) before publishing."
+    },
+    {
+      "id": "ssc-je-qualification-2026",
+      "title": "SSC Junior Engineer: diploma routes",
+      "rule": "Posts are Group B, Level 6. Qualifications are post-wise: several posts accept a three-year diploma in the relevant branch; some (e.g. Border Roads) need a diploma plus two years of experience, others a degree. The qualification must be held by the closing date of the online form (22 September 2026).",
+      "appliesTo": {
+        "stages": [
+          "diploma",
+          "undergraduate",
+          "graduate"
+        ],
+        "moments": [
+          "D",
+          "F"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "Staff Selection Commission (SSC)",
+      "document": "Junior Engineer Examination 2026 Notice",
+      "section": "Para 2 posts and qualifications table, PDF p.3 onward",
+      "cycle": "2026",
+      "sourceUrl": "https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/notice_16092026.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "ssc-je-result-declared-2026",
+      "title": "SSC: your result must be declared by the closing date",
+      "rule": "You meet the qualification only if your result was declared on or before the cut-off date and you were declared passed. \"Mere processing of the result\" by the institute does not count. Final-year students whose results come later are not eligible for this cycle.",
+      "appliesTo": {
+        "stages": [
+          "diploma",
+          "undergraduate"
+        ],
+        "moments": [
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "My Plan"
+      ],
+      "governingBody": "SSC",
+      "document": "Junior Engineer Examination 2026 Notice",
+      "section": "Para 2.4",
+      "cycle": "2026",
+      "sourceUrl": "https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/notice_16092026.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "ssc-je-age-2026",
+      "title": "SSC JE: age limit",
+      "rule": "Age is counted on 1 August 2026. The upper limit is 30 or 32 years depending on the organisation, with relaxations by category. Category status is counted on the closing date of the online form.",
+      "appliesTo": {
+        "stages": [
+          "diploma",
+          "undergraduate",
+          "graduate"
+        ],
+        "moments": [
+          "D",
+          "F"
+        ]
+      },
+      "usedBy": [
+        "Eligibility"
+      ],
+      "governingBody": "SSC",
+      "document": "Junior Engineer Examination 2026 Notice",
+      "section": "Paras 7.1 and 8.7",
+      "cycle": "2026",
+      "sourceUrl": "https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/notice_16092026.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "apprentice-stipend-minimum-2025",
+      "title": "Apprenticeship: minimum monthly stipend",
+      "rule": "Minimum stipend per month: Class 10 pass-outs Rs 8,200; Class 12 pass-outs Rs 9,600; National or State (ITI) certificate holders Rs 9,600; vocational/technician apprentices and diploma-institution sandwich students Rs 9,600; diploma holders and degree-institution sandwich students Rs 10,900; graduates Rs 12,300.",
+      "appliesTo": {
+        "stages": [
+          "iti",
+          "diploma",
+          "graduate"
+        ],
+        "moments": [
+          "D",
+          "F"
+        ]
+      },
+      "usedBy": [
+        "Cost Loan & ROI Calculator",
+        "Compare Paths"
+      ],
+      "governingBody": "Ministry of Skill Development (Apprenticeship Rules, 1992)",
+      "document": "Apprenticeship (Amendment) Rules, 2025 (Gazette, GSR 610(E), 3 Sept 2025)",
+      "section": "Rule 11(1) as substituted",
+      "cycle": "from 2025",
+      "sourceUrl": "https://boatwr.education.gov.in/wp-content/uploads/2023/08/Circular-29-10-2025_Gazette.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Replaces older figures such as Rs 7,000 (2019). A DGT clarification on stipend rates (11 Sept 2025) could not be fetched: its site certificate is revoked."
+    },
+    {
+      "id": "apprentice-two-trainings-2025",
+      "title": "Apprenticeship: at most two trainings, different trades",
+      "rule": "A person may do at most two apprenticeship trainings, and the second cannot be in the same trade. The central government's stipend share is for the first training only.",
+      "appliesTo": {
+        "stages": [
+          "iti",
+          "diploma"
+        ],
+        "moments": [
+          "D"
+        ]
+      },
+      "usedBy": [
+        "My Plan",
+        "Compare Paths"
+      ],
+      "governingBody": "Ministry of Skill Development",
+      "document": "Apprenticeship (Amendment) Rules, 2025",
+      "section": "Amended rule on repeat training",
+      "cycle": "from 2025",
+      "sourceUrl": "https://boatwr.education.gov.in/wp-content/uploads/2023/08/Circular-29-10-2025_Gazette.pdf",
+      "evidenceType": "primary_document",
+      "status": "verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": ""
+    },
+    {
+      "id": "nios-dgt-equivalence-2026",
+      "title": "ITI trainees can earn Class 10 / Class 12 through NIOS",
+      "rule": "Under the NIOS-DGT scheme, eligible Craftsmen Training Scheme (ITI) trainees can get Secondary or Senior Secondary equivalence while training. Trade subjects are credited, so 2-year trade trainees need one additional language subject and 1-year trade trainees need two additional subjects. Study happens at approved ITIs.",
+      "appliesTo": {
+        "stages": [
+          "iti",
+          "dropper",
+          "class10"
+        ],
+        "moments": [
+          "D",
+          "G",
+          "A"
+        ]
+      },
+      "usedBy": [
+        "Explore",
+        "Compare Paths"
+      ],
+      "governingBody": "Directorate General of Training (DGT) with NIOS",
+      "document": "DGT scheme page \"Creating Career Pathways through Academic Equivalence\"",
+      "section": "Scheme page",
+      "cycle": "2026",
+      "sourceUrl": "https://dgt.gov.in/en/CTS/NIOS_DGT_scheme",
+      "evidenceType": "official_page",
+      "status": "partly_verified",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "The scheme FAQ and brochure (July 2026) give more detail, including a 2-year gestation rule for Class XII via 1-year trades; that detail came only via search summaries and needs reading from the FAQ PDF."
+    },
+    {
+      "id": "ugc-fake-universities-link",
+      "title": "Check UGC's list of fake universities",
+      "rule": "Before admission, check the institution against UGC's current \"List of Fake Universities\". The list changes over time; the app links to it and shows the date it was checked, and never stores a count.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper",
+          "diploma",
+          "undergraduate",
+          "graduate",
+          "postgraduate"
+        ],
+        "moments": [
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Explore",
+        "Document Check"
+      ],
+      "governingBody": "University Grants Commission (UGC)",
+      "document": "UGC website, \"Fake Universities\" section",
+      "section": "Live list",
+      "cycle": "live",
+      "sourceUrl": "https://www.ugc.gov.in/page/Fake-Universities.aspx",
+      "evidenceType": "official_page",
+      "status": "link_only",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Open the live list; do not rely on any cached count.",
+      "notes": "The page loads its list through a script that could not be read automatically."
+    },
+    {
+      "id": "rrb-alp-2026",
+      "title": "RRB Assistant Loco Pilot 2026 (CEN 01/2026)",
+      "rule": "Not verified. The official notice is hosted on RRB sites whose security certificates are revoked or expired, so it could not be read safely. Secondary sources disagree on the age limit (28 vs 30).",
+      "appliesTo": {
+        "stages": [
+          "iti",
+          "diploma"
+        ],
+        "moments": [
+          "D"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "Railway Recruitment Boards",
+      "document": "CEN 01/2026",
+      "section": "-",
+      "cycle": "2026",
+      "sourceUrl": "https://www.rrbcdg.gov.in/uploads/2026/01-ALP/012026ALP-CEN.pdf",
+      "evidenceType": "access_blocked",
+      "status": "blocked",
+      "checkedOn": "2026-10-20",
+      "confirmNote": "Do not show eligibility from this card until the notice is read.",
+      "notes": ""
+    },
+    {
+      "id": "aicte-lateral-entry-diploma",
+      "title": "Diploma holders can enter year 2 of an engineering degree",
+      "rule": "AICTE's handbook provides second-year engineering degree admission for qualifying diploma holders. Seats, marks, branch mapping and domicile are set by the state admission authority and institution each cycle.",
+      "appliesTo": {
+        "stages": [
+          "diploma"
+        ],
+        "moments": [
+          "D"
+        ]
+      },
+      "usedBy": [
+        "Compare Paths",
+        "Eligibility"
+      ],
+      "governingBody": "AICTE",
+      "document": "Approval Process Handbook 2024-2027",
+      "section": "Printed pp.54-55, 102-104",
+      "cycle": "2024-2027",
+      "sourceUrl": "https://www.aicte.gov.in/sites/default/files/APH%20Final.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-16",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/technical-route-claim-review-2026-10-16.md"
+    },
+    {
+      "id": "aicte-iti-to-diploma-year2",
+      "title": "Class 10 + two-year ITI can enter year 2 of a diploma",
+      "rule": "AICTE lists Class 10 plus a two-year ITI qualification as an entry route into second-year engineering/technology diploma, with bridge courses where appropriate.",
+      "appliesTo": {
+        "stages": [
+          "iti"
+        ],
+        "moments": [
+          "D"
+        ]
+      },
+      "usedBy": [
+        "Compare Paths",
+        "Eligibility"
+      ],
+      "governingBody": "AICTE",
+      "document": "Approval Process Handbook 2024-2027",
+      "section": "Printed pp.54-55",
+      "cycle": "2024-2027",
+      "sourceUrl": "https://www.aicte.gov.in/sites/default/files/APH%20Final.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-16",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/technical-route-claim-review-2026-10-16.md"
+    },
+    {
+      "id": "rrb-technician-2025-ncvt-scvt",
+      "title": "Railway technician posts accept NCVT or SCVT",
+      "rule": "RRB CEN 02/2025 (Technician) lists accepted qualifications post by post and trade by trade; listed Grade III roles accept ITI certificates from NCVT or SCVT. \"SCVT will not be enough\" is false as a universal statement.",
+      "appliesTo": {
+        "stages": [
+          "iti"
+        ],
+        "moments": [
+          "D"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Document Check"
+      ],
+      "governingBody": "Railway Recruitment Boards",
+      "document": "CEN 02/2025 Technician categories",
+      "section": "Annexure A, p.27 onward",
+      "cycle": "2025",
+      "sourceUrl": "https://rrbguwahati.gov.in/documents/Updated_28062025_%20Detailed%20CEN%202-2025_Technician%20Categories.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-16",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/technical-route-claim-review-2026-10-16.md"
+    },
+    {
+      "id": "naps2-funding-exclusion",
+      "title": "NAPS-2 stipend support does not cover government employers",
+      "rule": "NAPS-2 gives partial stipend support through DBT; central/state government departments and PSUs are not eligible for this funding support.",
+      "appliesTo": {
+        "stages": [
+          "iti",
+          "diploma"
+        ],
+        "moments": [
+          "D"
+        ]
+      },
+      "usedBy": [
+        "Cost Loan & ROI Calculator"
+      ],
+      "governingBody": "Ministry of Skill Development",
+      "document": "MSDE Annual Report 2024-25",
+      "section": "NAPS-2 section",
+      "cycle": "2024-25",
+      "sourceUrl": "https://www.msde.gov.in/static/uploads/2024/02/8600d640ec9ca6f66daf4a8a46635f87.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-16",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/technical-route-claim-review-2026-10-16.md"
+    },
+    {
+      "id": "exam-jee-main-eligibility",
+      "title": "JEE MAIN: who can sit the exam",
+      "rule": "Class XII passed in 2024/2025 or appearing in 2026. Exam entry and NIT+ admission are separate; programme subjects, qualifying year and counselling rules must be checked.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "B",
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "NTA",
+      "document": "Official bulletin (2026)",
+      "section": "Chapters 3, 5; application fee table",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s3f8e59f4b2fe7c5705bf878bbd494ccdf/uploads/2025/11/202511021649722475.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-10",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/exam-notice-review-2026-10-10.json. Selected qualification, marks/fee scope reviewed; full document readiness, exceptions, later corrigenda and next-cycle dates still require review. No whole-record certification or live application window."
+    },
+    {
+      "id": "exam-jee-advanced-eligibility",
+      "title": "JEE ADVANCED: who can sit the exam",
+      "rule": "Indian/OCI(I) route: JEE Main top-250000 shortlist; at most two attempts in consecutive years; first Class XII appearance normally 2025/2026 with PCM, with specified exceptions and earlier IIT-admission restrictions. IIT admission marks are separate from permission to appear.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "IIT (organising institute)",
+      "document": "Official bulletin (2026)",
+      "section": "Clauses 11, 15 and 26",
+      "cycle": "2026",
+      "sourceUrl": "https://jeeadv.ac.in/documents/IBEnglish_2026.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-10",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/exam-notice-review-2026-10-10.json. Selected qualification, marks/fee scope reviewed; full document readiness, exceptions, later corrigenda and next-cycle dates still require review. No whole-record certification or live application window."
+    },
+    {
+      "id": "exam-neet-ug-eligibility",
+      "title": "NEET UG: who can sit the exam",
+      "rule": "Physics, Chemistry, Biology/Biotechnology and English are required through the recognised qualifying route, including permitted additional-subject routes. Class XII appearing candidates are provisional. The old unscoped aggregate 50/40 marks gate is withdrawn pending applicable NMC/admission-rule review; this does not assert that admission has no marks conditions. NEET qualifying percentile is a separate rule.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "B",
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "NTA",
+      "document": "Official bulletin (2026)",
+      "section": "Chapter 6 qualifying examination codes; fee table",
+      "cycle": "2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s37bc1ec1d9c3426357e69acd5bf320061/uploads/2026/02/202602231394640855.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-10",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/exam-notice-review-2026-10-10.json. Selected qualification, marks/fee scope reviewed; full document readiness, exceptions, later corrigenda and next-cycle dates still require review. No whole-record certification or live application window."
+    },
+    {
+      "id": "exam-clat-eligibility",
+      "title": "CLAT: who can sit the exam",
+      "rule": "UG route only: 10+2 passed or 2026 appearing provisionally. Consortium lists 45%, or 40% for SC/ST/PwD. NLU-specific admission documents must also be checked; NLSIU brochure lists only SC/ST relaxation, so PwD admission scope needs clarification. CLAT 2026 was scheduled for 7 December 2025, not December 2026.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "Consortium of NLUs",
+      "document": "Official bulletin (CLAT 2026 UG (exam held in 2025))",
+      "section": "UG eligibility and UG instructions",
+      "cycle": "CLAT 2026 UG (exam held in 2025)",
+      "sourceUrl": "https://clat2026.consortiumofnlus.ac.in/clat-2026/ug-eligibility.html",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-10",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/exam-notice-review-2026-10-10.json. Selected qualification, marks/fee scope reviewed; full document readiness, exceptions, later corrigenda and next-cycle dates still require review. No whole-record certification or live application window."
+    },
+    {
+      "id": "exam-cuet-eligibility",
+      "title": "CUET: who can sit the exam",
+      "rule": "Class XII/equivalent passed or appearing in 2026; NTA has no age limit, but universities may. Up to five test subjects. University/programme subject mapping and admission eligibility remain separate from test appearance.",
+      "appliesTo": {
+        "stages": [
+          "class12",
+          "dropper"
+        ],
+        "moments": [
+          "B",
+          "C",
+          "G"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "NTA",
+      "document": "Official bulletin (2026 UG)",
+      "section": "Chapter 3 and fee table",
+      "cycle": "2026 UG",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s3d1a21da7bca4abff8b0b61b87597de73/uploads/2026/01/202601031633478370.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-10",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/exam-notice-review-2026-10-10.json. Selected qualification, marks/fee scope reviewed; full document readiness, exceptions, later corrigenda and next-cycle dates still require review. No whole-record certification or live application window."
+    },
+    {
+      "id": "exam-gate-eligibility",
+      "title": "GATE: who can sit the exam",
+      "rule": "Eligible degree students in third year or higher, or completed government-approved degrees in the listed disciplines; special degree/equivalence routes have their own conditions. GATE qualification does not guarantee admission, scholarship or PSU recruitment.",
+      "appliesTo": {
+        "stages": [
+          "undergraduate",
+          "graduate"
+        ],
+        "moments": [
+          "E",
+          "F"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "IIT (organising institute)",
+      "document": "Official bulletin (2026)",
+      "section": "Eligibility and application-fees pages",
+      "cycle": "2026",
+      "sourceUrl": "https://gate2026.iitg.ac.in/eligibility-criteria.html",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-10",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/exam-notice-review-2026-10-10.json. Selected qualification, marks/fee scope reviewed; full document readiness, exceptions, later corrigenda and next-cycle dates still require review. No whole-record certification or live application window."
+    },
+    {
+      "id": "exam-cat-eligibility",
+      "title": "CAT: who can sit the exam",
+      "rule": "Bachelor degree/equivalent with 50%, or 45% SC/ST/PwBD; final-year/awaiting-result applicants can apply provisionally. Specified completed CA/CS/CMA/FIAI qualifications are alternate routes. University-certified CGPA conversion and institute-specific shortlisting/admission criteria apply.",
+      "appliesTo": {
+        "stages": [
+          "undergraduate",
+          "graduate"
+        ],
+        "moments": [
+          "F"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "IIMs",
+      "document": "Official bulletin (2026)",
+      "section": "Eligibility and payment sections; separate eligibility PDF",
+      "cycle": "2026",
+      "sourceUrl": "https://cdn.digialm.com/per/g06/pub/32842/EForms/image/CAT2026/CAT2026InformationBulletin_26-07-2026_V2.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-10",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/exam-notice-review-2026-10-10.json. Selected qualification, marks/fee scope reviewed; full document readiness, exceptions, later corrigenda and next-cycle dates still require review. No whole-record certification or live application window."
+    },
+    {
+      "id": "exam-cuet-pg-eligibility",
+      "title": "CUET PG: who can sit the exam",
+      "rule": "Bachelor degree/equivalent passed or final-year examination in 2026. No NTA age limit; university-specific age, qualification, subject mapping and counselling rules determine admission.",
+      "appliesTo": {
+        "stages": [
+          "undergraduate",
+          "graduate"
+        ],
+        "moments": [
+          "F"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "NTA",
+      "document": "Official bulletin (2026 PG)",
+      "section": "Chapter 3; application fee table",
+      "cycle": "2026 PG",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s388a839f2f6f1427879fc33ee4acf4f66/uploads/2025/12/202512161583029269.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-10",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/exam-notice-review-2026-10-10.json. Selected qualification, marks/fee scope reviewed; full document readiness, exceptions, later corrigenda and next-cycle dates still require review. No whole-record certification or live application window."
+    },
+    {
+      "id": "exam-ugc-net-eligibility",
+      "title": "UGC NET: who can sit the exam",
+      "rule": "Masters route: 55% General/EWS, 50% OBC-NCL/SC/ST/PwD/PwBD/third gender; provisional candidates have completion deadlines. Four-year bachelor route: 75% with notified 5% relaxation, including final-year provisional candidates; this route permits JRF/PhD, not Assistant Professor. A single masters marks gate cannot describe both routes.",
+      "appliesTo": {
+        "stages": [
+          "postgraduate"
+        ],
+        "moments": [
+          "F"
+        ]
+      },
+      "usedBy": [
+        "Eligibility",
+        "Exam Stack"
+      ],
+      "governingBody": "NTA",
+      "document": "Official bulletin (December 2026 bulletin dated 8 October 2026)",
+      "section": "Sections 2.1, 2.4; fee table",
+      "cycle": "December 2026 bulletin dated 8 October 2026",
+      "sourceUrl": "https://cdnbbsr.s3waas.gov.in/s301eee509ee2f68dc6014898c309e86bf/uploads/2026/10/202610081852912625.pdf",
+      "evidenceType": "carried_over_primary",
+      "status": "verified",
+      "checkedOn": "2026-10-10",
+      "confirmNote": "Confirm in this year's official notice before acting.",
+      "notes": "Carried over from docs/research/exam-notice-review-2026-10-10.json. Selected qualification, marks/fee scope reviewed; full document readiness, exceptions, later corrigenda and next-cycle dates still require review. No whole-record certification or live application window."
+    }
+  ]
+}

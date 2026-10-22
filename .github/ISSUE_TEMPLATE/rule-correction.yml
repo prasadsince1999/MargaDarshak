@@ -1,0 +1,42 @@
+name: Rule correction
+description: A rule card is wrong, out of date, or missing a source.
+title: "[Rule] "
+labels: ["rule-card", "needs-source-check"]
+body:
+  - type: input
+    id: card
+    attributes:
+      label: Rule card id
+      description: The "id" field in data/rule-cards/rule-cards.json, e.g. josaa-2026-withdrawal
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What is wrong?
+      description: Quote the current rule text and say what the official document says instead.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Official source link
+      description: The notice, brochure or bulletin itself (not a coaching or news summary).
+    validations:
+      required: true
+  - type: input
+    id: section
+    attributes:
+      label: Page or section
+      description: Where in the document the rule appears.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you submit
+      options:
+        - label: I read the rule in the official document myself.
+          required: true
+        - label: I have not included anyone's personal documents or details.
+          required: true

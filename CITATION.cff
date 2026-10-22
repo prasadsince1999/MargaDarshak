@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "Mārgadarshak open data: source-linked rules and evidence for Indian student decisions"
+message: "If you use this data, please cite it as below."
+type: dataset
+authors:
+  - name: "KSM × Tech"
+    website: "https://ksmxtech.com"
+  - given-names: "K. Prasad"
+    family-names: "Rao"
+repository-code: "https://github.com/prasadsince1999/MargaDarshak"
+url: "https://ksmxtech.com/margadarshak/"
+license: CC-BY-SA-4.0
+date-released: "2026-10-22"
+keywords:
+  - India
+  - education
+  - admissions
+  - career guidance
+  - open data

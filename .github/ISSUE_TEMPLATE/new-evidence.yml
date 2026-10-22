@@ -1,0 +1,37 @@
+name: New evidence or source
+description: A public record of a student losing a seat, job or year to a hidden rule, deadline or document problem.
+title: "[Evidence] "
+labels: ["evidence", "needs-review"]
+body:
+  - type: input
+    id: link
+    attributes:
+      label: Public link
+      description: Court judgment, official report, news article or public post.
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Stage
+      options: ["Class 10", "+2", "Diploma", "ITI / Vocational", "Bachelor's", "Master's", "Dropper / Gap", "Not sure"]
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened, in your own words
+      description: Two or three sentences. Please don't copy the original text; link to it.
+    validations:
+      required: true
+  - type: textarea
+    id: gate
+    attributes:
+      label: Which rule, deadline or document caused it?
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you submit
+      options:
+        - label: The source is public, and I have not shared private details about anyone.
+          required: true

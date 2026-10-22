@@ -1,0 +1,38 @@
+name: Tester feedback
+description: You tried the early-test app or the open data. Tell us what helped and what didn't.
+title: "[Feedback] "
+labels: ["feedback"]
+body:
+  - type: dropdown
+    id: who
+    attributes:
+      label: I am a
+      options: ["Student", "Parent", "Teacher or counsellor", "Developer", "Other"]
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Your stage (students)
+      options: ["Class 10", "+2", "Diploma", "ITI / Vocational", "Bachelor's", "Master's", "Dropper / Gap", "Not a student"]
+  - type: input
+    id: version
+    attributes:
+      label: App version or what you looked at
+      placeholder: "1.2.2 early test, or 'rule cards', 'evidence library'"
+  - type: textarea
+    id: helped
+    attributes:
+      label: What was useful?
+  - type: textarea
+    id: missing
+    attributes:
+      label: What was confusing, wrong or missing?
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Quoting
+      options:
+        - label: KSM × Tech may quote this feedback word for word in FEEDBACK.md, with my GitHub username.
