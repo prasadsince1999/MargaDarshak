@@ -1,1 +1,1 @@
-e6538bcb0faaf5f9279dd56672cc7eb507df322a64af8252e6abd26249fb3a22  MargaDarshak-1.2.2-build5-early-test.apk
+8b0164d1bdea0a9f592350b7f634e2f614176973fe6c5b46f3a5ae6ed217af8c  MargaDarshak-1.3.0-build2030-preview.apk

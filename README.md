@@ -7,7 +7,7 @@
 [![Validate open data](https://github.com/prasadsince1999/MargaDarshak/actions/workflows/validate.yml/badge.svg)](https://github.com/prasadsince1999/MargaDarshak/actions/workflows/validate.yml)
 [![Data: CC BY-SA 4.0](https://img.shields.io/badge/Data-CC_BY--SA_4.0-1A1A1A?style=for-the-badge)](LICENSE)
 [![Tools: AGPL-3.0](https://img.shields.io/badge/Tools-AGPL--3.0-0055FF?style=for-the-badge)](LICENSE-CODE)
-[![Android preview](https://img.shields.io/badge/Android-Early_Testing-FFCC00?style=for-the-badge&logo=android&logoColor=1A1A1A)](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.2-preview.1)
+[![Android preview](https://img.shields.io/badge/Android-Early_Testing-FFCC00?style=for-the-badge&logo=android&logoColor=1A1A1A)](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.3.0-preview.1)
 [![No pay-to-rank](https://img.shields.io/badge/Ethical_Stance-No_Pay--to--Rank-FFCC00?style=for-the-badge)](#the-ethical-charter)
 
 ---
@@ -84,7 +84,7 @@ The **app source code is private.** This data, the research and the validator ar
 
 ## Try the early-test app
 
-[**Download 1.2.2 (Android 7.0+)**](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.2.2-preview.1) · [checksum](APK-SHA256.txt) · [early-test notes](EARLY-TEST-NOTES.md)
+[**Download 1.3.0 (Android 7.0+)**](https://github.com/prasadsince1999/MargaDarshak/releases/tag/v1.3.0-preview.1) · [checksum](APK-SHA256.txt) · [early-test notes](EARLY-TEST-NOTES.md) · [changelog](CHANGELOG.md)
 
 It is a signed preview, not a Play Store launch. Start as Guest. Connected AI guidance, live updates, cloud sync and payments are **not** connected yet.
 
@@ -94,7 +94,7 @@ It is a signed preview, not a Play Store launch. Start as Guest. Connected AI gu
 |---|---|---|
 | Rule cards | 36 cards; 33 read in primary documents (20 Oct 2026) | NDA/CDS, state counselling, RRB when its site is reachable |
 | Evidence | 78 sourced cards; all marked "review pending" | Per-card review; Diploma, ITI, Master's and scholarship gaps |
-| App | Early-test APK; new education model in development | 6-step onboarding; rule cards shown on screens |
+| App | 1.3.0 preview: new education model, six-step onboarding, seven stages, seven tools | Diploma/ITI track; rule cards shown on screens |
 | Live updates | Not connected | Human-reviewed notices only; news alone is never enough |
 
 What students and testers have said so far is in [**FEEDBACK.md**](FEEDBACK.md), including the critical parts.
