@@ -74,13 +74,13 @@ It then shows the rule cards that apply to that moment, with their source and ch
 The **app source code is private.** This data, the research and the validator are open.
 
 <table>
-<tr><th>Home · a useful next step</th><th>Career · see the work</th></tr>
-<tr><td align="center"><img src="screens/home.png" width="300" alt="Stage-aware Home" /></td><td align="center"><img src="screens/career.png" width="300" alt="Career page" /></td></tr>
-<tr><th>Tools · compare before deciding</th><th>My Plan · main path and a backup</th></tr>
-<tr><td align="center"><img src="screens/tools.png" width="300" alt="Decision tools" /></td><td align="center"><img src="screens/my-plan.png" width="300" alt="Main and backup paths" /></td></tr>
+<tr><th>Onboarding · six steps</th><th>Home · your context and one next action</th></tr>
+<tr><td align="center"><img src="screens/onboarding.png" width="300" alt="Onboarding step 1 of 6: student or parent" /></td><td align="center"><img src="screens/home.png" width="300" alt="Home with context, next action and dated items" /></td></tr>
+<tr><th>Tools · the two that fit your moment first</th><th>My Plan · main path and a backup</th></tr>
+<tr><td align="center"><img src="screens/tools.png" width="300" alt="Tools for a +2 student" /></td><td align="center"><img src="screens/my-plan.png" width="300" alt="Plan A and Plan B" /></td></tr>
 </table>
 
-*Screens from the 1.2.2 early-test build (7 October 2026), using a demo Class 12 profile. Feature names have since been simplified: Compare Paths, What If, Eligibility, Exam Stack, Cost Loan & ROI Calculator, Document Check, Foundation Check and Parent Mode.*
+*Screens from the 1.3.0 preview (24 October 2026) web build at phone size (412×915), using the demo Class 12 profile. Dates with no checked source say so instead of showing a countdown.*
 
 ## Try the early-test app
 
