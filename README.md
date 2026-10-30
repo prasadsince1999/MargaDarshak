@@ -74,13 +74,13 @@ It then shows the rule cards that apply to that moment, with their source and ch
 The **app source code is private.** This data, the research and the validator are open.
 
 <table>
-<tr><th>Onboarding · six steps</th><th>Home · your context and one next action</th></tr>
-<tr><td align="center"><img src="screens/onboarding.png" width="300" alt="Onboarding step 1 of 6: student or parent" /></td><td align="center"><img src="screens/home.png" width="300" alt="Home with context, next action and dated items" /></td></tr>
-<tr><th>Tools · the two that fit your moment first</th><th>My Plan · main path and a backup</th></tr>
-<tr><td align="center"><img src="screens/tools.png" width="300" alt="Tools for a +2 student" /></td><td align="center"><img src="screens/my-plan.png" width="300" alt="Plan A and Plan B" /></td></tr>
+<tr><th>Onboarding · seven stages, real titles</th><th>Home · one next action</th><th>Explore · stage first, every route open</th></tr>
+<tr><td align="center"><img src="screens/onboarding.png" width="250" alt="Onboarding step 3 of 6: the seven education stages in four groups, with Class 11 or 12 asked only while studying" /></td><td align="center"><img src="screens/home.png" width="250" alt="Home: greeting strip with known facts, one next action, what matters now and the plan snapshot" /></td><td align="center"><img src="screens/explore.png" width="250" alt="Explore: search, three discovery groups, colleges and scholarships, and a For you or All paths toggle" /></td></tr>
+<tr><th>Tools · ordered by your moment, never paid</th><th>My Plan · main path and a backup</th><th>Profile · every answer, editable</th></tr>
+<tr><td align="center"><img src="screens/tools.png" width="250" alt="Tools: the student's moment and the two tools that fit it first" /></td><td align="center"><img src="screens/my-plan.png" width="250" alt="Plan A and Plan B with next steps; dates say Date not confirmed" /></td><td align="center"><img src="screens/profile.png" width="250" alt="Profile: name, board, date of birth with age, gender, and the education answers with edit rows" /></td></tr>
 </table>
 
-*Screens from the 1.3.0 preview (24 October 2026) web build at phone size (412×915), using the demo Class 12 profile. Dates with no checked source say so instead of showing a countdown.*
+*Screens from the current development build (30 October 2026), rendered at phone size (412×915) with a demo Class 12 profile. They are newer than the 1.3.0 preview APK; the next preview will include them. Dates with no checked source say "Date not confirmed" instead of showing a countdown.*
 
 ## Try the early-test app
 
@@ -94,10 +94,21 @@ It is a signed preview, not a Play Store launch. Start as Guest. Connected AI gu
 |---|---|---|
 | Rule cards | 36 cards; 33 read in primary documents (20 Oct 2026) | NDA/CDS, state counselling, RRB when its site is reachable |
 | Evidence | 78 sourced cards; all marked "review pending" | Per-card review; Diploma, ITI, Master's and scholarship gaps |
-| App | 1.3.0 preview: new education model, six-step onboarding, seven stages, seven tools | Diploma/ITI track; rule cards shown on screens |
+| App | 1.3.0 preview released. The development build adds the Diploma/ITI track, Document Check against lost seats, Class 10/+2 and degree guidance, and one design language across every screen; 3,455 automated tests pass | Next preview APK; student and parent feedback rounds |
 | Live updates | Not connected | Human-reviewed notices only; news alone is never enough |
 
 What students and testers have said so far is in [**FEEDBACK.md**](FEEDBACK.md), including the critical parts.
+
+## Help wanted
+
+Mārgadarshak is built by one person. It needs:
+
+- **A co-founder** with education knowledge: someone who can check rule and route data, demo the app to schools and families, and handle outreach. PrasaD builds the app and backend and runs the project.
+- **Students and parents to test it** and say where it confused them.
+- **Schools, colleges and education groups** to pilot it with a class or a counsellor.
+- **Funding and hardware** to keep building, and people to review data against official sources.
+
+Write to [support@ksmxtech.com](mailto:support@ksmxtech.com).
 
 ## Contribute
 
